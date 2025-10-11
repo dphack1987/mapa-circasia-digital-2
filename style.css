@@ -9,7 +9,6 @@
 
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* 🚨 CAMBIO CLAVE: Nuevo color de fondo (degradé de verdes) */
   background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
   display: flex;
   justify-content: center;
@@ -23,13 +22,13 @@ body {
 =========================== */
 #app {
   position: relative;
-  max-width: 1400px; /* Un poco más ancho para las pautas */
+  /* 🚨 CAMBIO CLAVE: Aumentamos el ancho máximo para las nuevas columnas más anchas */
+  max-width: 1600px; 
   width: 100%;
-  background: #fff;
+  background: #fafafa; 
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   border-radius: 16px;
   overflow: hidden;
-  /* 🚨 CAMBIO CLAVE: Activamos Flexbox para organizar los hijos */
   display: flex;
   justify-content: center;
 }
@@ -78,14 +77,15 @@ header p {
 /* 🚨 NUEVO: Estilos para los contenedores de las pautas */
 #pauta-izquierda-container,
 #pauta-derecha-container {
-  width: 160px; /* Ancho fijo para las pautas */
+  /* 🚨 CAMBIO CLAVE: Hacemos las columnas mucho más anchas */
+  width: 220px; 
   flex-shrink: 0; /* No se encogen */
   display: flex;
   flex-direction: column;
   justify-content: center; /* Centrar la pauta verticalmente */
   align-items: center; /* Centrar la pauta horizontalmente */
   padding: 2rem 0;
-  background-color: #f9f9f9; /* Un fondo sutil para diferenciarlos */
+  background-color: #e8f5e9; 
 }
 
 /* ===========================
@@ -159,11 +159,12 @@ header p {
 }
 
 /* ===========================
-   📢 PAUTAS (SIMPLIFICADO)
+   📢 PAUTAS (TAMAÑO PEQUEÑO MANTENIDO)
 =========================== */
 .pauta {
-  width: 140px;
-  height: 105px;
+  /* 🚨 CAMBIO CLAVE: Mantenemos la pauta con un tamaño pequeño */
+  width: 110px;
+  height: 82px;
   border: 2px solid #000;
   border-radius: 8px;
   cursor: pointer;
