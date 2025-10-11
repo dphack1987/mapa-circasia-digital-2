@@ -10,6 +10,14 @@ const modalTitle = document.getElementById('modal-title');
 const modalDesc = document.getElementById('modal-desc');
 const closeModalBtn = document.getElementById('close-modal');
 
+// Crear el elemento pautaHotspot
+const pautaHotspot = document.createElement('div');
+pautaHotspot.classList.add('pauta-hotspot');
+pautaHotspot.style.position = 'absolute';
+pautaHotspot.style.top = '50%';
+pautaHotspot.style.left = '50%';
+mapContainer.appendChild(pautaHotspot);
+
 let mostrandoCara1 = true;
 
 // ==============================
@@ -98,51 +106,80 @@ for (let i = 1; i <= rows; i++) {
 // ==============================
 const pautasAdicionales = [
   {
-    col: 'A',       // Primer cuadro blanco
-    row: 1,
+    col: 'A',       // Costado izquierdo
+    row: 2,
     title: 'Cerámicas El Alfarero',
     img: 'assets/pautas/pauta1.jpg',
     desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
-    cara: 1
+    cara: 1,
+    position: 'left'
   },
   {
-    col: 'B',       // Segundo cuadro blanco
-    row: 1,
+    col: 'H',       // Costado derecho
+    row: 2,
     title: 'Publicidad Pauta 2',
     img: 'assets/pautas/pauta2.jpg',
     desc: 'Información o promoción de la Pauta 2.',
-    cara: 1
+    cara: 1,
+    position: 'right'
   }
 ];
 
 function renderPautasAdicionales() {
+  // Limpiar pautas anteriores
+  document.querySelectorAll('.pauta').forEach(el => el.remove());
+  
   pautasAdicionales.forEach(p => {
     if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
 
-    const targetCell = [...gridOverlay.children].find(
-      c => c.dataset.col === p.col && c.dataset.row === String(p.row)
-    );
-
-    if (!targetCell) return;
-
+    // Crear elemento de pauta
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
-    pautaEl.title = p.title;
-    pautaEl.textContent = p.title;
+    
+    // Establecer tamaño fijo de 8x6 cm (convertido a píxeles aproximadamente)
+    // 1cm ≈ 37.8px en pantallas estándar
+    pautaEl.style.width = '302px';  // 8cm * 37.8px
+    pautaEl.style.height = '227px'; // 6cm * 37.8px
+    
+    // Posicionar en los costados según la propiedad position
     pautaEl.style.position = 'absolute';
-    pautaEl.style.top = '50%';
-    pautaEl.style.left = '50%';
-    pautaEl.style.transform = 'translate(-50%, -50%)';
-    pautaEl.style.background = 'rgba(255, 255, 255, 0.95)';
-    pautaEl.style.padding = '4px 8px';
-    pautaEl.style.fontSize = '12px';
-    pautaEl.style.fontWeight = '600';
-    pautaEl.style.border = '1px solid #000';
-    pautaEl.style.borderRadius = '4px';
+    
+    if (p.position === 'left') {
+      pautaEl.style.left = '10px';
+      pautaEl.style.top = '30%';
+    } else if (p.position === 'right') {
+      pautaEl.style.right = '10px';
+      pautaEl.style.top = '30%';
+    }
+    
+    // Mostrar la imagen directamente
+    pautaEl.style.backgroundImage = `url(${p.img})`;
+    pautaEl.style.backgroundSize = 'cover';
+    pautaEl.style.backgroundPosition = 'center';
+    pautaEl.style.border = '2px solid #000';
+    pautaEl.style.borderRadius = '8px';
+    pautaEl.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
     pautaEl.style.cursor = 'pointer';
-    pautaEl.style.textAlign = 'center';
-
-    targetCell.appendChild(pautaEl);
+    pautaEl.title = p.title;
+    
+    // Agregar título visible
+    const titleEl = document.createElement('div');
+    titleEl.textContent = p.title;
+    titleEl.style.position = 'absolute';
+    titleEl.style.bottom = '0';
+    titleEl.style.left = '0';
+    titleEl.style.right = '0';
+    titleEl.style.background = 'rgba(0,0,0,0.7)';
+    titleEl.style.color = 'white';
+    titleEl.style.padding = '8px';
+    titleEl.style.fontSize = '14px';
+    titleEl.style.fontWeight = 'bold';
+    titleEl.style.textAlign = 'center';
+    titleEl.style.borderBottomLeftRadius = '6px';
+    titleEl.style.borderBottomRightRadius = '6px';
+    
+    pautaEl.appendChild(titleEl);
+    mapContainer.appendChild(pautaEl);
 
     pautaEl.addEventListener('click', e => {
       e.stopPropagation();
