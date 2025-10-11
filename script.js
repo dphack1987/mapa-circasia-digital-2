@@ -2,6 +2,7 @@
 // 📌 VARIABLES Y ELEMENTOS DOM
 // ==============================
 const mapContainer = document.getElementById('map-container');
+const panzoomWrapper = document.getElementById('panzoom-element-wrapper'); // 🚨 NUEVO
 const mapImage = document.getElementById('map-image');
 const switchBtn = document.getElementById('switch-btn');
 const infoModal = document.getElementById('info-modal');
@@ -9,12 +10,11 @@ const modalTitle = document.getElementById('modal-title');
 const modalDesc = document.getElementById('modal-desc');
 const closeModalBtn = document.getElementById('close-modal');
 
-// 🚨 NUEVO: Seleccionar los botones de zoom
 const zoomInBtn = document.getElementById('zoom-in-btn');
 const zoomOutBtn = document.getElementById('zoom-out-btn');
 
 let mostrandoCara1 = true;
-let panzoomInstance = null; // Variable para guardar la instancia de Panzoom
+let panzoomInstance = null;
 
 // ==============================
 // 📍 PUNTOS TURÍSTICOS — CARA 1 & 2
@@ -34,16 +34,17 @@ const hotspotsCara2 = [
 // 🔍 FUNCIÓN PARA INICIALIZAR EL ZOOM
 // ==============================
 function initializePanzoom() {
-  // Si ya existe una instancia, la destruimos para evitar conflictos
   if (panzoomInstance) {
     panzoomInstance.destroy();
   }
 
-  // 🚨 CAMBIO CLAVE: Aplicamos Panzoom al contenedor, no a la imagen
-  panzoomInstance = panzoom(mapContainer, {
-    maxScale: 5, // Zoom máximo permitido (5x el tamaño original)
-    minScale: 1, // Zoom mínimo (tamaño original)
-    contain: 'outside', // Asegura que la imagen no se salga de su contenedor
+  // 🚨 CAMBIO CLAVE: Aplicamos Panzoom al nuevo wrapper que contiene solo la imagen
+  panzoomInstance = panzoom(panzoomWrapper, {
+    maxScale: 5,
+    minScale: 1,
+    contain: 'outside',
+    // 🚨 NUEVO: Añadimos soporte para la rueda del ratón
+    zoomSpeed: 0.1, // Velocidad de zoom con la rueda
   });
 }
 
@@ -58,8 +59,6 @@ switchBtn.addEventListener('click', () => {
 
   renderHotspots();
   renderPautasAdicionales();
-  
-  // Re-inicializamos Panzoom para la nueva imagen
   initializePanzoom();
 });
 
@@ -68,7 +67,6 @@ switchBtn.addEventListener('click', () => {
 // ==============================
 function renderHotspots() {
   document.querySelectorAll('.hotspot.dynamic').forEach(el => el.remove());
-
   const currentHotspots = mostrandoCara1 ? hotspotsCara1 : hotspotsCara2;
 
   currentHotspots.forEach(hs => {
@@ -80,7 +78,7 @@ function renderHotspots() {
     el.dataset.desc = hs.desc;
 
     el.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evita que el clic en el hotspot también mueva el mapa
+        e.stopPropagation();
         openModal(hs.title, hs.desc);
     });
     mapContainer.appendChild(el);
@@ -88,70 +86,52 @@ function renderHotspots() {
 }
 
 // ==============================
-// 📢 PAUTAS FIJAS (NUEVA UBICACIÓN)
+// 📢 PAUTAS FIJAS
 // ==============================
 const pautasAdicionales = [
   {
-    position: 'top', // Posición: en el contenedor superior
+    position: 'top',
     title: 'Cerámicas El Alfarero',
     img: 'assets/pautas/pauta1.jpg',
     desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
     cara: 1
   },
   {
-    position: 'bottom', // Posición: en el contenedor inferior
+    position: 'bottom',
     title: 'Publicidad Pauta 2',
     img: 'assets/pautas/pauta2.jpg',
     desc: 'Información o promoción de la Pauta 2.',
     cara: 1
   }
-  // Puedes añadir más pautas aquí si lo deseas
-  // { position: 'top', title: 'Otra Pauta', img: '...', desc: '...', cara: 1 }
 ];
 
 function renderPautasAdicionales() {
-  // 🚨 Seleccionar los nuevos contenedores superior e inferior
   const topAdContainer = document.getElementById('pauta-superior-container');
   const bottomAdContainer = document.getElementById('pauta-inferior-container');
-
-  // Limpiar pautas anteriores de ambos contenedores
   topAdContainer.innerHTML = '';
   bottomAdContainer.innerHTML = '';
   
   pautasAdicionales.forEach(p => {
     if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
-
-    // Crear elemento de pauta
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
     pautaEl.title = p.title;
-
-    // Crear la imagen
     const imgEl = document.createElement('img');
     imgEl.src = p.img;
     imgEl.alt = p.title;
     pautaEl.appendChild(imgEl);
-
-    // Crear el título
     const titleEl = document.createElement('div');
     titleEl.classList.add('pauta-title');
     titleEl.textContent = p.title;
     pautaEl.appendChild(titleEl);
-    
-    // 🚨 Añadir la pauta al contenedor correcto
     if (p.position === 'top') {
       topAdContainer.appendChild(pautaEl);
     } else if (p.position === 'bottom') {
       bottomAdContainer.appendChild(pautaEl);
     }
-
     pautaEl.addEventListener('click', e => {
       e.stopPropagation();
-      openModal(
-        p.title,
-        `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">
-         <p style="font-size:14px;color:#333;">${p.desc}</p>`
-      );
+      openModal(p.title, `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:6px; margin-bottom:8px;"><p style="font-size:14px;color:#333;">${p.desc}</p>`);
     });
   });
 }
@@ -171,22 +151,21 @@ infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal
 // ==============================
 // 🎮 EVENT LISTENERS PARA LOS BOTONES DE ZOOM
 // ==============================
-zoomInBtn.addEventListener('click', () => {
-  if (panzoomInstance) {
-    panzoomInstance.zoomIn();
-  }
+zoomInBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Evita que el clic en el botón mueva el mapa
+    if (panzoomInstance) panzoomInstance.zoomIn();
 });
 
-zoomOutBtn.addEventListener('click', () => {
-  if (panzoomInstance) {
-    panzoomInstance.zoomOut();
-  }
+zoomOutBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Evita que el clic en el botón mueva el mapa
+    if (panzoomInstance) panzoomInstance.zoomOut();
 });
 
 // ==============================
-// 🟢 INICIALIZAR
+// 🟢 INICIALIZAR (Más robusto)
 // ==============================
-renderHotspots();
-renderPautasAdicionales();
-// Inicializamos Panzoom al cargar la página
-initializePanzoom();
+document.addEventListener('DOMContentLoaded', () => {
+  renderHotspots();
+  renderPautasAdicionales();
+  initializePanzoom();
+});

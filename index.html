@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mapa Turístico Circasia 2025</title>
-
-  <!-- 📌 Fuente elegante -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <!-- 📎 Estilos CSS -->
-  <link rel="stylesheet" href="style.css" />
-</head>
 <body>
   <!-- 🔸 Encabezado principal (fijo, no se mueve con el scroll) -->
   <header>
@@ -28,9 +13,13 @@
 
     <!-- 🗺️ Contenedor del mapa (protagonista, ocupa todo el espacio disponible) -->
     <div id="map-container" aria-label="Mapa turístico de Circasia">
-      <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
       
-      <!-- 🚨 NUEVO: Controles de Zoom -->
+      <!-- 🚨 NUEVO: Wrapper específico para Panzoom. Solo contiene la imagen. -->
+      <div id="panzoom-element-wrapper">
+        <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
+      </div>
+      
+      <!-- 🚨 NUEVO: Controles de Zoom y botón de cambiar cara ahora son hijos directos de map-container -->
       <div id="zoom-controls">
         <button id="zoom-in-btn" aria-label="Acercar">+</button>
         <button id="zoom-out-btn" aria-label="Alejar">-</button>
@@ -66,4 +55,3 @@
   <!-- ⚡ Scripts JS -->
   <script src="script.js"></script>
 </body>
-</html>

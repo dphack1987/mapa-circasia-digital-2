@@ -10,7 +10,6 @@
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  /* 🚨 Convertimos el body en un contenedor flex de altura completa */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -25,7 +24,6 @@ header, footer {
   padding: 1.5rem;
   background: #2e7d32;
   color: #fff;
-  /* 🚨 Evitamos que se encojan o crezcan */
   flex-shrink: 0;
 }
 
@@ -48,9 +46,7 @@ footer {
    🗺️ PANEL CENTRAL CON SCROLL
 =========================== */
 #scrollable-content {
-  /* 🚨 Este contenedor ocupa todo el espacio vertical disponible */
   flex-grow: 1;
-  /* 🚨 Añadimos scroll vertical cuando el contenido se desborda */
   overflow-y: auto;
   background: #fafafa;
   margin: 1rem;
@@ -64,14 +60,13 @@ footer {
 #pauta-superior-container,
 #pauta-inferior-container {
   width: 100%;
-  height: 130px; /* Altura fija para las franjas de pautas */
-  flex-shrink: 0; /* No se encogen */
-  display: flex; /* Usamos flex para alinear las pautas */
-  align-items: center; /* Centrar verticalmente */
+  height: 130px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
   padding: 1rem;
-  gap: 1.5rem; /* Espacio entre pautas */
+  gap: 1.5rem;
   background-color: #e8f5e9;
-  /* 🚨 Permite el scroll horizontal si hay muchas pautas */
   overflow-x: auto;
 }
 
@@ -82,39 +77,49 @@ footer {
 }
 #pauta-superior-container,
 #pauta-inferior-container {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-
+/* ==============================
+   🗺️ ESTILOS DEL MAPA Y WRAPPER
+   ============================== */
 #map-container {
   position: relative;
   width: 100%;
-  /* 🚨 El mapa crece para llenar el espacio entre las pautas */
   flex-grow: 1;
-  overflow: hidden; /* Se mantiene hidden para que el zoom no rompa el layout */
+  overflow: hidden;
+}
+
+/* 🚨 NUEVO: El wrapper ahora ocupa todo el contenedor */
+#panzoom-element-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #map-image {
-  display: block;
-  width: 100%;
-  height: auto;
+  /* 🚨 CAMBIO CLAVE: max-width y max-height para que la imagen no se deforme al hacer zoom */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Asegura que la imagen quepa completa sin recortarse */
   user-select: none;
-  /* 🚨 ELIMINAMOS: pointer-events: none; para que Panzoom pueda recibir eventos */
   transition: transform 0.25s ease;
 }
 
 /* ==============================
-   🔍 CONTROLES DE ZOOM (NUEVO)
+   🔍 CONTROLES DE ZOOM
    ============================== */
 #zoom-controls {
   position: absolute;
   top: 15px;
   left: 15px;
-  z-index: 1001; /* Por encima del botón de cambiar cara */
+  z-index: 1001;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Espacio entre los botones */
+  gap: 8px;
 }
 
 #zoom-controls button {
@@ -191,7 +196,6 @@ footer {
    📢 PAUTAS
 =========================== */
 .pauta {
-  /* 🚨 Las pautas ya no necesitan ser flex-items, solo block */
   display: block; 
   width: 140px;
   height: 105px;
@@ -201,7 +205,6 @@ footer {
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   position: relative;
-  /* 🚨 Evita que la pauta se encoja más pequeño que su contenido */
   flex-shrink: 0;
 }
 
@@ -303,7 +306,7 @@ footer {
 =========================== */
 @media (max-width: 768px) {
   #scrollable-content {
-    margin: 0.5rem; /* Menos margen en móviles */
+    margin: 0.5rem;
     border-radius: 8px;
   }
   
