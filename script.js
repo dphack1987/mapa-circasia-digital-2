@@ -167,29 +167,6 @@ function openModal(title, desc) {
 closeModalBtn.addEventListener('click', () => infoModal.classList.add('hidden'));
 infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.classList.add('hidden'); });
 
-// ==============================
-// 🔶 Hotspot visual de la pauta (Cerámicas El Alfarero)
-// ==============================
-const pautaHotspot = document.createElement('div');
-pautaHotspot.classList.add('pauta-hotspot');
-pautaHotspot.title = 'Cerámicas El Alfarero';
-pautaHotspot.style.top = '70%';
-pautaHotspot.style.left = '55%';
-mapContainer.appendChild(pautaHotspot);
-
-pautaHotspot.addEventListener('click', e => {
-  e.stopPropagation();
-  openModal(
-    'Cerámicas El Alfarero',
-    `<div style="text-align:center;">
-       <img src="assets/pautas/pauta1.jpg" alt="Cerámicas El Alfarero"
-            style="width:100%; border-radius:10px; margin-bottom:10px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-       <p style="font-size:14px;color:#333; margin:0;">
-         Centro Artesanal y Gastronómico — Cerámica tradicional y contemporánea hecha a mano en Circasia.
-       </p>
-     </div>`
-  );
-});
 
 // ==============================
 // 🔶 Estilos dinámicos para hotspot pulsante
