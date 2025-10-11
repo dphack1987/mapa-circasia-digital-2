@@ -10,7 +10,6 @@
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  /* 🚨 Convertimos el body en un contenedor flex de altura completa */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -25,7 +24,6 @@ header, footer {
   padding: 1.5rem;
   background: #2e7d32;
   color: #fff;
-  /* 🚨 Evitamos que se encojan o crezcan */
   flex-shrink: 0;
 }
 
@@ -48,9 +46,7 @@ footer {
    🗺️ PANEL CENTRAL CON SCROLL
 =========================== */
 #scrollable-content {
-  /* 🚨 Este contenedor ocupa todo el espacio vertical disponible */
   flex-grow: 1;
-  /* 🚨 Añadimos scroll vertical cuando el contenido se desborda */
   overflow-y: auto;
   background: #fafafa;
   margin: 1rem;
@@ -60,61 +56,68 @@ footer {
   flex-direction: column;
 }
 
-/* 🚨 Estilos para los contenedores de pautas con scroll horizontal */
+/* 🚨 Estilos para los contenedores de pautas */
 #pauta-superior-container,
 #pauta-inferior-container {
   width: 100%;
-  height: 130px; /* Altura fija para las franjas de pautas */
-  flex-shrink: 0; /* No se encogen */
-  display: flex; /* Usamos flex para alinear las pautas */
-  align-items: center; /* Centrar verticalmente */
+  height: 130px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
   padding: 1rem;
-  gap: 1.5rem; /* Espacio entre pautas */
+  gap: 1.5rem;
   background-color: #e8f5e9;
-  /* 🚨 Permite el scroll horizontal si hay muchas pautas */
   overflow-x: auto;
 }
 
-/* Ocultar la barra de scroll pero manteniendo la funcionalidad */
+/* Ocultar la barra de scroll */
 #pauta-superior-container::-webkit-scrollbar,
 #pauta-inferior-container::-webkit-scrollbar {
   display: none;
 }
 #pauta-superior-container,
 #pauta-inferior-container {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-
-#map-container {
-  position: relative;
-  width: 100%;
-  /* 🚨 El mapa crece para llenar el espacio entre las pautas */
-  flex-grow: 1;
-  overflow: hidden; /* Se mantiene hidden para que el zoom no rompa el layout */
-}
-
-#map-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  user-select: none;
-  pointer-events: none; /* Se mantiene para que los clics vayan a los hotspots */
-  transition: transform 0.25s ease;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ==============================
-   🔍 CONTROLES DE ZOOM (NUEVO)
+   🗺️ ESTILOS DEL MAPA Y WRAPPER
+   ============================== */
+#map-container {
+  position: relative; /* 🚨 CLAVE: Es el contexto de posicionamiento para todo */
+  width: 100%;
+  flex-grow: 1;
+  overflow: hidden; /* 🚨 CLAVE: El overflow está aquí, no en el wrapper */
+}
+
+/* 🚨 NUEVO: El wrapper ahora ocupa todo el contenedor y es el objetivo de Panzoom */
+#panzoom-element-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#map-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Asegura que la imagen quepa completa sin recortarse */
+  user-select: none;
+}
+
+/* ==============================
+   🔍 CONTROLES DE ZOOM
    ============================== */
 #zoom-controls {
   position: absolute;
   top: 15px;
   left: 15px;
-  z-index: 1001; /* Por encima del botón de cambiar cara */
+  z-index: 1001;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Espacio entre los botones */
+  gap: 8px;
 }
 
 #zoom-controls button {
@@ -166,29 +169,6 @@ footer {
 }
 
 /* ===========================
-   🧭 REJILLA INTERACTIVA
-=========================== */
-#grid-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  z-index: 500;
-}
-
-.grid-cell {
-  border: 1px dashed rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.grid-cell:hover {
-  background: rgba(46, 125, 50, 0.15);
-}
-
-/* ===========================
    📍 HOTSPOTS
 =========================== */
 .hotspot {
@@ -214,7 +194,6 @@ footer {
    📢 PAUTAS
 =========================== */
 .pauta {
-  /* 🚨 Las pautas ya no necesitan ser flex-items, solo block */
   display: block; 
   width: 140px;
   height: 105px;
@@ -224,7 +203,6 @@ footer {
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   position: relative;
-  /* 🚨 Evita que la pauta se encoja más pequeño que su contenido */
   flex-shrink: 0;
 }
 
@@ -326,7 +304,7 @@ footer {
 =========================== */
 @media (max-width: 768px) {
   #scrollable-content {
-    margin: 0.5rem; /* Menos margen en móviles */
+    margin: 0.5rem;
     border-radius: 8px;
   }
   

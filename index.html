@@ -28,9 +28,13 @@
 
     <!-- 🗺️ Contenedor del mapa (protagonista, ocupa todo el espacio disponible) -->
     <div id="map-container" aria-label="Mapa turístico de Circasia">
-      <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
       
-      <!-- 🚨 NUEVO: Controles de Zoom -->
+      <!-- 🚨 NUEVO: Wrapper que contiene solo la imagen. Este es el objetivo de Panzoom. -->
+      <div id="panzoom-element-wrapper">
+        <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
+      </div>
+      
+      <!-- 🚨 IMPORTANTE: Los controles y botones están FUERA del wrapper de panzoom -->
       <div id="zoom-controls">
         <button id="zoom-in-btn" aria-label="Acercar">+</button>
         <button id="zoom-out-btn" aria-label="Alejar">-</button>
