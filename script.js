@@ -136,20 +136,21 @@ function renderPautasAdicionales() {
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
     
-    // Establecer tamaño fijo de 8x6 cm (convertido a píxeles aproximadamente)
-    // 1cm ≈ 37.8px en pantallas estándar
-    pautaEl.style.width = '302px';  // 8cm * 37.8px
-    pautaEl.style.height = '227px'; // 6cm * 37.8px
+    // Establecer tamaño más pequeño para que quepan 12 pautas
+    // Reduciendo a aproximadamente 4x3 cm
+    pautaEl.style.width = '150px';  // 4cm * 37.8px ≈ 150px
+    pautaEl.style.height = '113px'; // 3cm * 37.8px ≈ 113px
     
     // Posicionar en los costados según la propiedad position
     pautaEl.style.position = 'absolute';
     
+    // Posicionar en los extremos laterales para no interferir con la visualización del mapa
     if (p.position === 'left') {
-      pautaEl.style.left = '10px';
-      pautaEl.style.top = '30%';
+      pautaEl.style.left = '5px';
+      pautaEl.style.top = '15%';
     } else if (p.position === 'right') {
-      pautaEl.style.right = '10px';
-      pautaEl.style.top = '30%';
+      pautaEl.style.right = '5px';
+      pautaEl.style.top = '15%';
     }
     
     // Mostrar la imagen directamente
@@ -171,8 +172,8 @@ function renderPautasAdicionales() {
     titleEl.style.right = '0';
     titleEl.style.background = 'rgba(0,0,0,0.7)';
     titleEl.style.color = 'white';
-    titleEl.style.padding = '8px';
-    titleEl.style.fontSize = '14px';
+    titleEl.style.padding = '4px';
+    titleEl.style.fontSize = '10px';
     titleEl.style.fontWeight = 'bold';
     titleEl.style.textAlign = 'center';
     titleEl.style.borderBottomLeftRadius = '6px';
