@@ -10,6 +10,7 @@
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  /* 🚨 Convertimos el body en un contenedor flex de altura completa */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -24,6 +25,7 @@ header, footer {
   padding: 1.5rem;
   background: #2e7d32;
   color: #fff;
+  /* 🚨 Evitamos que se encojan o crezcan */
   flex-shrink: 0;
 }
 
@@ -46,7 +48,9 @@ footer {
    🗺️ PANEL CENTRAL CON SCROLL
 =========================== */
 #scrollable-content {
+  /* 🚨 Este contenedor ocupa todo el espacio vertical disponible */
   flex-grow: 1;
+  /* 🚨 Añadimos scroll vertical cuando el contenido se desborda */
   overflow-y: auto;
   background: #fafafa;
   margin: 1rem;
@@ -60,13 +64,14 @@ footer {
 #pauta-superior-container,
 #pauta-inferior-container {
   width: 100%;
-  height: 130px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
+  height: 130px; /* Altura fija para las franjas de pautas */
+  flex-shrink: 0; /* No se encogen */
+  display: flex; /* Usamos flex para alinear las pautas */
+  align-items: center; /* Centrar verticalmente */
   padding: 1rem;
-  gap: 1.5rem;
+  gap: 1.5rem; /* Espacio entre pautas */
   background-color: #e8f5e9;
+  /* 🚨 Permite el scroll horizontal si hay muchas pautas */
   overflow-x: auto;
 }
 
@@ -77,49 +82,39 @@ footer {
 }
 #pauta-superior-container,
 #pauta-inferior-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-/* ==============================
-   🗺️ ESTILOS DEL MAPA Y WRAPPER
-   ============================== */
+
 #map-container {
   position: relative;
   width: 100%;
+  /* 🚨 El mapa crece para llenar el espacio entre las pautas */
   flex-grow: 1;
-  overflow: hidden;
-}
-
-/* 🚨 NUEVO: El wrapper ahora ocupa todo el contenedor */
-#panzoom-element-wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden; /* Se mantiene hidden para que el zoom no rompa el layout */
 }
 
 #map-image {
-  /* 🚨 CAMBIO CLAVE: max-width y max-height para que la imagen no se deforme al hacer zoom */
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* Asegura que la imagen quepa completa sin recortarse */
+  display: block;
+  width: 100%;
+  height: auto;
   user-select: none;
+  pointer-events: none; /* Se mantiene para que los clics vayan a los hotspots */
   transition: transform 0.25s ease;
 }
 
 /* ==============================
-   🔍 CONTROLES DE ZOOM
+   🔍 CONTROLES DE ZOOM (NUEVO)
    ============================== */
 #zoom-controls {
   position: absolute;
   top: 15px;
   left: 15px;
-  z-index: 1001;
+  z-index: 1001; /* Por encima del botón de cambiar cara */
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 8px; /* Espacio entre los botones */
 }
 
 #zoom-controls button {
@@ -171,6 +166,29 @@ footer {
 }
 
 /* ===========================
+   🧭 REJILLA INTERACTIVA
+=========================== */
+#grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  z-index: 500;
+}
+
+.grid-cell {
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.grid-cell:hover {
+  background: rgba(46, 125, 50, 0.15);
+}
+
+/* ===========================
    📍 HOTSPOTS
 =========================== */
 .hotspot {
@@ -196,6 +214,7 @@ footer {
    📢 PAUTAS
 =========================== */
 .pauta {
+  /* 🚨 Las pautas ya no necesitan ser flex-items, solo block */
   display: block; 
   width: 140px;
   height: 105px;
@@ -205,6 +224,7 @@ footer {
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   position: relative;
+  /* 🚨 Evita que la pauta se encoja más pequeño que su contenido */
   flex-shrink: 0;
 }
 
@@ -306,7 +326,7 @@ footer {
 =========================== */
 @media (max-width: 768px) {
   #scrollable-content {
-    margin: 0.5rem;
+    margin: 0.5rem; /* Menos margen en móviles */
     border-radius: 8px;
   }
   
