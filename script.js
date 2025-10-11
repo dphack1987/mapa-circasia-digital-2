@@ -99,14 +99,27 @@ for (let i = 1; i <= rows; i++) {
 // ==============================
 const pautas = [
   {
-    col: 'C', row: 2,
+    col: 'A',          // Primera columna (izquierda superior)
+    row: 1,            // Primera fila
+    title: 'Pauta 1',
+    img: 'assets/pautas/pauta1.jpg',
+    desc: 'Descripción de la Pauta 1: información relevante, turismo o promoción.',
+    cara: 1            // Solo visible en Cara 1
+  },
+  {
+    col: 'C',
+    row: 2,
     title: 'Cerámicas El Alfarero',
     img: 'assets/pautas/pauta_ceramicas_alfarero.jpg',
-    desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!'
+    desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
+    cara: 1            // Solo visible en Cara 1
   }
 ];
 
 pautas.forEach(p => {
+  // Solo mostrar la pauta si corresponde a la cara actual
+  if (p.cara && p.cara !== (mostrandoCara1 ? 1 : 2)) return;
+
   const targetCell = [...gridOverlay.children].find(
     c => c.dataset.col === p.col && c.dataset.row === String(p.row)
   );
@@ -120,6 +133,15 @@ pautas.forEach(p => {
     pautaEl.style.top = '50%';
     pautaEl.style.left = '50%';
     pautaEl.style.transform = 'translate(-50%, -50%)';
+    pautaEl.style.background = 'rgba(255, 255, 255, 0.95)';
+    pautaEl.style.padding = '6px 10px';
+    pautaEl.style.fontSize = '12px';
+    pautaEl.style.fontWeight = '600';
+    pautaEl.style.border = '2px solid #000';
+    pautaEl.style.borderRadius = '6px';
+    pautaEl.style.cursor = 'pointer';
+    pautaEl.style.textAlign = 'center';
+
     targetCell.appendChild(pautaEl);
 
     pautaEl.addEventListener('click', e => {
