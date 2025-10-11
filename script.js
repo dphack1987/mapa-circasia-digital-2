@@ -2,19 +2,16 @@
 // 📌 VARIABLES Y ELEMENTOS DOM
 // ==============================
 const mapContainer = document.getElementById('map-container');
-const panzoomWrapper = document.getElementById('panzoom-element-wrapper'); // 🚨 NUEVO
 const mapImage = document.getElementById('map-image');
 const switchBtn = document.getElementById('switch-btn');
+const gridOverlay = document.getElementById('grid-overlay');
 const infoModal = document.getElementById('info-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalDesc = document.getElementById('modal-desc');
 const closeModalBtn = document.getElementById('close-modal');
 
-const zoomInBtn = document.getElementById('zoom-in-btn');
-const zoomOutBtn = document.getElementById('zoom-out-btn');
-
 let mostrandoCara1 = true;
-let panzoomInstance = null;
+let panzoomInstance = null; // 🚨 NUEVO: Variable para guardar la instancia de Panzoom
 
 // ==============================
 // 📍 PUNTOS TURÍSTICOS — CARA 1 & 2
@@ -34,17 +31,17 @@ const hotspotsCara2 = [
 // 🔍 FUNCIÓN PARA INICIALIZAR EL ZOOM
 // ==============================
 function initializePanzoom() {
+  // Si ya existe una instancia, la destruimos para evitar conflictos
   if (panzoomInstance) {
     panzoomInstance.destroy();
   }
 
-  // 🚨 CAMBIO CLAVE: Aplicamos Panzoom al nuevo wrapper que contiene solo la imagen
-  panzoomInstance = panzoom(panzoomWrapper, {
-    maxScale: 5,
-    minScale: 1,
-    contain: 'outside',
-    // 🚨 NUEVO: Añadimos soporte para la rueda del ratón
-    zoomSpeed: 0.1, // Velocidad de zoom con la rueda
+  // Creamos una nueva instancia de Panzoom en la imagen del mapa
+  panzoomInstance = panzoom(mapImage, {
+    maxScale: 5, // Zoom máximo permitido (5x el tamaño original)
+    minScale: 1, // Zoom mínimo (tamaño original)
+    contain: 'outside', // Asegura que la imagen no se salga de su contenedor
+    // Puedes añadir más opciones aquí si lo deseas
   });
 }
 
@@ -59,6 +56,8 @@ switchBtn.addEventListener('click', () => {
 
   renderHotspots();
   renderPautasAdicionales();
+  
+  // 🚨 CAMBIO CLAVE: Re-inicializamos Panzoom para la nueva imagen
   initializePanzoom();
 });
 
@@ -67,6 +66,7 @@ switchBtn.addEventListener('click', () => {
 // ==============================
 function renderHotspots() {
   document.querySelectorAll('.hotspot.dynamic').forEach(el => el.remove());
+
   const currentHotspots = mostrandoCara1 ? hotspotsCara1 : hotspotsCara2;
 
   currentHotspots.forEach(hs => {
@@ -77,61 +77,107 @@ function renderHotspots() {
     el.dataset.title = hs.title;
     el.dataset.desc = hs.desc;
 
-    el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openModal(hs.title, hs.desc);
-    });
+    el.addEventListener('click', () => openModal(hs.title, hs.desc));
     mapContainer.appendChild(el);
   });
 }
 
 // ==============================
-// 📢 PAUTAS FIJAS
+// 📐 GENERAR REJILLA
+// ==============================
+const cols = 8;
+const rows = 4;
+
+gridOverlay.style.display = 'grid';
+gridOverlay.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+gridOverlay.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+gridOverlay.style.width = '100%';
+gridOverlay.style.height = '100%';
+gridOverlay.style.position = 'absolute';
+gridOverlay.style.top = '0';
+gridOverlay.style.left = '0';
+
+for (let i = 1; i <= rows; i++) {
+  for (let j = 1; j <= cols; j++) {
+    const cell = document.createElement('div');
+    cell.classList.add('grid-cell');
+    cell.dataset.col = String.fromCharCode(64 + j);
+    cell.dataset.row = i;
+    cell.title = `${cell.dataset.col}${i}`;
+    cell.style.cursor = 'pointer';
+    gridOverlay.appendChild(cell);
+
+    cell.addEventListener('click', () => {
+      openModal(`Celda ${cell.title}`, 'Espacio disponible para información o pauta local.');
+    });
+  }
+}
+
+// ==============================
+// 📢 PAUTAS FIJAS (NUEVA UBICACIÓN)
 // ==============================
 const pautasAdicionales = [
   {
-    position: 'top',
+    position: 'top', // Posición: en el contenedor superior
     title: 'Cerámicas El Alfarero',
     img: 'assets/pautas/pauta1.jpg',
     desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
     cara: 1
   },
   {
-    position: 'bottom',
+    position: 'bottom', // Posición: en el contenedor inferior
     title: 'Publicidad Pauta 2',
     img: 'assets/pautas/pauta2.jpg',
     desc: 'Información o promoción de la Pauta 2.',
     cara: 1
   }
+  // Puedes añadir más pautas aquí si lo deseas
+  // { position: 'top', title: 'Otra Pauta', img: '...', desc: '...', cara: 1 }
 ];
 
 function renderPautasAdicionales() {
+  // 🚨 Seleccionar los nuevos contenedores superior e inferior
   const topAdContainer = document.getElementById('pauta-superior-container');
   const bottomAdContainer = document.getElementById('pauta-inferior-container');
+
+  // Limpiar pautas anteriores de ambos contenedores
   topAdContainer.innerHTML = '';
   bottomAdContainer.innerHTML = '';
   
   pautasAdicionales.forEach(p => {
     if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
+
+    // Crear elemento de pauta
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
     pautaEl.title = p.title;
+
+    // Crear la imagen
     const imgEl = document.createElement('img');
     imgEl.src = p.img;
     imgEl.alt = p.title;
     pautaEl.appendChild(imgEl);
+
+    // Crear el título
     const titleEl = document.createElement('div');
     titleEl.classList.add('pauta-title');
     titleEl.textContent = p.title;
     pautaEl.appendChild(titleEl);
+    
+    // 🚨 Añadir la pauta al contenedor correcto
     if (p.position === 'top') {
       topAdContainer.appendChild(pautaEl);
     } else if (p.position === 'bottom') {
       bottomAdContainer.appendChild(pautaEl);
     }
+
     pautaEl.addEventListener('click', e => {
       e.stopPropagation();
-      openModal(p.title, `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:6px; margin-bottom:8px;"><p style="font-size:14px;color:#333;">${p.desc}</p>`);
+      openModal(
+        p.title,
+        `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">
+         <p style="font-size:14px;color:#333;">${p.desc}</p>`
+      );
     });
   });
 }
@@ -148,24 +194,40 @@ function openModal(title, desc) {
 closeModalBtn.addEventListener('click', () => infoModal.classList.add('hidden'));
 infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.classList.add('hidden'); });
 
-// ==============================
-// 🎮 EVENT LISTENERS PARA LOS BOTONES DE ZOOM
-// ==============================
-zoomInBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Evita que el clic en el botón mueva el mapa
-    if (panzoomInstance) panzoomInstance.zoomIn();
-});
-
-zoomOutBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Evita que el clic en el botón mueva el mapa
-    if (panzoomInstance) panzoomInstance.zoomOut();
-});
 
 // ==============================
-// 🟢 INICIALIZAR (Más robusto)
+// 🔶 Estilos dinámicos para hotspot pulsante (Se mantiene, pero no se usa en este diseño)
 // ==============================
-document.addEventListener('DOMContentLoaded', () => {
-  renderHotspots();
-  renderPautasAdicionales();
-  initializePanzoom();
-});
+(function injectPautaStyles() {
+  const css = `
+    .pauta-hotspot {
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle, #ffd54f 35%, #f39c12 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(243,156,18,0.35);
+      cursor: pointer;
+      animation: pautaPulso 2s infinite;
+      transform: translate(-50%, -50%);
+      border: 2px solid white;
+      z-index: 900;
+    }
+    @keyframes pautaPulso {
+      0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 6px rgba(243,156,18,0.28); }
+      50% { transform: translate(-50%, -50%) scale(1.18); box-shadow: 0 0 20px rgba(255,200,0,0.45); }
+      100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 6px rgba(243,156,18,0.28); }
+    }
+  `;
+  const styleEl = document.createElement('style');
+  styleEl.setAttribute('data-generated', 'pauta-hotspot-styles');
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+})();
+
+// ==============================
+// 🟢 INICIALIZAR
+// ==============================
+renderHotspots();
+renderPautasAdicionales();
+// 🚨 CAMBIO CLAVE: Inicializamos Panzoom al cargar la página
+initializePanzoom();
