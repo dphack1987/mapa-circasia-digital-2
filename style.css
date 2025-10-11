@@ -22,8 +22,7 @@ body {
 =========================== */
 #app {
   position: relative;
-  /* 🚨 CAMBIO CLAVE: Aumentamos el ancho máximo para las nuevas columnas más anchas */
-  max-width: 1600px; 
+  max-width: 1400px; /* Ancho máximo para pantallas muy grandes */
   width: 100%;
   background: #fafafa; 
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
@@ -60,7 +59,8 @@ header p {
 #map-container {
   position: relative;
   width: 100%;
-  flex-grow: 1; /* El mapa ocupa todo el espacio disponible */
+  /* 🚨 ¡ESTA ES LA CLAVE! El mapa ocupará TODO el espacio libre */
+  flex-grow: 1; 
   overflow: hidden;
   cursor: grab;
 }
@@ -77,14 +77,14 @@ header p {
 /* 🚨 NUEVO: Estilos para los contenedores de las pautas */
 #pauta-izquierda-container,
 #pauta-derecha-container {
-  /* 🚨 CAMBIO CLAVE: Hacemos las columnas mucho más anchas */
-  width: 220px; 
+  /* 🚨 CAMBIO CLAVE: Reducimos las columnas al mínimo tamaño funcional */
+  width: 130px; 
   flex-shrink: 0; /* No se encogen */
   display: flex;
   flex-direction: column;
   justify-content: center; /* Centrar la pauta verticalmente */
   align-items: center; /* Centrar la pauta horizontalmente */
-  padding: 2rem 0;
+  padding: 1rem 0; /* Reducimos el padding también */
   background-color: #e8f5e9; 
 }
 
@@ -159,10 +159,10 @@ header p {
 }
 
 /* ===========================
-   📢 PAUTAS (TAMAÑO PEQUEÑO MANTENIDO)
+   📢 PAUTAS (TAMAÑO AJUSTADO AL CONTENEDOR)
 =========================== */
 .pauta {
-  /* 🚨 CAMBIO CLAVE: Mantenemos la pauta con un tamaño pequeño */
+  /* 🚨 CAMBIO CLAVE: Ajustamos la pauta para que quepa perfectamente */
   width: 110px;
   height: 82px;
   border: 2px solid #000;
