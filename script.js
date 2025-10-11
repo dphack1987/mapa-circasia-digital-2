@@ -11,6 +11,7 @@ const modalDesc = document.getElementById('modal-desc');
 const closeModalBtn = document.getElementById('close-modal');
 
 let mostrandoCara1 = true;
+let panzoomInstance = null; // 🚨 NUEVO: Variable para guardar la instancia de Panzoom
 
 // ==============================
 // 📍 PUNTOS TURÍSTICOS — CARA 1 & 2
@@ -27,6 +28,24 @@ const hotspotsCara2 = [
 ];
 
 // ==============================
+// 🔍 FUNCIÓN PARA INICIALIZAR EL ZOOM
+// ==============================
+function initializePanzoom() {
+  // Si ya existe una instancia, la destruimos para evitar conflictos
+  if (panzoomInstance) {
+    panzoomInstance.destroy();
+  }
+
+  // Creamos una nueva instancia de Panzoom en la imagen del mapa
+  panzoomInstance = panzoom(mapImage, {
+    maxScale: 5, // Zoom máximo permitido (5x el tamaño original)
+    minScale: 1, // Zoom mínimo (tamaño original)
+    contain: 'outside', // Asegura que la imagen no se salga de su contenedor
+    // Puedes añadir más opciones aquí si lo deseas
+  });
+}
+
+// ==============================
 // 🌀 CAMBIO DE CARA
 // ==============================
 switchBtn.addEventListener('click', () => {
@@ -37,6 +56,9 @@ switchBtn.addEventListener('click', () => {
 
   renderHotspots();
   renderPautasAdicionales();
+  
+  // 🚨 CAMBIO CLAVE: Re-inicializamos Panzoom para la nueva imagen
+  initializePanzoom();
 });
 
 // ==============================
@@ -207,3 +229,5 @@ infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal
 // ==============================
 renderHotspots();
 renderPautasAdicionales();
+// 🚨 CAMBIO CLAVE: Inicializamos Panzoom al cargar la página
+initializePanzoom();

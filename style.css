@@ -92,8 +92,8 @@ footer {
   width: 100%;
   /* 🚨 El mapa crece para llenar el espacio entre las pautas */
   flex-grow: 1;
-  overflow: hidden;
-  cursor: grab;
+  overflow: hidden; /* Se mantiene hidden para que el zoom no rompa el layout */
+  /* cursor: grab; <-- Esta línea ya no es necesaria, Panzoom la gestiona */
 }
 
 #map-image {
@@ -101,7 +101,7 @@ footer {
   width: 100%;
   height: auto;
   user-select: none;
-  pointer-events: none;
+  pointer-events: none; /* Se mantiene para que los clics vayan a los hotspots */
   transition: transform 0.25s ease;
 }
 
