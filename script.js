@@ -4,7 +4,6 @@
 const mapContainer = document.getElementById('map-container');
 const mapImage = document.getElementById('map-image');
 const switchBtn = document.getElementById('switch-btn');
-const gridOverlay = document.getElementById('grid-overlay');
 const infoModal = document.getElementById('info-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalDesc = document.getElementById('modal-desc');
@@ -40,8 +39,8 @@ function initializePanzoom() {
     panzoomInstance.destroy();
   }
 
-  // Creamos una nueva instancia de Panzoom en la imagen del mapa
-  panzoomInstance = panzoom(mapImage, {
+  // 🚨 CAMBIO CLAVE: Aplicamos Panzoom al contenedor, no a la imagen
+  panzoomInstance = panzoom(mapContainer, {
     maxScale: 5, // Zoom máximo permitido (5x el tamaño original)
     minScale: 1, // Zoom mínimo (tamaño original)
     contain: 'outside', // Asegura que la imagen no se salga de su contenedor
@@ -80,40 +79,12 @@ function renderHotspots() {
     el.dataset.title = hs.title;
     el.dataset.desc = hs.desc;
 
-    el.addEventListener('click', () => openModal(hs.title, hs.desc));
+    el.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita que el clic en el hotspot también mueva el mapa
+        openModal(hs.title, hs.desc);
+    });
     mapContainer.appendChild(el);
   });
-}
-
-// ==============================
-// 📐 GENERAR REJILLA
-// ==============================
-const cols = 8;
-const rows = 4;
-
-gridOverlay.style.display = 'grid';
-gridOverlay.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-gridOverlay.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-gridOverlay.style.width = '100%';
-gridOverlay.style.height = '100%';
-gridOverlay.style.position = 'absolute';
-gridOverlay.style.top = '0';
-gridOverlay.style.left = '0';
-
-for (let i = 1; i <= rows; i++) {
-  for (let j = 1; j <= cols; j++) {
-    const cell = document.createElement('div');
-    cell.classList.add('grid-cell');
-    cell.dataset.col = String.fromCharCode(64 + j);
-    cell.dataset.row = i;
-    cell.title = `${cell.dataset.col}${i}`;
-    cell.style.cursor = 'pointer';
-    gridOverlay.appendChild(cell);
-
-    cell.addEventListener('click', () => {
-      openModal(`Celda ${cell.title}`, 'Espacio disponible para información o pauta local.');
-    });
-  }
 }
 
 // ==============================
