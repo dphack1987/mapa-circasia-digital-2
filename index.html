@@ -14,27 +14,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 🔸 Encabezado principal (fijo, no se mueve con el scroll) -->
+  <!-- 🔸 Encabezado principal -->
   <header>
     <h1>Mapa Turístico de Circasia 2025</h1>
     <p>Explora los puntos más representativos del municipio</p>
   </header>
 
-  <!-- 🗺️ Contenedor principal con scroll (el área que se mueve verticalmente) -->
+  <!-- 🗺️ Contenedor principal con scroll -->
   <main id="scrollable-content">
     
-    <!-- 🚨 Contenedor para las pautas superiores (con scroll horizontal) -->
+    <!-- 🚨 Contenedor para las pautas superiores -->
     <div id="pauta-superior-container"></div>
 
-    <!-- 🗺️ Contenedor del mapa (protagonista, ocupa todo el espacio disponible) -->
+    <!-- 🗺️ Contenedor del mapa -->
     <div id="map-container" aria-label="Mapa turístico de Circasia">
       
-      <!-- 🚨 NUEVO: Wrapper que contiene solo la imagen. Este es el objetivo de Panzoom. -->
+      <!-- 🚨 Wrapper que SOLO contiene la imagen. Este es el objetivo de Panzoom. -->
       <div id="panzoom-element-wrapper">
         <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
       </div>
       
-      <!-- 🚨 IMPORTANTE: Los controles y botones están FUERA del wrapper de panzoom -->
+      <!-- 🚨 Controles y botones están FUERA del wrapper de panzoom -->
       <div id="zoom-controls">
         <button id="zoom-in-btn" aria-label="Acercar">+</button>
         <button id="zoom-out-btn" aria-label="Alejar">-</button>
@@ -43,12 +43,12 @@
       <button id="switch-btn" aria-pressed="false">Cambiar a Cara 2</button>
     </div>
 
-    <!-- 🚨 Contenedor para las pautas inferiores (con scroll horizontal) -->
+    <!-- 🚨 Contenedor para las pautas inferiores -->
     <div id="pauta-inferior-container"></div>
 
   </main>
 
-  <!-- 📎 Pie de página (fijo, no se mueve con el scroll) -->
+  <!-- 📎 Pie de página -->
   <footer>
     <p>© 2025 Mapa Digital de Circasia | Desarrollado para turismo y cultura</p>
   </footer>

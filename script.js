@@ -2,7 +2,7 @@
 // 📌 VARIABLES Y ELEMENTOS DOM
 // ==============================
 const mapContainer = document.getElementById('map-container');
-const panzoomWrapper = document.getElementById('panzoom-element-wrapper'); // 🚨 OBJETIVO DE PANZOOM
+const panzoomWrapper = document.getElementById('panzoom-element-wrapper');
 const mapImage = document.getElementById('map-image');
 const switchBtn = document.getElementById('switch-btn');
 const infoModal = document.getElementById('info-modal');
@@ -17,34 +17,18 @@ let mostrandoCara1 = true;
 let panzoomInstance = null;
 
 // ==============================
-// 📍 PUNTOS TURÍSTICOS — CARA 1 & 2
-// ==============================
-const hotspotsCara1 = [
-  { top: '35%', left: '50%', title: 'Mirador de Circasia', desc: 'Uno de los puntos panorámicos más emblemáticos de Circasia.' },
-  { top: '60%', left: '20%', title: 'Plaza Principal', desc: 'Centro histórico con arquitectura tradicional y gran actividad cultural.' },
-  { top: '75%', left: '70%', title: 'Museo Local', desc: 'Espacio cultural con exposiciones permanentes sobre la historia local.' }
-];
-
-const hotspotsCara2 = [
-  { top: '40%', left: '40%', title: 'Zona Gastronómica', desc: 'Área con restaurantes típicos y cafés artesanales.' },
-  { top: '65%', left: '60%', title: 'Sendero Ecológico', desc: 'Ruta natural para caminatas con paisajes únicos.' }
-];
-
-// ==============================
 // 🔍 FUNCIÓN PARA INICIALIZAR EL ZOOM
 // ==============================
 function initializePanzoom() {
   if (panzoomInstance) {
     panzoomInstance.destroy();
   }
-
-  // 🚨 CAMBIO CLAVE: Aplicamos Panzoom al nuevo wrapper que contiene solo la imagen.
   panzoomInstance = panzoom(panzoomWrapper, {
     maxScale: 5,
     minScale: 1,
     contain: 'outside',
     zoomSpeed: 0.065,
-    pinchAndPan: true, // Asegura que funcione en táctil
+    pinchAndPan: true,
   });
 }
 
@@ -57,33 +41,9 @@ switchBtn.addEventListener('click', () => {
   switchBtn.textContent = mostrandoCara1 ? 'Cambiar a Cara 2' : 'Cambiar a Cara 1';
   switchBtn.setAttribute('aria-pressed', mostrandoCara1 ? 'false' : 'true');
 
-  renderHotspots();
   renderPautasAdicionales();
   initializePanzoom();
 });
-
-// ==============================
-// 📍 FUNCION RENDER HOTSPOTS
-// ==============================
-function renderHotspots() {
-  document.querySelectorAll('.hotspot.dynamic').forEach(el => el.remove());
-  const currentHotspots = mostrandoCara1 ? hotspotsCara1 : hotspotsCara2;
-
-  currentHotspots.forEach(hs => {
-    const el = document.createElement('div');
-    el.classList.add('hotspot', 'dynamic');
-    el.style.top = hs.top;
-    el.style.left = hs.left;
-    el.dataset.title = hs.title;
-    el.dataset.desc = hs.desc;
-
-    el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openModal(hs.title, hs.desc);
-    });
-    mapContainer.appendChild(el);
-  });
-}
 
 // ==============================
 // 📢 PAUTAS FIJAS
@@ -140,12 +100,12 @@ infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal
 // 🎮 EVENT LISTENERS PARA LOS BOTONES DE ZOOM
 // ==============================
 zoomInBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Evita que el clic en el botón mueva el mapa
+    e.stopPropagation();
     if (panzoomInstance) panzoomInstance.zoomIn();
 });
 
 zoomOutBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Evita que el clic en el botón mueva el mapa
+    e.stopPropagation();
     if (panzoomInstance) panzoomInstance.zoomOut();
 });
 
@@ -153,7 +113,6 @@ zoomOutBtn.addEventListener('click', (e) => {
 // 🟢 INICIALIZAR
 // ==============================
 document.addEventListener('DOMContentLoaded', () => {
-  renderHotspots();
   renderPautasAdicionales();
   initializePanzoom();
 });
