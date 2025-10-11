@@ -30,6 +30,13 @@
     <div id="map-container" aria-label="Mapa turístico de Circasia">
       <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
       <div id="grid-overlay"></div>
+      
+      <!-- 🚨 NUEVO: Controles de Zoom -->
+      <div id="zoom-controls">
+        <button id="zoom-in-btn" aria-label="Acercar">+</button>
+        <button id="zoom-out-btn" aria-label="Alejar">-</button>
+      </div>
+
       <button id="switch-btn" aria-pressed="false">Cambiar a Cara 2</button>
     </div>
 
@@ -54,7 +61,7 @@
     </div>
   </div>
 
-  <!-- 🚨 NUEVO: Añadimos la librería Panzoom para el zoom -->
+  <!-- 🚨 Añadimos la librería Panzoom para el zoom -->
   <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   
   <!-- ⚡ Scripts JS -->

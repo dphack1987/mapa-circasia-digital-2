@@ -10,8 +10,12 @@ const modalTitle = document.getElementById('modal-title');
 const modalDesc = document.getElementById('modal-desc');
 const closeModalBtn = document.getElementById('close-modal');
 
+// 🚨 NUEVO: Seleccionar los botones de zoom
+const zoomInBtn = document.getElementById('zoom-in-btn');
+const zoomOutBtn = document.getElementById('zoom-out-btn');
+
 let mostrandoCara1 = true;
-let panzoomInstance = null; // 🚨 NUEVO: Variable para guardar la instancia de Panzoom
+let panzoomInstance = null; // Variable para guardar la instancia de Panzoom
 
 // ==============================
 // 📍 PUNTOS TURÍSTICOS — CARA 1 & 2
@@ -41,7 +45,6 @@ function initializePanzoom() {
     maxScale: 5, // Zoom máximo permitido (5x el tamaño original)
     minScale: 1, // Zoom mínimo (tamaño original)
     contain: 'outside', // Asegura que la imagen no se salga de su contenedor
-    // Puedes añadir más opciones aquí si lo deseas
   });
 }
 
@@ -57,7 +60,7 @@ switchBtn.addEventListener('click', () => {
   renderHotspots();
   renderPautasAdicionales();
   
-  // 🚨 CAMBIO CLAVE: Re-inicializamos Panzoom para la nueva imagen
+  // Re-inicializamos Panzoom para la nueva imagen
   initializePanzoom();
 });
 
@@ -194,40 +197,25 @@ function openModal(title, desc) {
 closeModalBtn.addEventListener('click', () => infoModal.classList.add('hidden'));
 infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.classList.add('hidden'); });
 
+// ==============================
+// 🎮 EVENT LISTENERS PARA LOS BOTONES DE ZOOM
+// ==============================
+zoomInBtn.addEventListener('click', () => {
+  if (panzoomInstance) {
+    panzoomInstance.zoomIn();
+  }
+});
 
-// ==============================
-// 🔶 Estilos dinámicos para hotspot pulsante (Se mantiene, pero no se usa en este diseño)
-// ==============================
-(function injectPautaStyles() {
-  const css = `
-    .pauta-hotspot {
-      width: 22px;
-      height: 22px;
-      background: radial-gradient(circle, #ffd54f 35%, #f39c12 100%);
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(243,156,18,0.35);
-      cursor: pointer;
-      animation: pautaPulso 2s infinite;
-      transform: translate(-50%, -50%);
-      border: 2px solid white;
-      z-index: 900;
-    }
-    @keyframes pautaPulso {
-      0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 6px rgba(243,156,18,0.28); }
-      50% { transform: translate(-50%, -50%) scale(1.18); box-shadow: 0 0 20px rgba(255,200,0,0.45); }
-      100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 6px rgba(243,156,18,0.28); }
-    }
-  `;
-  const styleEl = document.createElement('style');
-  styleEl.setAttribute('data-generated', 'pauta-hotspot-styles');
-  styleEl.textContent = css;
-  document.head.appendChild(styleEl);
-})();
+zoomOutBtn.addEventListener('click', () => {
+  if (panzoomInstance) {
+    panzoomInstance.zoomOut();
+  }
+});
 
 // ==============================
 // 🟢 INICIALIZAR
 // ==============================
 renderHotspots();
 renderPautasAdicionales();
-// 🚨 CAMBIO CLAVE: Inicializamos Panzoom al cargar la página
+// Inicializamos Panzoom al cargar la página
 initializePanzoom();
