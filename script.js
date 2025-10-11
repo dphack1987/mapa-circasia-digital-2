@@ -58,8 +58,6 @@ function renderHotspots() {
     el.addEventListener('click', () => openModal(hs.title, hs.desc));
     mapContainer.appendChild(el);
   });
-
-  pautaHotspot.style.display = mostrandoCara1 ? 'block' : 'none';
 }
 
 // ==============================
@@ -94,23 +92,23 @@ for (let i = 1; i <= rows; i++) {
 }
 
 // ==============================
-// 📢 PAUTAS FIJAS PARA CARA 1
+// 📢 PAUTAS FIJAS — CARA 1
 // ==============================
 const pautasAdicionales = [
   {
     col: 'A',       // Primer cuadro blanco
     row: 1,
-    title: 'Cerámicas El Alfarero',
+    title: 'Pauta 1',
     img: 'assets/pautas/pauta1.jpg',
-    desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
+    desc: '',
     cara: 1
   },
   {
-    col: 'B',       // Segundo cuadro blanco
-    row: 1,
-    title: 'Publicidad Pauta 2',
+    col: 'A',
+    row: 3,         // Segundo cuadro blanco
+    title: 'Pauta 2',
     img: 'assets/pautas/pauta2.jpg',
-    desc: 'Información o promoción de la Pauta 2.',
+    desc: '',
     cara: 1
   }
 ];
@@ -125,33 +123,19 @@ function renderPautasAdicionales() {
 
     if (!targetCell) return;
 
-    const pautaEl = document.createElement('div');
-    pautaEl.classList.add('pauta');
-    pautaEl.title = p.title;
-    pautaEl.textContent = p.title;
+    const pautaEl = document.createElement('img');
+    pautaEl.src = p.img;
+    pautaEl.alt = p.title;
+    pautaEl.style.width = '100%';
+    pautaEl.style.height = 'auto';
+    pautaEl.style.borderRadius = '6px';
     pautaEl.style.position = 'absolute';
     pautaEl.style.top = '50%';
     pautaEl.style.left = '50%';
     pautaEl.style.transform = 'translate(-50%, -50%)';
-    pautaEl.style.background = 'rgba(255, 255, 255, 0.95)';
-    pautaEl.style.padding = '4px 8px';
-    pautaEl.style.fontSize = '12px';
-    pautaEl.style.fontWeight = '600';
-    pautaEl.style.border = '1px solid #000';
-    pautaEl.style.borderRadius = '4px';
-    pautaEl.style.cursor = 'pointer';
-    pautaEl.style.textAlign = 'center';
+    pautaEl.style.zIndex = '800';
 
     targetCell.appendChild(pautaEl);
-
-    pautaEl.addEventListener('click', e => {
-      e.stopPropagation();
-      openModal(
-        p.title,
-        `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">
-         <p style="font-size:14px;color:#333;">${p.desc}</p>`
-      );
-    });
   });
 }
 
@@ -168,61 +152,7 @@ closeModalBtn.addEventListener('click', () => infoModal.classList.add('hidden'))
 infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.classList.add('hidden'); });
 
 // ==============================
-// 🔶 Hotspot visual de la pauta (Cerámicas El Alfarero)
-// ==============================
-const pautaHotspot = document.createElement('div');
-pautaHotspot.classList.add('pauta-hotspot');
-pautaHotspot.title = 'Cerámicas El Alfarero';
-pautaHotspot.style.top = '70%';
-pautaHotspot.style.left = '55%';
-mapContainer.appendChild(pautaHotspot);
-
-pautaHotspot.addEventListener('click', e => {
-  e.stopPropagation();
-  openModal(
-    'Cerámicas El Alfarero',
-    `<div style="text-align:center;">
-       <img src="assets/pautas/pauta1.jpg" alt="Cerámicas El Alfarero"
-            style="width:100%; border-radius:10px; margin-bottom:10px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-       <p style="font-size:14px;color:#333; margin:0;">
-         Centro Artesanal y Gastronómico — Cerámica tradicional y contemporánea hecha a mano en Circasia.
-       </p>
-     </div>`
-  );
-});
-
-// ==============================
-// 🔶 Estilos dinámicos para hotspot pulsante
-// ==============================
-(function injectPautaStyles() {
-  const css = `
-    .pauta-hotspot {
-      width: 22px;
-      height: 22px;
-      background: radial-gradient(circle, #ffd54f 35%, #f39c12 100%);
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(243,156,18,0.35);
-      cursor: pointer;
-      animation: pautaPulso 2s infinite;
-      transform: translate(-50%, -50%);
-      border: 2px solid white;
-      z-index: 900;
-    }
-    @keyframes pautaPulso {
-      0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 6px rgba(243,156,18,0.28); }
-      50% { transform: translate(-50%, -50%) scale(1.18); box-shadow: 0 0 20px rgba(255,200,0,0.45); }
-      100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 6px rgba(243,156,18,0.28); }
-    }
-  `;
-  const styleEl = document.createElement('style');
-  styleEl.setAttribute('data-generated', 'pauta-hotspot-styles');
-  styleEl.textContent = css;
-  document.head.appendChild(styleEl);
-})();
-
-// ==============================
 // 🟢 INICIALIZAR
 // ==============================
-pautaHotspot.style.display = mostrandoCara1 ? 'block' : 'none';
 renderHotspots();
 renderPautasAdicionales();
