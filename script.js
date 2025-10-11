@@ -36,13 +36,13 @@ switchBtn.addEventListener('click', () => {
   switchBtn.setAttribute('aria-pressed', mostrandoCara1 ? 'false' : 'true');
 
   renderHotspots();
+  renderPautasAdicionales();
 });
 
 // ==============================
 // 📍 FUNCION RENDER HOTSPOTS
 // ==============================
 function renderHotspots() {
-  // Limpiar hotspots dinámicos
   document.querySelectorAll('.hotspot.dynamic').forEach(el => el.remove());
 
   const currentHotspots = mostrandoCara1 ? hotspotsCara1 : hotspotsCara2;
@@ -59,7 +59,6 @@ function renderHotspots() {
     mapContainer.appendChild(el);
   });
 
-  // Mostrar u ocultar hotspot visual de la pauta
   pautaHotspot.style.display = mostrandoCara1 ? 'block' : 'none';
 }
 
@@ -95,36 +94,37 @@ for (let i = 1; i <= rows; i++) {
 }
 
 // ==============================
-// 📢 PAUTAS FIJAS
+// 📢 PAUTAS FIJAS PARA CARA 1
 // ==============================
-const pautas = [
+const pautasAdicionales = [
   {
-    col: 'A',          // Primera columna (izquierda superior)
-    row: 1,            // Primera fila
-    title: 'Pauta 1',
+    col: 'A',       // Primer cuadro blanco
+    row: 1,
+    title: 'Cerámicas El Alfarero',
     img: 'assets/pautas/pauta1.jpg',
-    desc: 'Descripción de la Pauta 1: información relevante, turismo o promoción.',
-    cara: 1            // Solo visible en Cara 1
+    desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
+    cara: 1
   },
   {
-    col: 'C',
-    row: 2,
-    title: 'Cerámicas El Alfarero',
-    img: 'assets/pautas/pauta_ceramicas_alfarero.jpg',
-    desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
-    cara: 1            // Solo visible en Cara 1
+    col: 'B',       // Segundo cuadro blanco
+    row: 1,
+    title: 'Publicidad Pauta 2',
+    img: 'assets/pautas/pauta2.jpg',
+    desc: 'Información o promoción de la Pauta 2.',
+    cara: 1
   }
 ];
 
-pautas.forEach(p => {
-  // Solo mostrar la pauta si corresponde a la cara actual
-  if (p.cara && p.cara !== (mostrandoCara1 ? 1 : 2)) return;
+function renderPautasAdicionales() {
+  pautasAdicionales.forEach(p => {
+    if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
 
-  const targetCell = [...gridOverlay.children].find(
-    c => c.dataset.col === p.col && c.dataset.row === String(p.row)
-  );
+    const targetCell = [...gridOverlay.children].find(
+      c => c.dataset.col === p.col && c.dataset.row === String(p.row)
+    );
 
-  if (targetCell) {
+    if (!targetCell) return;
+
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
     pautaEl.title = p.title;
@@ -134,11 +134,11 @@ pautas.forEach(p => {
     pautaEl.style.left = '50%';
     pautaEl.style.transform = 'translate(-50%, -50%)';
     pautaEl.style.background = 'rgba(255, 255, 255, 0.95)';
-    pautaEl.style.padding = '6px 10px';
+    pautaEl.style.padding = '4px 8px';
     pautaEl.style.fontSize = '12px';
     pautaEl.style.fontWeight = '600';
-    pautaEl.style.border = '2px solid #000';
-    pautaEl.style.borderRadius = '6px';
+    pautaEl.style.border = '1px solid #000';
+    pautaEl.style.borderRadius = '4px';
     pautaEl.style.cursor = 'pointer';
     pautaEl.style.textAlign = 'center';
 
@@ -148,12 +148,12 @@ pautas.forEach(p => {
       e.stopPropagation();
       openModal(
         p.title,
-        `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:8px; margin-bottom:10px;">
+        `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">
          <p style="font-size:14px;color:#333;">${p.desc}</p>`
       );
     });
-  }
-});
+  });
+}
 
 // ==============================
 // 🪟 MODAL DE INFORMACIÓN
@@ -168,7 +168,7 @@ closeModalBtn.addEventListener('click', () => infoModal.classList.add('hidden'))
 infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.classList.add('hidden'); });
 
 // ==============================
-// 🔶 Hotspot visual de la pauta (pulsante)
+// 🔶 Hotspot visual de la pauta (Cerámicas El Alfarero)
 // ==============================
 const pautaHotspot = document.createElement('div');
 pautaHotspot.classList.add('pauta-hotspot');
@@ -182,7 +182,7 @@ pautaHotspot.addEventListener('click', e => {
   openModal(
     'Cerámicas El Alfarero',
     `<div style="text-align:center;">
-       <img src="assets/pautas/pauta_ceramicas_alfarero.jpg" alt="Cerámicas El Alfarero"
+       <img src="assets/pautas/pauta1.jpg" alt="Cerámicas El Alfarero"
             style="width:100%; border-radius:10px; margin-bottom:10px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
        <p style="font-size:14px;color:#333; margin:0;">
          Centro Artesanal y Gastronómico — Cerámica tradicional y contemporánea hecha a mano en Circasia.
@@ -225,3 +225,4 @@ pautaHotspot.addEventListener('click', e => {
 // ==============================
 pautaHotspot.style.display = mostrandoCara1 ? 'block' : 'none';
 renderHotspots();
+renderPautasAdicionales();
