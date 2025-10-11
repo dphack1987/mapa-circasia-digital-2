@@ -20,19 +20,20 @@
     <p>Explora los puntos más representativos del municipio</p>
   </header>
 
-  <!-- 🗺️ Contenedor principal del mapa -->
+  <!-- 🗺️ Contenedor principal de la app (ahora con Flexbox) -->
   <main id="app">
+    <!-- 🚨 NUEVO: Contenedor para la pauta de la izquierda -->
+    <div id="pauta-izquierda-container"></div>
+
+    <!-- 🗺️ Contenedor del mapa (ahora en el centro) -->
     <div id="map-container" aria-label="Mapa turístico de Circasia">
-
-      <!-- 📌 Imagen base del mapa -->
       <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
-
-      <!-- 📐 Rejilla interactiva opcional -->
       <div id="grid-overlay"></div>
-
-      <!-- 🌀 Botón para cambiar la cara del mapa -->
       <button id="switch-btn" aria-pressed="false">Cambiar a Cara 2</button>
     </div>
+
+    <!-- 🚨 NUEVO: Contenedor para la pauta de la derecha -->
+    <div id="pauta-derecha-container"></div>
   </main>
 
   <!-- ===========================

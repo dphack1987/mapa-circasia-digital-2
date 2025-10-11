@@ -10,14 +10,6 @@ const modalTitle = document.getElementById('modal-title');
 const modalDesc = document.getElementById('modal-desc');
 const closeModalBtn = document.getElementById('close-modal');
 
-// Crear el elemento pautaHotspot
-const pautaHotspot = document.createElement('div');
-pautaHotspot.classList.add('pauta-hotspot');
-pautaHotspot.style.position = 'absolute';
-pautaHotspot.style.top = '50%';
-pautaHotspot.style.left = '50%';
-mapContainer.appendChild(pautaHotspot);
-
 let mostrandoCara1 = true;
 
 // ==============================
@@ -66,8 +58,6 @@ function renderHotspots() {
     el.addEventListener('click', () => openModal(hs.title, hs.desc));
     mapContainer.appendChild(el);
   });
-
-  pautaHotspot.style.display = mostrandoCara1 ? 'block' : 'none';
 }
 
 // ==============================
@@ -102,32 +92,33 @@ for (let i = 1; i <= rows; i++) {
 }
 
 // ==============================
-// 📢 PAUTAS FIJAS PARA CARA 1
+// 📢 PAUTAS FIJAS PARA CARA 1 (NUEVA VERSIÓN)
 // ==============================
 const pautasAdicionales = [
   {
-    col: 'A',       // Costado izquierdo
-    row: 2,
+    position: 'left', // Posición simplificada
     title: 'Cerámicas El Alfarero',
     img: 'assets/pautas/pauta1.jpg',
     desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
-    cara: 1,
-    position: 'left'
+    cara: 1
   },
   {
-    col: 'H',       // Costado derecho
-    row: 2,
+    position: 'right',
     title: 'Publicidad Pauta 2',
     img: 'assets/pautas/pauta2.jpg',
     desc: 'Información o promoción de la Pauta 2.',
-    cara: 1,
-    position: 'right'
+    cara: 1
   }
 ];
 
 function renderPautasAdicionales() {
-  // Limpiar pautas anteriores
-  document.querySelectorAll('.pauta').forEach(el => el.remove());
+  // 🚨 CAMBIO CLAVE: Seleccionar los nuevos contenedores
+  const leftAdContainer = document.getElementById('pauta-izquierda-container');
+  const rightAdContainer = document.getElementById('pauta-derecha-container');
+
+  // Limpiar pautas anteriores de ambos contenedores
+  leftAdContainer.innerHTML = '';
+  rightAdContainer.innerHTML = '';
   
   pautasAdicionales.forEach(p => {
     if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
@@ -135,52 +126,26 @@ function renderPautasAdicionales() {
     // Crear elemento de pauta
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
-    
-    // Establecer tamaño más pequeño para que quepan 12 pautas
-    // Reduciendo a aproximadamente 4x3 cm
-    pautaEl.style.width = '150px';  // 4cm * 37.8px ≈ 150px
-    pautaEl.style.height = '113px'; // 3cm * 37.8px ≈ 113px
-    
-    // Posicionar en los costados según la propiedad position
-    pautaEl.style.position = 'absolute';
-    
-    // Posicionar en los extremos laterales para no interferir con la visualización del mapa
-    if (p.position === 'left') {
-      pautaEl.style.left = '5px';
-      pautaEl.style.top = '15%';
-    } else if (p.position === 'right') {
-      pautaEl.style.right = '5px';
-      pautaEl.style.top = '15%';
-    }
-    
-    // Mostrar la imagen directamente
-    pautaEl.style.backgroundImage = `url(${p.img})`;
-    pautaEl.style.backgroundSize = 'cover';
-    pautaEl.style.backgroundPosition = 'center';
-    pautaEl.style.border = '2px solid #000';
-    pautaEl.style.borderRadius = '8px';
-    pautaEl.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
-    pautaEl.style.cursor = 'pointer';
     pautaEl.title = p.title;
-    
-    // Agregar título visible
+
+    // Crear la imagen
+    const imgEl = document.createElement('img');
+    imgEl.src = p.img;
+    imgEl.alt = p.title;
+    pautaEl.appendChild(imgEl);
+
+    // Crear el título
     const titleEl = document.createElement('div');
+    titleEl.classList.add('pauta-title');
     titleEl.textContent = p.title;
-    titleEl.style.position = 'absolute';
-    titleEl.style.bottom = '0';
-    titleEl.style.left = '0';
-    titleEl.style.right = '0';
-    titleEl.style.background = 'rgba(0,0,0,0.7)';
-    titleEl.style.color = 'white';
-    titleEl.style.padding = '4px';
-    titleEl.style.fontSize = '10px';
-    titleEl.style.fontWeight = 'bold';
-    titleEl.style.textAlign = 'center';
-    titleEl.style.borderBottomLeftRadius = '6px';
-    titleEl.style.borderBottomRightRadius = '6px';
-    
     pautaEl.appendChild(titleEl);
-    mapContainer.appendChild(pautaEl);
+    
+    // 🚨 CAMBIO CLAVE: Añadir la pauta al contenedor correcto
+    if (p.position === 'left') {
+      leftAdContainer.appendChild(pautaEl);
+    } else if (p.position === 'right') {
+      rightAdContainer.appendChild(pautaEl);
+    }
 
     pautaEl.addEventListener('click', e => {
       e.stopPropagation();
@@ -207,7 +172,7 @@ infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal
 
 
 // ==============================
-// 🔶 Estilos dinámicos para hotspot pulsante
+// 🔶 Estilos dinámicos para hotspot pulsante (Se mantiene, pero no se usa en este diseño)
 // ==============================
 (function injectPautaStyles() {
   const css = `
@@ -238,6 +203,5 @@ infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal
 // ==============================
 // 🟢 INICIALIZAR
 // ==============================
-pautaHotspot.style.display = mostrandoCara1 ? 'block' : 'none';
 renderHotspots();
 renderPautasAdicionales();

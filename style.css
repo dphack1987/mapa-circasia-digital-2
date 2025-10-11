@@ -9,7 +9,8 @@
 
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
+  /* 🚨 CAMBIO CLAVE: Nuevo color de fondo (degradé de verdes) */
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,16 +19,19 @@ body {
 }
 
 /* ===========================
-   🧭 CONTENEDOR PRINCIPAL
+   🧭 CONTENEDOR PRINCIPAL (AHORA CON FLEXBOX)
 =========================== */
 #app {
   position: relative;
-  max-width: 1200px;
+  max-width: 1400px; /* Un poco más ancho para las pautas */
   width: 100%;
   background: #fff;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   border-radius: 16px;
   overflow: hidden;
+  /* 🚨 CAMBIO CLAVE: Activamos Flexbox para organizar los hijos */
+  display: flex;
+  justify-content: center;
 }
 
 /* ===========================
@@ -52,12 +56,13 @@ header p {
 }
 
 /* ===========================
-   🗺️ MAPA
+   🗺️ MAPA Y CONTENEDORES DE PAUTAS
 =========================== */
 #map-container {
   position: relative;
   width: 100%;
-  overflow: hidden; /* permite zoom/pan sin cortar la imagen */
+  flex-grow: 1; /* El mapa ocupa todo el espacio disponible */
+  overflow: hidden;
   cursor: grab;
 }
 
@@ -68,6 +73,19 @@ header p {
   user-select: none;
   pointer-events: none;
   transition: transform 0.25s ease;
+}
+
+/* 🚨 NUEVO: Estilos para los contenedores de las pautas */
+#pauta-izquierda-container,
+#pauta-derecha-container {
+  width: 160px; /* Ancho fijo para las pautas */
+  flex-shrink: 0; /* No se encogen */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrar la pauta verticalmente */
+  align-items: center; /* Centrar la pauta horizontalmente */
+  padding: 2rem 0;
+  background-color: #f9f9f9; /* Un fondo sutil para diferenciarlos */
 }
 
 /* ===========================
@@ -141,52 +159,44 @@ header p {
 }
 
 /* ===========================
-   📢 PAUTAS
+   📢 PAUTAS (SIMPLIFICADO)
 =========================== */
 .pauta {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.85);
+  width: 140px;
+  height: 105px;
   border: 2px solid #000;
   border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  pointer-events: auto;
-  z-index: 800;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  position: relative; /* Necesario para el título */
 }
 
 .pauta:hover {
-  background: #fff;
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
 
-.pauta::after {
-  content: attr(title);
+.pauta img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+  border-radius: 6px;
+}
+
+.pauta .pauta-title {
   position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  white-space: nowrap;
-}
-
-.pauta:hover::after {
-  opacity: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
 /* ===========================
@@ -270,6 +280,19 @@ footer {
    📱 RESPONSIVO
 =========================== */
 @media (max-width: 768px) {
+  #app {
+    flex-direction: column; /* Poner las pautas arriba y abajo en móvil */
+  }
+
+  #pauta-izquierda-container,
+  #pauta-derecha-container {
+    width: 100%;
+    height: 120px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1rem;
+  }
+
   #switch-btn {
     font-size: 12px;
     padding: 8px 14px;
@@ -284,12 +307,3 @@ footer {
     font-size: 1.4rem;
   }
 }
-
-/* ===========================
-   🔎 ESTILOS PARA ZOOM/PAN FUTURO
-=========================== */
-#map-container.zooming {
-  cursor: grabbing;
-  overflow: hidden;
-}
-
