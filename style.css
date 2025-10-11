@@ -57,6 +57,8 @@ header p {
 #map-container {
   position: relative;
   width: 100%;
+  overflow: hidden; /* permite zoom/pan sin cortar la imagen */
+  cursor: grab;
 }
 
 #map-image {
@@ -65,6 +67,7 @@ header p {
   height: auto;
   user-select: none;
   pointer-events: none;
+  transition: transform 0.25s ease;
 }
 
 /* ===========================
@@ -102,13 +105,10 @@ header p {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(4, 1fr);
   z-index: 500;
 }
 
 .grid-cell {
-  position: relative;
   border: 1px dashed rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background 0.2s;
@@ -141,13 +141,13 @@ header p {
 }
 
 /* ===========================
-   📢 PAUTAS PUBLICITARIAS
+   📢 PAUTAS
 =========================== */
 .pauta {
   position: absolute;
   width: 100px;
   height: 100px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   border: 2px solid #000;
   border-radius: 8px;
   display: flex;
@@ -284,3 +284,12 @@ footer {
     font-size: 1.4rem;
   }
 }
+
+/* ===========================
+   🔎 ESTILOS PARA ZOOM/PAN FUTURO
+=========================== */
+#map-container.zooming {
+  cursor: grabbing;
+  overflow: hidden;
+}
+

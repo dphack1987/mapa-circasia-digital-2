@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mapa Turístico Circasia 2025</title>
 
-  <!-- 📌 Fuente elegante + estilo base -->
+  <!-- 📌 Fuente elegante -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 
+  <!-- 📎 Estilos CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -22,27 +23,9 @@
   <!-- 🗺️ Contenedor principal del mapa -->
   <main id="app">
     <div id="map-container" aria-label="Mapa turístico de Circasia">
+
       <!-- 📌 Imagen base del mapa -->
       <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
-
-      <!-- 📍 Hotspots interactivos -->
-      <div class="hotspot"
-           style="top: 35%; left: 50%;"
-           data-title="Mirador de Circasia"
-           data-desc="Uno de los puntos panorámicos más emblemáticos de Circasia.">
-      </div>
-
-      <div class="hotspot"
-           style="top: 60%; left: 20%;"
-           data-title="Plaza Principal"
-           data-desc="Centro histórico con arquitectura tradicional.">
-      </div>
-
-      <div class="hotspot"
-           style="top: 75%; left: 70%;"
-           data-title="Museo Local"
-           data-desc="Espacio cultural con exposiciones permanentes.">
-      </div>
 
       <!-- 📐 Rejilla interactiva opcional -->
       <div id="grid-overlay"></div>
@@ -68,7 +51,7 @@
     <p>© 2025 Mapa Digital de Circasia | Desarrollado para turismo y cultura</p>
   </footer>
 
-  <!-- ⚡ Scripts -->
+  <!-- ⚡ Scripts JS -->
   <script src="script.js"></script>
 </body>
 </html>
