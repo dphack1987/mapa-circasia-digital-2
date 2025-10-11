@@ -1,5 +1,5 @@
 /* ===========================
-   🌐 ESTILOS GLOBALES
+   🌐 ESTILOS GLOBALES Y LAYOUT DE PÁGINA
 =========================== */
 * {
   margin: 0;
@@ -10,36 +10,23 @@
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  /* 🚨 Convertimos el body en un contenedor flex de altura completa */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   min-height: 100vh;
   color: #222;
 }
 
 /* ===========================
-   🧭 CONTENEDOR PRINCIPAL (AHORA CON FLEXBOX)
+   🏞️ ENCABEZADO Y PIE DE PÁGINA (FIJOS)
 =========================== */
-#app {
-  position: relative;
-  max-width: 1400px; /* Ancho máximo para pantallas muy grandes */
-  width: 100%;
-  background: #fafafa; 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-}
-
-/* ===========================
-   🏞️ ENCABEZADO
-=========================== */
-header {
+header, footer {
   text-align: center;
   padding: 1.5rem;
   background: #2e7d32;
   color: #fff;
+  /* 🚨 Evitamos que se encojan o crezcan */
+  flex-shrink: 0;
 }
 
 header h1 {
@@ -53,14 +40,58 @@ header p {
   opacity: 0.9;
 }
 
+footer {
+  font-size: 0.9rem;
+}
+
 /* ===========================
-   🗺️ MAPA Y CONTENEDORES DE PAUTAS
+   🗺️ PANEL CENTRAL CON SCROLL
 =========================== */
+#scrollable-content {
+  /* 🚨 Este contenedor ocupa todo el espacio vertical disponible */
+  flex-grow: 1;
+  /* 🚨 Añadimos scroll vertical cuando el contenido se desborda */
+  overflow-y: auto;
+  background: #fafafa;
+  margin: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🚨 Estilos para los contenedores de pautas con scroll horizontal */
+#pauta-superior-container,
+#pauta-inferior-container {
+  width: 100%;
+  height: 130px; /* Altura fija para las franjas de pautas */
+  flex-shrink: 0; /* No se encogen */
+  display: flex; /* Usamos flex para alinear las pautas */
+  align-items: center; /* Centrar verticalmente */
+  padding: 1rem;
+  gap: 1.5rem; /* Espacio entre pautas */
+  background-color: #e8f5e9;
+  /* 🚨 Permite el scroll horizontal si hay muchas pautas */
+  overflow-x: auto;
+}
+
+/* Ocultar la barra de scroll pero manteniendo la funcionalidad */
+#pauta-superior-container::-webkit-scrollbar,
+#pauta-inferior-container::-webkit-scrollbar {
+  display: none;
+}
+#pauta-superior-container,
+#pauta-inferior-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
 #map-container {
   position: relative;
   width: 100%;
-  /* 🚨 ¡ESTA ES LA CLAVE! El mapa ocupará TODO el espacio libre */
-  flex-grow: 1; 
+  /* 🚨 El mapa crece para llenar el espacio entre las pautas */
+  flex-grow: 1;
   overflow: hidden;
   cursor: grab;
 }
@@ -72,20 +103,6 @@ header p {
   user-select: none;
   pointer-events: none;
   transition: transform 0.25s ease;
-}
-
-/* 🚨 NUEVO: Estilos para los contenedores de las pautas */
-#pauta-izquierda-container,
-#pauta-derecha-container {
-  /* 🚨 CAMBIO CLAVE: Reducimos las columnas al mínimo tamaño funcional */
-  width: 130px; 
-  flex-shrink: 0; /* No se encogen */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Centrar la pauta verticalmente */
-  align-items: center; /* Centrar la pauta horizontalmente */
-  padding: 1rem 0; /* Reducimos el padding también */
-  background-color: #e8f5e9; 
 }
 
 /* ===========================
@@ -159,18 +176,21 @@ header p {
 }
 
 /* ===========================
-   📢 PAUTAS (TAMAÑO AJUSTADO AL CONTENEDOR)
+   📢 PAUTAS
 =========================== */
 .pauta {
-  /* 🚨 CAMBIO CLAVE: Ajustamos la pauta para que quepa perfectamente */
-  width: 110px;
-  height: 82px;
+  /* 🚨 Las pautas ya no necesitan ser flex-items, solo block */
+  display: block; 
+  width: 140px;
+  height: 105px;
   border: 2px solid #000;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  position: relative; /* Necesario para el título */
+  position: relative;
+  /* 🚨 Evita que la pauta se encoja más pequeño que su contenido */
+  flex-shrink: 0;
 }
 
 .pauta:hover {
@@ -181,7 +201,7 @@ header p {
 .pauta img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+  object-fit: cover;
   border-radius: 6px;
 }
 
@@ -267,31 +287,23 @@ header p {
 }
 
 /* ===========================
-   🦶 PIE DE PÁGINA
-=========================== */
-footer {
-  text-align: center;
-  padding: 1rem;
-  background: #2e7d32;
-  color: #fff;
-  font-size: 0.9rem;
-}
-
-/* ===========================
    📱 RESPONSIVO
 =========================== */
 @media (max-width: 768px) {
-  #app {
-    flex-direction: column; /* Poner las pautas arriba y abajo en móvil */
+  #scrollable-content {
+    margin: 0.5rem; /* Menos margen en móviles */
+    border-radius: 8px;
+  }
+  
+  #pauta-superior-container,
+  #pauta-inferior-container {
+    height: 110px;
+    padding: 0.5rem;
   }
 
-  #pauta-izquierda-container,
-  #pauta-derecha-container {
-    width: 100%;
-    height: 120px;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 1rem;
+  .pauta {
+    width: 120px;
+    height: 90px;
   }
 
   #switch-btn {

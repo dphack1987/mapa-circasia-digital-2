@@ -92,33 +92,35 @@ for (let i = 1; i <= rows; i++) {
 }
 
 // ==============================
-// 📢 PAUTAS FIJAS PARA CARA 1 (NUEVA VERSIÓN)
+// 📢 PAUTAS FIJAS (NUEVA UBICACIÓN)
 // ==============================
 const pautasAdicionales = [
   {
-    position: 'left', // Posición simplificada
+    position: 'top', // Posición: en el contenedor superior
     title: 'Cerámicas El Alfarero',
     img: 'assets/pautas/pauta1.jpg',
     desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!',
     cara: 1
   },
   {
-    position: 'right',
+    position: 'bottom', // Posición: en el contenedor inferior
     title: 'Publicidad Pauta 2',
     img: 'assets/pautas/pauta2.jpg',
     desc: 'Información o promoción de la Pauta 2.',
     cara: 1
   }
+  // Puedes añadir más pautas aquí si lo deseas
+  // { position: 'top', title: 'Otra Pauta', img: '...', desc: '...', cara: 1 }
 ];
 
 function renderPautasAdicionales() {
-  // 🚨 CAMBIO CLAVE: Seleccionar los nuevos contenedores
-  const leftAdContainer = document.getElementById('pauta-izquierda-container');
-  const rightAdContainer = document.getElementById('pauta-derecha-container');
+  // 🚨 Seleccionar los nuevos contenedores superior e inferior
+  const topAdContainer = document.getElementById('pauta-superior-container');
+  const bottomAdContainer = document.getElementById('pauta-inferior-container');
 
   // Limpiar pautas anteriores de ambos contenedores
-  leftAdContainer.innerHTML = '';
-  rightAdContainer.innerHTML = '';
+  topAdContainer.innerHTML = '';
+  bottomAdContainer.innerHTML = '';
   
   pautasAdicionales.forEach(p => {
     if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
@@ -140,11 +142,11 @@ function renderPautasAdicionales() {
     titleEl.textContent = p.title;
     pautaEl.appendChild(titleEl);
     
-    // 🚨 CAMBIO CLAVE: Añadir la pauta al contenedor correcto
-    if (p.position === 'left') {
-      leftAdContainer.appendChild(pautaEl);
-    } else if (p.position === 'right') {
-      rightAdContainer.appendChild(pautaEl);
+    // 🚨 Añadir la pauta al contenedor correcto
+    if (p.position === 'top') {
+      topAdContainer.appendChild(pautaEl);
+    } else if (p.position === 'bottom') {
+      bottomAdContainer.appendChild(pautaEl);
     }
 
     pautaEl.addEventListener('click', e => {

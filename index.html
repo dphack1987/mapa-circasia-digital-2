@@ -14,27 +14,34 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 🔸 Encabezado principal -->
+  <!-- 🔸 Encabezado principal (fijo, no se mueve con el scroll) -->
   <header>
     <h1>Mapa Turístico de Circasia 2025</h1>
     <p>Explora los puntos más representativos del municipio</p>
   </header>
 
-  <!-- 🗺️ Contenedor principal de la app (ahora con Flexbox) -->
-  <main id="app">
-    <!-- 🚨 NUEVO: Contenedor para la pauta de la izquierda -->
-    <div id="pauta-izquierda-container"></div>
+  <!-- 🗺️ Contenedor principal con scroll (el área que se mueve verticalmente) -->
+  <main id="scrollable-content">
+    
+    <!-- 🚨 Contenedor para las pautas superiores (con scroll horizontal) -->
+    <div id="pauta-superior-container"></div>
 
-    <!-- 🗺️ Contenedor del mapa (ahora en el centro) -->
+    <!-- 🗺️ Contenedor del mapa (protagonista, ocupa todo el espacio disponible) -->
     <div id="map-container" aria-label="Mapa turístico de Circasia">
       <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1" />
       <div id="grid-overlay"></div>
       <button id="switch-btn" aria-pressed="false">Cambiar a Cara 2</button>
     </div>
 
-    <!-- 🚨 NUEVO: Contenedor para la pauta de la derecha -->
-    <div id="pauta-derecha-container"></div>
+    <!-- 🚨 Contenedor para las pautas inferiores (con scroll horizontal) -->
+    <div id="pauta-inferior-container"></div>
+
   </main>
+
+  <!-- 📎 Pie de página (fijo, no se mueve con el scroll) -->
+  <footer>
+    <p>© 2025 Mapa Digital de Circasia | Desarrollado para turismo y cultura</p>
+  </footer>
 
   <!-- ===========================
        ℹ️ MODAL DE INFORMACIÓN
@@ -46,11 +53,6 @@
       <p id="modal-desc"></p>
     </div>
   </div>
-
-  <!-- 📎 Pie de página -->
-  <footer>
-    <p>© 2025 Mapa Digital de Circasia | Desarrollado para turismo y cultura</p>
-  </footer>
 
   <!-- ⚡ Scripts JS -->
   <script src="script.js"></script>
