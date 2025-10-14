@@ -16,8 +16,18 @@
 <body>
   <!-- 🔸 Encabezado principal -->
   <header>
-    <h1>Mapa Turístico de Circasia 2025</h1>
-    <p>Explora los puntos más representativos del municipio</p>
+    <h1 id="header-title">Mapa Turístico de Circasia 2025</h1>
+    <p id="header-subtitle">Explora los puntos más representativos del municipio</p>
+    <!-- 🌐 Selector de idioma -->
+    <div id="lang-switcher">
+      <label for="lang-select" class="sr-only">Idioma</label>
+      <select id="lang-select" aria-label="Idioma">
+        <option value="es" selected>Español</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </div>
   </header>
 
   <!-- 🗺️ Contenedor principal con scroll -->

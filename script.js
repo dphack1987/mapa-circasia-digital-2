@@ -12,9 +12,113 @@ const closeModalBtn = document.getElementById('close-modal');
 
 const zoomInBtn = document.getElementById('zoom-in-btn');
 const zoomOutBtn = document.getElementById('zoom-out-btn');
+const langSelect = document.getElementById('lang-select');
 
 let mostrandoCara1 = true;
 let panzoomInstance = null;
+let currentLang = 'es';
+
+// ==============================
+// 🌐 DICCIONARIO DE TRADUCCIONES
+// ==============================
+const i18n = {
+  es: {
+    headerTitle: 'Mapa Turístico de Circasia 2025',
+    headerSubtitle: 'Explora los puntos más representativos del municipio',
+    switchToFace2: 'Cambiar a Cara 2',
+    switchToFace1: 'Cambiar a Cara 1',
+    zoomIn: 'Acercar',
+    zoomOut: 'Alejar',
+    altFace1: 'Mapa Turístico - Cara 1',
+    altFace2: 'Mapa Turístico - Cara 2',
+    pautas: {
+      pauta1: {
+        title: 'Cerámicas El Alfarero',
+        desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!'
+      },
+      pauta2: {
+        title: 'Publicidad Pauta 2',
+        desc: 'Información o promoción de la Pauta 2.'
+      },
+      pauta3: {
+        title: 'Publicidad Pauta 3',
+        desc: 'Promoción y detalles de la Pauta 3.'
+      }
+    }
+  },
+  en: {
+    headerTitle: 'Circasia 2025 Tourist Map',
+    headerSubtitle: 'Explore the most representative places of the municipality',
+    switchToFace2: 'Switch to Face 2',
+    switchToFace1: 'Switch to Face 1',
+    zoomIn: 'Zoom In',
+    zoomOut: 'Zoom Out',
+    altFace1: 'Tourist Map - Face 1',
+    altFace2: 'Tourist Map - Face 2',
+    pautas: {
+      pauta1: {
+        title: 'El Alfarero Ceramics',
+        desc: 'Traditional handcrafted ceramics workshop in Circasia. Visit us and discover our unique pieces!'
+      },
+      pauta2: {
+        title: 'Ad Slot 2',
+        desc: 'Information or promotion for Ad 2.'
+      },
+      pauta3: {
+        title: 'Ad Slot 3',
+        desc: 'Promotion and details for Ad 3.'
+      }
+    }
+  },
+  fr: {
+    headerTitle: 'Carte touristique de Circasia 2025',
+    headerSubtitle: 'Explorez les lieux les plus représentatifs de la commune',
+    switchToFace2: 'Changer vers Face 2',
+    switchToFace1: 'Changer vers Face 1',
+    zoomIn: 'Zoom avant',
+    zoomOut: 'Zoom arrière',
+    altFace1: 'Carte touristique - Face 1',
+    altFace2: 'Carte touristique - Face 2',
+    pautas: {
+      pauta1: {
+        title: 'Céramiques El Alfarero',
+        desc: "Atelier artisanal de céramique traditionnelle à Circasia. Venez découvrir nos pièces uniques !"
+      },
+      pauta2: {
+        title: 'Publicité Emplacement 2',
+        desc: 'Informations ou promotion pour la Publicité 2.'
+      },
+      pauta3: {
+        title: 'Publicité Emplacement 3',
+        desc: 'Promotion et détails pour la Publicité 3.'
+      }
+    }
+  },
+  de: {
+    headerTitle: 'Touristenkarte Circasia 2025',
+    headerSubtitle: 'Entdecken Sie die repräsentativsten Orte der Gemeinde',
+    switchToFace2: 'Zur Seite 2 wechseln',
+    switchToFace1: 'Zur Seite 1 wechseln',
+    zoomIn: 'Vergrößern',
+    zoomOut: 'Verkleinern',
+    altFace1: 'Touristenkarte - Seite 1',
+    altFace2: 'Touristenkarte - Seite 2',
+    pautas: {
+      pauta1: {
+        title: 'Keramik El Alfarero',
+        desc: 'Traditionelle Keramikwerkstatt in Circasia. Besuchen Sie uns und entdecken Sie unsere einzigartigen Stücke!'
+      },
+      pauta2: {
+        title: 'Werbeplatz 2',
+        desc: 'Informationen oder Werbung für Platz 2.'
+      },
+      pauta3: {
+        title: 'Werbeplatz 3',
+        desc: 'Promotion und Details für Platz 3.'
+      }
+    }
+  }
+};
 
 // ==============================
 // 🔍 FUNCIÓN PARA INICIALIZAR EL ZOOM
@@ -38,8 +142,9 @@ function initializePanzoom() {
 switchBtn.addEventListener('click', () => {
   mostrandoCara1 = !mostrandoCara1;
   mapImage.src = mostrandoCara1 ? 'assets/cara1.jpg' : 'assets/cara2.jpg';
-  switchBtn.textContent = mostrandoCara1 ? 'Cambiar a Cara 2' : 'Cambiar a Cara 1';
+  switchBtn.textContent = mostrandoCara1 ? i18n[currentLang].switchToFace2 : i18n[currentLang].switchToFace1;
   switchBtn.setAttribute('aria-pressed', mostrandoCara1 ? 'false' : 'true');
+  mapImage.alt = mostrandoCara1 ? i18n[currentLang].altFace1 : i18n[currentLang].altFace2;
 
   renderPautasAdicionales();
   initializePanzoom();
@@ -49,8 +154,9 @@ switchBtn.addEventListener('click', () => {
 // 📢 PAUTAS FIJAS
 // ==============================
 const pautasAdicionales = [
-  { position: 'top', title: 'Cerámicas El Alfarero', img: 'assets/pautas/pauta1.jpg', desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!', cara: 1 },
-  { position: 'bottom', title: 'Publicidad Pauta 2', img: 'assets/pautas/pauta2.jpg', desc: 'Información o promoción de la Pauta 2.', cara: 1 }
+  { position: 'top', id: 'pauta1', img: 'assets/pautas/pauta1.jpg', cara: 1 },
+  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.jpg', cara: 1 },
+  { position: 'bottom', id: 'pauta3', img: 'assets/pautas/pauta3.jpg', cara: 1 }
 ];
 
 function renderPautasAdicionales() {
@@ -63,14 +169,15 @@ function renderPautasAdicionales() {
     if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
-    pautaEl.title = p.title;
+    const tr = i18n[currentLang].pautas[p.id];
+    pautaEl.title = tr.title;
     const imgEl = document.createElement('img');
     imgEl.src = p.img;
-    imgEl.alt = p.title;
+    imgEl.alt = tr.title;
     pautaEl.appendChild(imgEl);
     const titleEl = document.createElement('div');
     titleEl.classList.add('pauta-title');
-    titleEl.textContent = p.title;
+    titleEl.textContent = tr.title;
     pautaEl.appendChild(titleEl);
     if (p.position === 'top') {
       topAdContainer.appendChild(pautaEl);
@@ -79,7 +186,7 @@ function renderPautasAdicionales() {
     }
     pautaEl.addEventListener('click', e => {
       e.stopPropagation();
-      openModal(p.title, `<img src="${p.img}" alt="${p.title}" style="width:100%; border-radius:6px; margin-bottom:8px;"><p style="font-size:14px;color:#333;">${p.desc}</p>`);
+      openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;"><p style="font-size:14px;color:#333;">${tr.desc}</p>`);
     });
   });
 }
@@ -112,7 +219,31 @@ zoomOutBtn.addEventListener('click', (e) => {
 // ==============================
 // 🟢 INICIALIZAR
 // ==============================
+function applyTranslations() {
+  const headerTitleEl = document.getElementById('header-title');
+  const headerSubtitleEl = document.getElementById('header-subtitle');
+  if (headerTitleEl) headerTitleEl.textContent = i18n[currentLang].headerTitle;
+  if (headerSubtitleEl) headerSubtitleEl.textContent = i18n[currentLang].headerSubtitle;
+  switchBtn.textContent = mostrandoCara1 ? i18n[currentLang].switchToFace2 : i18n[currentLang].switchToFace1;
+  zoomInBtn.setAttribute('aria-label', i18n[currentLang].zoomIn);
+  zoomOutBtn.setAttribute('aria-label', i18n[currentLang].zoomOut);
+  mapImage.alt = mostrandoCara1 ? i18n[currentLang].altFace1 : i18n[currentLang].altFace2;
+}
+
+if (langSelect) {
+  langSelect.addEventListener('change', (e) => {
+    currentLang = e.target.value || 'es';
+    document.documentElement.lang = currentLang;
+    applyTranslations();
+    renderPautasAdicionales();
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  document.documentElement.lang = currentLang;
+  mapImage.alt = i18n[currentLang].altFace1;
+  switchBtn.textContent = i18n[currentLang].switchToFace2;
   renderPautasAdicionales();
   initializePanzoom();
+  applyTranslations();
 });
