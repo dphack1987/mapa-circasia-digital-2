@@ -126,8 +126,11 @@ const i18n = {
 function initializePanzoom() {
   if (panzoomInstance) {
     panzoomInstance.destroy();
+    panzoomInstance = null;
   }
-  panzoomInstance = panzoom(panzoomWrapper, {
+  // Zoom solo en cara1.jpg
+  if (!mostrandoCara1) return;
+  panzoomInstance = panzoom(mapImage, {
     maxScale: 5,
     minScale: 1,
     contain: 'outside',

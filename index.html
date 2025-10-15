@@ -16,18 +16,8 @@
 <body>
   <!-- 🔸 Encabezado principal -->
   <header>
-    <h1 id="header-title">Mapa Turístico de Circasia 2025</h1>
-    <p id="header-subtitle">Explora los puntos más representativos del municipio</p>
-    <!-- 🌐 Selector de idioma -->
-    <div id="lang-switcher">
-      <label for="lang-select" class="sr-only">Idioma</label>
-      <select id="lang-select" aria-label="Idioma">
-        <option value="es" selected>Español</option>
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-      </select>
-    </div>
+    <h1>Mapa Turístico de Circasia 2025</h1>
+    <p>Explora los puntos más representativos del municipio</p>
   </header>
 
   <!-- 🗺️ Contenedor principal con scroll -->
@@ -36,8 +26,12 @@
     <!-- 🚨 Contenedor para las pautas superiores -->
     <div id="pauta-superior-container"></div>
 
-    <!-- 🗺️ Contenedor del mapa -->
-    <div id="map-container" aria-label="Mapa turístico de Circasia">
+  <!-- 🗺️ Contenedor del mapa -->
+  <div id="map-container" aria-label="Mapa turístico de Circasia">
+      <!-- 🌍 Base Google Maps debajo del mapa estético -->
+      <div id="google-map-base" aria-hidden="true">
+        <iframe title="Google Maps - Circasia" src="https://maps.google.com/maps?q=Circasia%20Quindio%20Colombia&z=14&output=embed" allowfullscreen loading="lazy"></iframe>
+      </div>
       
       <!-- 🚨 Wrapper que SOLO contiene la imagen. Este es el objetivo de Panzoom. -->
       <div id="panzoom-element-wrapper">

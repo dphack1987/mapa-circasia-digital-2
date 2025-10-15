@@ -25,7 +25,6 @@ header, footer {
   background: #2e7d32;
   color: #fff;
   flex-shrink: 0;
-  position: relative; /* para posicionar el selector de idioma */
 }
 
 header h1 {
@@ -92,10 +91,25 @@ footer {
   overflow: hidden;
 }
 
-/* 🚨 NUEVO: El wrapper ahora ocupa todo el contenedor y es el objetivo de Panzoom */
-#panzoom-element-wrapper {
+/* 🌍 Base Google Maps debajo */
+#google-map-base {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#google-map-base iframe {
   width: 100%;
   height: 100%;
+  border: 0;
+  pointer-events: none; /* evitamos interacción, zoom solo sobre cara1.jpg */
+}
+
+/* 🚨 Wrapper del mapa estético sobre la base */
+#panzoom-element-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -174,8 +188,8 @@ footer {
 =========================== */
 .pauta {
   display: block; 
-  width: 140px;
-  height: 105px;
+  width: 160px;
+  height: 120px;
   border: 2px solid #000;
   border-radius: 8px;
   cursor: pointer;
@@ -308,33 +322,4 @@ footer {
     font-size: 12px;
     padding: 8px 14px;
   }
-}
-
-/* 🌐 Selector de idioma */
-#lang-switcher {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-}
-
-#lang-select {
-  background: #ffffff;
-  color: #2e7d32;
-  border: 2px solid #ffffff;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
 }
