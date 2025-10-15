@@ -104,8 +104,7 @@ header::after {
 }
 
 /* 🚨 Estilos para los contenedores de pautas */
-#pauta-superior-container,
-#pauta-inferior-container {
+#pauta-superior-container {
   width: 100%;
   height: 220px; /* más protagonismo visual */
   flex-shrink: 0;
@@ -113,17 +112,22 @@ header::after {
   align-items: center;
   padding: 1.25rem;
   gap: 2rem;
-  background: linear-gradient(135deg, rgba(46,125,50,0.08), rgba(77,208,225,0.08)), #e8f5e9;
+  background-image:
+    url('assets/decor/fondo1.jpg'),
+    linear-gradient(135deg, rgba(46,125,50,0.08), rgba(77,208,225,0.08)),
+    linear-gradient(#e8f5e9, #e8f5e9);
+  background-size: cover, auto, auto;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, center, center;
+  background-blend-mode: overlay, normal, normal;
   overflow-x: auto;
 }
 
 /* Ocultar la barra de scroll */
-#pauta-superior-container::-webkit-scrollbar,
-#pauta-inferior-container::-webkit-scrollbar {
+#pauta-superior-container::-webkit-scrollbar {
   display: none;
 }
-#pauta-superior-container,
-#pauta-inferior-container {
+#pauta-superior-container {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -231,6 +235,8 @@ header::after {
   width: 220px;  /* aumento visible y moderno */
   height: 165px; /* mantiene proporción aproximada */
   flex: 0 0 220px; /* asegura ancho fijo en el contenedor flex */
+  min-width: 220px;
+  max-width: 220px;
   border: 1px solid #e0e0e0;
   background-color: #ffffff;
   border-radius: 8px;
@@ -454,8 +460,7 @@ header h1 {
 }
 
 /* Barras decorativas en contenedores de pautas */
-#pauta-superior-container::before,
-#pauta-inferior-container::before {
+#pauta-superior-container::before {
   content: '';
   position: absolute;
   left: 0; right: 0; top: 0;
@@ -465,8 +470,7 @@ header h1 {
   pointer-events: none;
 }
 
-#pauta-superior-container::after,
-#pauta-inferior-container::after {
+#pauta-superior-container::after {
   content: '';
   position: absolute;
   left: 0; right: 0; bottom: 0;
@@ -476,33 +480,36 @@ header h1 {
   pointer-events: none;
 }
 
-/* Fondo decorativo en contenedores de pautas (sin SVG) */
-#pauta-superior-container,
-#pauta-inferior-container {
+/* Fondo decorativo en contenedores de pautas (sin SVG; usa JPG de base) */
+#pauta-superior-container {
   background-image:
+    url('assets/decor/fondo1.jpg'),
     linear-gradient(135deg, rgba(46,125,50,0.08), rgba(77,208,225,0.08)),
     linear-gradient(#e8f5e9, #e8f5e9);
-  background-size: auto, auto;
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
-  background-blend-mode: normal, normal;
+  background-size: cover, auto, auto;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, center, center;
+  background-blend-mode: overlay, normal, normal;
 }
 
-/* Tarjetas pauta: radio mayor, brillo y microinteracciones */
+/* Tarjetas pauta sin recuadro: solo imagen y microinteracciones */
 .pauta {
   border-radius: 12px;
-  backdrop-filter: blur(6px) saturate(120%);
-  padding: 8px; /* espacio interno para evitar que la imagen se pegue al borde */
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb; /* gris claro moderno */
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .pauta img {
-  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain; /* evita recortes de imagenes de diferente proporción */
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
   transition: transform 0.3s ease, filter 0.3s ease;
   filter: saturate(110%);
-  object-fit: contain; /* evita recortes de imagenes de diferente proporción */
 }
 
 .pauta:hover img {
@@ -528,6 +535,9 @@ header h1 {
   font-size: 14px;
   letter-spacing: 0.3px;
   text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Responsivo actualizado para mantener presencia visual */
