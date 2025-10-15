@@ -128,9 +128,9 @@ function initializePanzoom() {
     panzoomInstance.destroy();
     panzoomInstance = null;
   }
-  // Zoom solo en cara1.jpg
+  // Zoom solo en cara1.jpg y solo sobre el wrapper del mapa
   if (!mostrandoCara1) return;
-  panzoomInstance = panzoom(mapImage, {
+  panzoomInstance = panzoom(panzoomWrapper, {
     maxScale: 5,
     minScale: 1,
     contain: 'outside',
