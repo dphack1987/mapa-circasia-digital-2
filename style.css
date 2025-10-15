@@ -22,7 +22,7 @@ body {
 header, footer {
   text-align: center;
   padding: 1.5rem;
-  background: #2e7d32;
+  background: #2e7d32; /* se mantendrá, pero añadimos detalle debajo */
   color: #fff;
   flex-shrink: 0;
 }
@@ -76,6 +76,19 @@ footer {
   font-size: 0.9rem;
 }
 
+/* Detalle estético bajo el header */
+header::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #ffc107, #4dd0e1);
+}
+
 /* ===========================
    🗺️ PANEL CENTRAL CON SCROLL
 =========================== */
@@ -123,6 +136,10 @@ footer {
   width: 100%;
   flex-grow: 1;
   overflow: hidden;
+  background:
+    radial-gradient(50% 50% at 20% 20%, rgba(46,125,50,0.10) 0%, transparent 60%),
+    radial-gradient(45% 45% at 80% 30%, rgba(77,208,225,0.10) 0%, transparent 60%),
+    #fafafa;
 }
 
 /* 🚨 Wrapper del mapa estético */
@@ -160,7 +177,7 @@ footer {
 #zoom-controls button {
   width: 44px;
   height: 44px;
-  background: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
   border: 2px solid #2e7d32;
   border-radius: 50%;
   font-size: 28px;
@@ -187,7 +204,7 @@ footer {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #2e7d32;
+  background: linear-gradient(135deg, #2e7d32, #388e3c);
   color: white;
   padding: 10px 18px;
   border: none;
@@ -195,14 +212,15 @@ footer {
   font-size: 14px;
   font-weight: bold;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
   z-index: 1000;
 }
 
 #switch-btn:hover {
-  background: #1b5e20;
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
   transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.30);
 }
 
 /* ===========================
@@ -212,18 +230,21 @@ footer {
   display: block; 
   width: 182px;  /* +30% sobre 140px */
   height: 136px; /* +30% sobre 105px */
-  border: 2px solid #000;
+  border: 2px solid transparent;
+  background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #ffc107, #4dd0e1);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   position: relative;
   flex-shrink: 0;
 }
 
 .pauta:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.30);
 }
 
 .pauta img {
@@ -233,12 +254,25 @@ footer {
   border-radius: 6px;
 }
 
+/* Cinta decorativa en pautas */
+.pauta::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: -2px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid #ffc107;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+
 .pauta .pauta-title {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0,0,0,0.7);
+  background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.55));
   color: white;
   padding: 6px;
   font-size: 12px; /* se mantiene para legibilidad */
