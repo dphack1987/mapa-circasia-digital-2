@@ -127,15 +127,16 @@ function initializePanzoom() {
   if (panzoomInstance) {
     panzoomInstance.destroy();
     panzoomInstance = null;
+    // Limpia cualquier transform previo
+    mapImage.style.transform = '';
   }
-  // Zoom solo en cara1.jpg y solo sobre el wrapper del mapa
+  // Zoom solo en cara1.jpg y aplicado directamente a la imagen
   if (!mostrandoCara1) return;
-  panzoomInstance = panzoom(panzoomWrapper, {
+  panzoomInstance = panzoom(mapImage, {
     maxScale: 5,
     minScale: 1,
     contain: 'outside',
     zoomSpeed: 0.065,
-    pinchAndPan: true,
   });
 }
 
