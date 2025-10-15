@@ -429,10 +429,12 @@ header h1 {
   position: absolute;
   inset: 0;
   background:
+    url('assets/decor/mesh-gradient.svg') center/cover no-repeat,
     radial-gradient(600px 600px at 10% 90%, rgba(255,193,7,0.08), transparent 60%),
     radial-gradient(800px 800px at 90% 10%, rgba(77,208,225,0.08), transparent 60%);
   pointer-events: none;
   z-index: 0;
+  opacity: 0.6;
 }
 
 /* Botones de zoom con glass y glow */
@@ -484,16 +486,40 @@ header h1 {
   pointer-events: none;
 }
 
+/* Patrones decorativos en contenedores de pautas */
+#pauta-superior-container,
+#pauta-inferior-container {
+  background-image:
+    url('assets/decor/pattern-dots.svg'),
+    linear-gradient(135deg, rgba(46,125,50,0.08), rgba(77,208,225,0.08)),
+    linear-gradient(#e8f5e9, #e8f5e9);
+  background-size: 60px 60px, auto, auto;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-position: center, center, center;
+  background-blend-mode: overlay, normal, normal;
+}
+
 /* Tarjetas pauta: radio mayor, brillo y microinteracciones */
 .pauta {
   border-radius: 12px;
   backdrop-filter: blur(6px) saturate(120%);
+  padding: 8px; /* espacio interno para evitar que la imagen se pegue al borde */
+  background-image:
+    linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)),
+    url('assets/decor/pattern-dots.svg'),
+    linear-gradient(135deg, #ffc107, #4dd0e1);
+  background-size: auto, 60px 60px, auto;
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-position: center, center, center;
+  background-origin: border-box;
+  background-clip: content-box, content-box, border-box;
 }
 
 .pauta img {
   border-radius: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
   filter: saturate(110%);
+  object-fit: contain; /* evita recortes de imagenes de diferente proporción */
 }
 
 .pauta:hover img {
