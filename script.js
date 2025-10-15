@@ -38,12 +38,12 @@ const i18n = {
         desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!'
       },
       pauta2: {
-        title: 'Publicidad Pauta 2',
-        desc: 'Información o promoción de la Pauta 2.'
+        title: 'Orqueta Quinta Base',
+        desc: 'Información sobre Orqueta Quinta Base.'
       },
       pauta3: {
-        title: 'Publicidad Pauta 3',
-        desc: 'Promoción y detalles de la Pauta 3.'
+        title: 'Queso y Café',
+        desc: 'Promoción de Queso y Café.'
       }
     }
   },
