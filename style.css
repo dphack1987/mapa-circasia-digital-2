@@ -423,13 +423,13 @@ header h1 {
   border: 1px solid rgba(255,255,255,0.55);
 }
 
-/* Malla de color sutil sobre el mapa */
+/* Fondo JPG detrás del mapa (sin SVG) */
 #map-container::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    url('assets/decor/mesh-gradient.svg') center/cover no-repeat,
+    url('assets/decor/fondo1.jpg') center/cover no-repeat,
     radial-gradient(600px 600px at 10% 90%, rgba(255,193,7,0.08), transparent 60%),
     radial-gradient(800px 800px at 90% 10%, rgba(77,208,225,0.08), transparent 60%);
   pointer-events: none;
@@ -486,17 +486,16 @@ header h1 {
   pointer-events: none;
 }
 
-/* Patrones decorativos en contenedores de pautas */
+/* Fondo decorativo en contenedores de pautas (sin SVG) */
 #pauta-superior-container,
 #pauta-inferior-container {
   background-image:
-    url('assets/decor/pattern-dots.svg'),
     linear-gradient(135deg, rgba(46,125,50,0.08), rgba(77,208,225,0.08)),
     linear-gradient(#e8f5e9, #e8f5e9);
-  background-size: 60px 60px, auto, auto;
-  background-repeat: repeat, no-repeat, no-repeat;
-  background-position: center, center, center;
-  background-blend-mode: overlay, normal, normal;
+  background-size: auto, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-blend-mode: normal, normal;
 }
 
 /* Tarjetas pauta: radio mayor, brillo y microinteracciones */
@@ -506,13 +505,12 @@ header h1 {
   padding: 8px; /* espacio interno para evitar que la imagen se pegue al borde */
   background-image:
     linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)),
-    url('assets/decor/pattern-dots.svg'),
     linear-gradient(135deg, #ffc107, #4dd0e1);
-  background-size: auto, 60px 60px, auto;
-  background-repeat: no-repeat, repeat, no-repeat;
-  background-position: center, center, center;
+  background-size: auto, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
   background-origin: border-box;
-  background-clip: content-box, content-box, border-box;
+  background-clip: content-box, border-box;
 }
 
 .pauta img {
