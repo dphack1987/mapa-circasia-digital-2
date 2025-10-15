@@ -401,3 +401,138 @@ header::after {
     padding: 8px 14px;
   }
 }
+/* ===========================
+   🎨 UPGRADE ESTÉTICO MODERNO (sobrescribe estilos previos)
+=========================== */
+
+/* Encabezado y pie con gradiente y sombra */
+header, footer {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32 45%, #4dd0e1);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+
+header h1 {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+
+/* Contenedor central con glassmorphism suave */
+#scrollable-content {
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  backdrop-filter: saturate(140%) blur(8px);
+  border: 1px solid rgba(255,255,255,0.55);
+}
+
+/* Malla de color sutil sobre el mapa */
+#map-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 600px at 10% 90%, rgba(255,193,7,0.08), transparent 60%),
+    radial-gradient(800px 800px at 90% 10%, rgba(77,208,225,0.08), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Botones de zoom con glass y glow */
+#zoom-controls button {
+  background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,255,255,0.65));
+  border: 2px solid rgba(46,125,50,0.7);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+  backdrop-filter: blur(10px) saturate(120%);
+}
+
+#zoom-controls button:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 4px rgba(77,208,225,0.3), 0 10px 20px rgba(0,0,0,0.35);
+}
+
+/* Botón de cambio con gradiente moderno y mayúsculas */
+#switch-btn {
+  background: linear-gradient(135deg, #2e7d32, #26a69a);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+#switch-btn:focus-visible,
+#zoom-controls button:focus-visible {
+  outline: 3px solid rgba(77,208,225,0.55);
+  outline-offset: 2px;
+}
+
+/* Barras decorativas en contenedores de pautas */
+#pauta-superior-container::before,
+#pauta-inferior-container::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffc107, #4dd0e1);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+#pauta-superior-container::after,
+#pauta-inferior-container::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4dd0e1, #ffc107);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Tarjetas pauta: radio mayor, brillo y microinteracciones */
+.pauta {
+  border-radius: 12px;
+  backdrop-filter: blur(6px) saturate(120%);
+}
+
+.pauta img {
+  border-radius: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: saturate(110%);
+}
+
+.pauta:hover img {
+  transform: scale(1.05);
+  filter: saturate(120%) contrast(105%);
+}
+
+.pauta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 35%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pauta:hover::after {
+  opacity: 1;
+}
+
+.pauta .pauta-title {
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+}
+
+/* Responsivo actualizado para mantener presencia visual */
+@media (max-width: 768px) {
+  #pauta-superior-container,
+  #pauta-inferior-container {
+    height: 170px;
+    padding: 0.75rem 1rem;
+  }
+  .pauta,
+  #pauta-superior-container .pauta,
+  #pauta-inferior-container .pauta {
+    width: 180px;
+    height: 135px;
+  }
+  #zoom-controls button { width: 48px; height: 48px; }
+}
