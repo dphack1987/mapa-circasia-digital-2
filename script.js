@@ -136,9 +136,9 @@ function initializePanzoom() {
     panzoomInstance = null;
     mapImage.style.transform = '';
   }
-  // Zoom solo en cara1.jpg y aplicado directamente a la imagen
-  if (!mostrandoCara1) return;
-  panzoomInstance = Panzoom(mapImage, {
+  
+  // Inicializar Panzoom en ambas caras
+  panzoomInstance = Panzoom(panzoomWrapper, {
     maxScale: 5,
     minScale: 1,
     contain: 'outside',
@@ -147,6 +147,7 @@ function initializePanzoom() {
     duration: 200,
     transformOrigin: '50% 50%'
   });
+  
   // Añade zoom con rueda al contenedor del mapa
   zoomWheelHandler = panzoomInstance.zoomWithWheel;
   mapContainer.addEventListener('wheel', zoomWheelHandler, { passive: false });
@@ -171,18 +172,26 @@ switchBtn.addEventListener('click', () => {
 // ==============================
 const pautasAdicionales = [
   { position: 'top', id: 'pauta1', img: 'assets/pautas/pauta1.jpg', cara: 1 },
-  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.jpg', cara: 1 },
-  { position: 'bottom', id: 'pauta3', img: 'assets/pautas/pauta3.jpg', cara: 1 }
+  { position: 'top', id: 'pauta2', img: 'assets/pautas/pauta2.jpg', cara: 1 },
+  { position: 'top', id: 'pauta3', img: 'assets/pautas/pauta3.jpg', cara: 1 },
+  { position: 'bottom', id: 'pauta1', img: 'assets/pautas/pauta1.jpg', cara: 2 },
+  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.jpg', cara: 2 },
+  { position: 'bottom', id: 'pauta3', img: 'assets/pautas/pauta3.jpg', cara: 2 }
 ];
 
 function renderPautasAdicionales() {
   const topAdContainer = document.getElementById('pauta-superior-container');
   const bottomAdContainer = document.getElementById('pauta-inferior-container');
-  topAdContainer.innerHTML = '';
-  bottomAdContainer.innerHTML = '';
+  
+  if (topAdContainer) topAdContainer.innerHTML = '';
+  if (bottomAdContainer) bottomAdContainer.innerHTML = '';
   
   pautasAdicionales.forEach(p => {
     if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
+    
+    const container = p.position === 'top' ? topAdContainer : bottomAdContainer;
+    if (!container) return;
+    
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
     const tr = i18n[currentLang].pautas[p.id];
@@ -195,11 +204,7 @@ function renderPautasAdicionales() {
     titleEl.classList.add('pauta-title');
     titleEl.textContent = tr.title;
     pautaEl.appendChild(titleEl);
-    if (p.position === 'top') {
-      topAdContainer.appendChild(pautaEl);
-    } else if (p.position === 'bottom') {
-      bottomAdContainer.appendChild(pautaEl);
-    }
+    container.appendChild(pautaEl);
     pautaEl.addEventListener('click', e => {
       e.stopPropagation();
       openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;"><p style="font-size:14px;color:#333;">${tr.desc}</p>`);
