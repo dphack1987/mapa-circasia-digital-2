@@ -260,7 +260,23 @@ if (langSelect) {
   });
 }
 
+function ensurePautaContainers() {
+  const scroll = document.getElementById('scrollable-content');
+  if (!scroll) return;
+  if (!document.getElementById('pauta-superior-container')) {
+    const sup = document.createElement('div');
+    sup.id = 'pauta-superior-container';
+    scroll.prepend(sup);
+  }
+  if (!document.getElementById('pauta-inferior-container')) {
+    const inf = document.createElement('div');
+    inf.id = 'pauta-inferior-container';
+    scroll.appendChild(inf);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  ensurePautaContainers();
   document.documentElement.lang = currentLang;
   mapImage.alt = i18n[currentLang].altFace1;
   switchBtn.textContent = i18n[currentLang].switchToFace2;
