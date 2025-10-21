@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 
   <!-- 📎 Estilos CSS -->
-  <link rel="stylesheet" href="style.v20251015-11.css" />
+  <link rel="stylesheet" href="style.css?v=20251015-8" />
 </head>
 <body>
   <!-- 🔸 Encabezado principal -->
@@ -76,28 +76,7 @@
   <!-- 🚨 Añadimos la librería Panzoom para el zoom -->
   <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   
-  <!-- ⚡ Bootstrap JS para asegurar contenedores de pautas -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var scroll = document.getElementById('scrollable-content');
-      if (scroll) {
-        if (!document.getElementById('pauta-superior-container')) {
-          var sup = document.createElement('div');
-          sup.id = 'pauta-superior-container';
-          scroll.prepend(sup);
-        }
-        if (!document.getElementById('pauta-inferior-container')) {
-          var inf = document.createElement('div');
-          inf.id = 'pauta-inferior-container';
-          inf.style.display = 'none';
-          inf.setAttribute('aria-hidden', 'true');
-          scroll.appendChild(inf);
-        }
-      }
-    });
-  </script>
-  
   <!-- ⚡ Scripts JS -->
-  <script src="script.v20251015-11.js"></script>
+  <script src="script.js?v=20251015-6"></script>
 </body>
 </html>
