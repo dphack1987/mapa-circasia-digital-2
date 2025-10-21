@@ -505,6 +505,9 @@ header::after {
 #pauta-inferior-container .pauta {
   width: 400px;
   height: 300px;
+  box-sizing: border-box;
+  aspect-ratio: 4 / 3;
+  height: auto;
 }
 
 /* Ajustes móviles (~30% sobre tamaños móviles previos 120x90 y 110 de alto) */
@@ -519,6 +522,10 @@ header::after {
   #pauta-inferior-container .pauta {
     width: 300px;
     height: 225px;
+    box-sizing: border-box;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    box-sizing: border-box;
   }
 }
 
