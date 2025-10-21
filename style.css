@@ -1,19 +1,82 @@
 /* ===========================
    🌐 ESTILOS GLOBALES Y LAYOUT DE PÁGINA
 =========================== */
+:root {
+  --brand-green: #2e7d32;
+  --brand-green-dark: #1b5e20;
+  --accent-cyan: #4dd0e1;
+  --accent-amber: #ffc107;
+  --surface: #ffffff;
+  --surface-muted: #f5f7f6;
+  --radius-card: 12px;
+  --shadow-1: 0 6px 18px rgba(0,0,0,0.08);
+  --shadow-2: 0 12px 28px rgba(0,0,0,0.22);
+  --gap-pauta: 0.5rem;
+  
+  /* Variables para animaciones y efectos modernos */
+  --animation-duration: 0.6s;
+  --animation-delay-base: 0.1s;
+  --gradient-modern: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.18);
+}
+
+/* Variables para modo oscuro */
+[data-theme="dark"] {
+  --brand-green: #4caf50;
+  --brand-green-dark: #388e3c;
+  --accent-cyan: #26c6da;
+  --accent-amber: #ffca28;
+  --surface: #1e1e1e;
+  --surface-muted: #2d2d2d;
+  --glass-bg: rgba(0, 0, 0, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1e1e1e 100%);
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] body::before {
+  background: radial-gradient(circle at 30% 20%, rgba(76, 175, 80, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(38, 198, 218, 0.12) 0%, transparent 50%);
+}
+html { scroll-behavior: smooth; }
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Importar fuente moderna */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 body {
-  font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  color: #222;
+  color: #1a202c;
+  position: relative;
+}
+
+/* Overlay sutil para profundidad */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* ===========================
@@ -22,9 +85,19 @@ body {
 header, footer {
   text-align: center;
   padding: 1.5rem;
-  background: #2e7d32; /* se mantendrá, pero añadimos detalle debajo */
+  background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #43a047 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease-in-out infinite;
   color: #fff;
   flex-shrink: 0;
+  position: relative;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(46, 125, 50, 0.3);
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* Posiciona elementos internos del header (selector de idioma) */
@@ -36,7 +109,30 @@ header {
 #lang-switcher {
   position: absolute;
   top: 14px;
+  right: 70px;
+}
+
+#theme-toggle {
+  position: absolute;
+  top: 14px;
   right: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-1);
 }
 
 #lang-select {
@@ -62,18 +158,24 @@ header {
 }
 
 header h1 {
-  font-weight: 800;
-  font-size: 1.8rem;
-  margin-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 header p {
   font-weight: 400;
-  opacity: 0.9;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  opacity: 0.95;
+  letter-spacing: 0.01em;
 }
 
 footer {
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 /* Detalle estético bajo el header */
@@ -107,14 +209,57 @@ header::after {
 #pauta-superior-container,
 #pauta-inferior-container {
   width: 100%;
-  height: 220px; /* más protagonismo visual */
+  height: auto; /* auto para acomodar el tamaño mayor de las pautas */
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: 1.25rem;
-  gap: 2rem;
-  background: linear-gradient(135deg, rgba(46,125,50,0.08), rgba(77,208,225,0.08)), #e8f5e9;
+  padding: 0; /* eliminar espacio blanco interno del contenedor */
+  gap: var(--gap-pauta); /* separación mínima entre pautas */
+  background: linear-gradient(135deg, var(--glass-bg), rgba(77,208,225,0.15));
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.25), 
+    inset 0 -1px 0 rgba(0,0,0,0.05),
+    0 8px 32px rgba(46,125,50,0.15);
+  position: relative; /* para las barras decorativas */
   overflow-x: auto;
+  scroll-snap-type: x mandatory; /* snapping suave en scroll horizontal */
+  overscroll-behavior-x: contain; /* evita rebotes */
+}
+
+/* Desvanecimientos en extremos para sugerir scroll */
+#pauta-superior-container::before,
+#pauta-inferior-container::before,
+#pauta-superior-container::after,
+#pauta-inferior-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 72px;
+  pointer-events: none;
+  z-index: 2;
+}
+#pauta-superior-container::before,
+#pauta-inferior-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(250,250,250,0.95), rgba(250,250,250,0));
+}
+#pauta-superior-container::after,
+#pauta-inferior-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(250,250,250,0.95), rgba(250,250,250,0));
+}
+
+/* Ajustes en modo oscuro para los desvanecimientos */
+[data-theme="dark"] #pauta-superior-container::before,
+[data-theme="dark"] #pauta-inferior-container::before {
+  background: linear-gradient(to right, rgba(30,30,30,0.95), rgba(30,30,30,0));
+}
+[data-theme="dark"] #pauta-superior-container::after,
+[data-theme="dark"] #pauta-inferior-container::after {
+  background: linear-gradient(to left, rgba(30,30,30,0.95), rgba(30,30,30,0));
 }
 
 /* Ocultar la barra de scroll */
@@ -140,6 +285,35 @@ header::after {
     radial-gradient(50% 50% at 20% 20%, rgba(46,125,50,0.10) 0%, transparent 60%),
     radial-gradient(45% 45% at 80% 30%, rgba(77,208,225,0.10) 0%, transparent 60%),
     #fafafa;
+}
+
+/* Fondo mesh animado para dar vida al área del mapa */
+#map-container::before {
+  content: '';
+  position: absolute;
+  inset: -10% -20%;
+  background: radial-gradient(60% 60% at 10% 20%, rgba(102,126,234,0.12), transparent 60%),
+              radial-gradient(70% 70% at 90% 10%, rgba(118,75,162,0.10), transparent 65%),
+              radial-gradient(55% 55% at 30% 80%, rgba(16,185,129,0.10), transparent 65%);
+  filter: saturate(140%);
+  animation: meshFloat 24s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Viñeta sutil para enfocar el centro del mapa */
+#map-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side, rgba(0,0,0,0) 60%, rgba(0,0,0,0.12) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes meshFloat {
+  0%, 100% { transform: translate3d(0,0,0) scale(1); }
+  50% { transform: translate3d(0, -10px, 0) scale(1.02); }
 }
 
 /* 🚨 Wrapper del mapa estético */
@@ -194,7 +368,9 @@ header::after {
 #zoom-controls button:hover {
   background: #2e7d32;
   color: white;
-  transform: scale(1.1);
+  transform: scale(1.1) translateZ(6px);
+  box-shadow: 0 10px 24px rgba(46,125,50,0.35), 0 0 0 4px rgba(46,125,50,0.15) inset;
+  filter: drop-shadow(0 6px 16px rgba(46,125,50,0.25));
 }
 
 /* ===========================
@@ -206,21 +382,25 @@ header::after {
   right: 15px;
   background: linear-gradient(135deg, #2e7d32, #388e3c);
   color: white;
-  padding: 10px 18px;
+  padding: 12px 20px;
   border: none;
   cursor: pointer;
   font-size: 14px;
-  font-weight: bold;
-  border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-button);
+  box-shadow: var(--shadow-1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
+  backdrop-filter: blur(8px);
 }
 
 #switch-btn:hover {
   background: linear-gradient(135deg, #1b5e20, #2e7d32);
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.30);
+  transform: scale(1.05) translateZ(6px);
+  box-shadow: 0 12px 28px rgba(46,125,50,0.35);
+  filter: drop-shadow(0 6px 16px rgba(46,125,50,0.25));
 }
 
 /* ===========================
@@ -228,34 +408,82 @@ header::after {
 =========================== */
 .pauta {
   display: block; 
-  width: 220px;  /* aumento visible y moderno */
-  height: 165px; /* mantiene proporción aproximada */
-  flex: 0 0 220px; /* asegura ancho fijo en el contenedor flex */
+  width: 400px;  /* más grande y uniforme */
+  height: 300px; /* 4:3 exacto */
+  flex: 0 0 400px; /* asegura ancho fijo en el contenedor flex */
   border: 1px solid #e0e0e0;
-  background-color: #ffffff;
-  border-radius: 8px;
+  background-color: var(--surface);
+  border-radius: var(--radius-card);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: box-shadow 220ms cubic-bezier(0.22,1,0.36,1),
+              filter 200ms linear,
+              transform 260ms cubic-bezier(0.22,1,0.36,1);
+  box-shadow: var(--shadow-1);
   position: relative;
   flex-shrink: 0;
+  scroll-snap-align: start;
+  
+  /* Animación de entrada */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp var(--animation-duration) ease-out forwards;
+}
+
+/* Retraso escalonado para cada pauta */
+.pauta:nth-child(1) { animation-delay: calc(var(--animation-delay-base) * 1); }
+.pauta:nth-child(2) { animation-delay: calc(var(--animation-delay-base) * 2); }
+.pauta:nth-child(3) { animation-delay: calc(var(--animation-delay-base) * 3); }
+.pauta:nth-child(4) { animation-delay: calc(var(--animation-delay-base) * 4); }
+.pauta:nth-child(5) { animation-delay: calc(var(--animation-delay-base) * 5); }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .pauta:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.30);
+  transform: perspective(900px) translateZ(10px) rotateX(1.2deg) rotateY(-1.2deg);
+  box-shadow: var(--shadow-2);
+}
+
+/* Borde animado con conic-gradient */
+.pauta::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, rgba(46,125,50,0.00), rgba(46,125,50,0.28), rgba(77,208,225,0.28), rgba(46,125,50,0.00));
+  filter: blur(0.4px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.pauta:hover::before {
+  opacity: 1;
+  animation: spinRing 4.2s linear infinite;
+}
+
+@keyframes spinRing {
+  to { transform: rotate(360deg); }
 }
 
 .pauta img {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: contain; /* evita recortes, mantiene proporción */
+  object-fit: contain; /* no recortar, mostrar completas */
+  object-position: center; /* centrado uniforme */
+  background-color: #f5f7f6; /* bandas internas suaves en vez de blanco puro */
   border-radius: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Eliminamos la cinta decorativa para un look más moderno */
-.pauta::before { display: none; }
+.pauta::before { /* override eliminado para mantener aro visible */ }
 
 .pauta .pauta-title {
   position: absolute;
@@ -275,22 +503,22 @@ header::after {
 /* Mayor especificidad para asegurar tamaños en producción */
 #pauta-superior-container .pauta,
 #pauta-inferior-container .pauta {
-  width: 220px;
-  height: 165px;
+  width: 400px;
+  height: 300px;
 }
 
 /* Ajustes móviles (~30% sobre tamaños móviles previos 120x90 y 110 de alto) */
 @media (max-width: 640px) {
   #pauta-superior-container,
   #pauta-inferior-container {
-    height: 170px;
-    padding: 0.75rem 1rem;
+    height: auto;
+    padding: 0;
   }
   .pauta,
   #pauta-superior-container .pauta,
   #pauta-inferior-container .pauta {
-    width: 180px;
-    height: 135px;
+    width: 300px;
+    height: 225px;
   }
 }
 
@@ -371,13 +599,14 @@ header::after {
   
   #pauta-superior-container,
   #pauta-inferior-container {
-    height: 140px;
-    padding: 0.5rem;
+    height: auto;
+    padding: 0;
   }
 
   .pauta {
-    width: 150px;
-    height: 110px;
+    width: 260px;
+    height: 195px;
+    flex: 0 0 260px;
   }
 
   #zoom-controls button {
@@ -459,9 +688,9 @@ header h1 {
   content: '';
   position: absolute;
   left: 0; right: 0; top: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #ffc107, #4dd0e1);
-  opacity: 0.8;
+  height: 3px; /* más sutil */
+  background: linear-gradient(90deg, #4dd0e1, #ffc107);
+  opacity: 0.5; /* menor opacidad para estética moderna */
   pointer-events: none;
 }
 
@@ -470,43 +699,43 @@ header h1 {
   content: '';
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #4dd0e1, #ffc107);
-  opacity: 0.8;
+  height: 3px; /* más sutil */
+  background: linear-gradient(90deg, #ffc107, #4dd0e1);
+  opacity: 0.5;
   pointer-events: none;
 }
 
 /* Fondo decorativo en contenedores de pautas (sin SVG) */
 #pauta-superior-container,
 #pauta-inferior-container {
-  background-image:
-    linear-gradient(135deg, rgba(46,125,50,0.08), rgba(77,208,225,0.08)),
-    linear-gradient(#e8f5e9, #e8f5e9);
-  background-size: auto, auto;
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
-  background-blend-mode: normal, normal;
+  background-image: none; /* sin fondo para evitar zonas claras */
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: normal;
 }
 
 /* Tarjetas pauta: radio mayor, brillo y microinteracciones */
 .pauta {
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   backdrop-filter: blur(6px) saturate(120%);
-  padding: 8px; /* espacio interno para evitar que la imagen se pegue al borde */
-  background-color: #ffffff;
+  padding: 0; /* sin relleno interno para maximizar imagen */
+  background-color: var(--surface);
   border: 1px solid #e5e7eb; /* gris claro moderno */
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-1);
 }
 
 .pauta img {
   border-radius: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
   filter: saturate(110%);
-  object-fit: contain; /* evita recortes de imagenes de diferente proporción */
+  object-fit: contain; /* no recortar, mostrar completas */
+  object-position: center; /* centrado uniforme */
+  background-color: #f5f7f6; /* bandas internas suaves */
 }
 
 .pauta:hover img {
-  transform: scale(1.05);
+  transform: none; /* sin zoom para mantener composición igual */
   filter: saturate(120%) contrast(105%);
 }
 
@@ -544,4 +773,75 @@ header h1 {
     height: 135px;
   }
   #zoom-controls button { width: 48px; height: 48px; }
+}
+/* Brillo sweep sutil en hover */
+.pauta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255,255,255,0.0) 40%, rgba(255,255,255,0.20) 50%, rgba(255,255,255,0.0) 60%);
+  transform: translateX(-60%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.pauta:hover::after {
+  opacity: 1;
+  animation: sweepShine 1.2s ease;
+}
+@keyframes sweepShine {
+  0% { transform: translateX(-60%); }
+  100% { transform: translateX(160%); }
+}
+/* Desvanecimientos en extremos para sugerir scroll */
+#pauta-superior-container::before,
+#pauta-inferior-container::before,
+#pauta-superior-container::after,
+#pauta-inferior-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 72px;
+  pointer-events: none;
+  z-index: 2;
+}
+#pauta-superior-container::before,
+#pauta-inferior-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(250,250,250,0.95), rgba(250,250,250,0));
+}
+#pauta-superior-container::after,
+#pauta-inferior-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(250,250,250,0.95), rgba(250,250,250,0));
+}
+[data-theme="dark"] #pauta-superior-container::before,
+[data-theme="dark"] #pauta-inferior-container::before {
+  background: linear-gradient(to right, rgba(30,30,30,0.95), rgba(30,30,30,0));
+}
+[data-theme="dark"] #pauta-superior-container::after,
+[data-theme="dark"] #pauta-inferior-container::after {
+  background: linear-gradient(to left, rgba(30,30,30,0.95), rgba(30,30,30,0));
+}
+#map-container::before {
+  content: '';
+  position: absolute;
+  inset: -10% -20%;
+  background: radial-gradient(60% 60% at 10% 20%, rgba(102,126,234,0.18), transparent 60%),
+              radial-gradient(70% 70% at 90% 10%, rgba(118,75,162,0.16), transparent 65%),
+              radial-gradient(55% 55% at 30% 80%, rgba(16,185,129,0.16), transparent 65%);
+  filter: saturate(170%);
+  animation: meshFloat 18s ease-in-out infinite;
+  pointer-events: none;
+}
+#map-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side, rgba(0,0,0,0) 60%, rgba(0,0,0,0.18) 100%);
+  pointer-events: none;
+  z-index: 1;
 }

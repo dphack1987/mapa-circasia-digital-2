@@ -13,6 +13,7 @@ const closeModalBtn = document.getElementById('close-modal');
 const zoomInBtn = document.getElementById('zoom-in-btn');
 const zoomOutBtn = document.getElementById('zoom-out-btn');
 const langSelect = document.getElementById('lang-select');
+const themeToggle = document.getElementById('theme-toggle');
 
 let mostrandoCara1 = true;
 let panzoomInstance = null;
@@ -255,10 +256,39 @@ if (langSelect) {
   });
 }
 
+// ==============================
+// 🌙 FUNCIONALIDAD MODO OSCURO
+// ==============================
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  
+  // Guardar preferencia en localStorage
+  localStorage.setItem('theme', newTheme);
+}
+
+// Cargar tema guardado
+function loadSavedTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  if (themeToggle) {
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+// Event listener para el toggle
+if (themeToggle) {
+  themeToggle.addEventListener('click', toggleTheme);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.lang = currentLang;
   mapImage.alt = i18n[currentLang].altFace1;
   switchBtn.textContent = i18n[currentLang].switchToFace2;
+  loadSavedTheme(); // Cargar tema guardado
   renderPautasAdicionales();
   initializePanzoom();
   applyTranslations();
