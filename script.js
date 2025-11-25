@@ -229,9 +229,9 @@ function initializePanzoom() {
 // ==============================
 const pautasAdicionales = [
   { position: 'top',    id: 'pauta1', img: 'assets/pautas/pauta1.jpg',  cara: 1, dest: '4.619811,-75.635037' },
-  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1, dest: 'Armenia - Pereira Km 1, Circasia, Salento, Quindío' },
   { position: 'top',    id: 'pauta3', img: 'assets/pautas/pauta3.png',  cara: 1, dest: null },
-  { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1, dest: 'El Roble, Sobre la autopista del café, Armenia - Pereira Km 12, Arrayanal, Circasia, Quindío' },
   { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1, dest: null },
   { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1, dest: null },
   { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1, dest: null }
