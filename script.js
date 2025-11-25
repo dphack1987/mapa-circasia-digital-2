@@ -36,15 +36,31 @@ const i18n = {
     pautas: {
       pauta1: {
         title: 'Cerámicas El Alfarero',
-        desc: 'Taller artesanal de cerámica tradicional ubicado en Circasia. ¡Visítanos y conoce nuestras piezas únicas!'
+        desc: 'Taller artesanal de cerámica tradicional en Circasia. Piezas únicas hechas a mano.'
       },
       pauta2: {
-        title: 'Orqueta Quinta Base',
-        desc: 'Información sobre Orqueta Quinta Base.'
+        title: 'Orquesta Quinta Base',
+        desc: 'Agrupación musical local. Consulta presentaciones, clases y eventos.'
       },
       pauta3: {
         title: 'Queso y Café',
-        desc: 'Promoción de Queso y Café.'
+        desc: 'Sabores de la región: productos lácteos y café especial.'
+      },
+      pauta4: {
+        title: 'Restaurante El Roble',
+        desc: 'Gastronomía típica en un ambiente acogedor. ¡Buen provecho!'
+      },
+      pauta5: {
+        title: 'Pauta 5',
+        desc: 'Contenido promocional / cultural adicional.'
+      },
+      pauta6: {
+        title: 'Pauta 6',
+        desc: 'Contenido promocional / cultural adicional.'
+      },
+      pauta7: {
+        title: 'Pauta 7',
+        desc: 'Contenido promocional / cultural adicional.'
       }
     }
   },
@@ -60,15 +76,31 @@ const i18n = {
     pautas: {
       pauta1: {
         title: 'El Alfarero Ceramics',
-        desc: 'Traditional handcrafted ceramics workshop in Circasia. Visit us and discover our unique pieces!'
+        desc: 'Traditional handcrafted ceramics in Circasia. Unique pieces, made with care.'
       },
       pauta2: {
-        title: 'Ad Slot 2',
-        desc: 'Information or promotion for Ad 2.'
+        title: 'Quinta Base Orchestra',
+        desc: 'Local music ensemble. Check shows, classes and events.'
       },
       pauta3: {
-        title: 'Ad Slot 3',
-        desc: 'Promotion and details for Ad 3.'
+        title: 'Cheese & Coffee',
+        desc: 'Regional flavors: dairy delicacies and specialty coffee.'
+      },
+      pauta4: {
+        title: 'El Roble Restaurant',
+        desc: 'Traditional cuisine in a cozy setting. Enjoy!'
+      },
+      pauta5: {
+        title: 'Ad Slot 5',
+        desc: 'Additional promotional or cultural content.'
+      },
+      pauta6: {
+        title: 'Ad Slot 6',
+        desc: 'Additional promotional or cultural content.'
+      },
+      pauta7: {
+        title: 'Ad Slot 7',
+        desc: 'Additional promotional or cultural content.'
       }
     }
   },
@@ -84,15 +116,31 @@ const i18n = {
     pautas: {
       pauta1: {
         title: 'Céramiques El Alfarero',
-        desc: "Atelier artisanal de céramique traditionnelle à Circasia. Venez découvrir nos pièces uniques !"
+        desc: 'Atelier artisanal de céramique à Circasia. Pièces uniques faites à la main.'
       },
       pauta2: {
-        title: 'Publicité Emplacement 2',
-        desc: 'Informations ou promotion pour la Publicité 2.'
+        title: 'Orchestre Quinta Base',
+        desc: 'Ensemble musical local. Consultez spectacles, cours et événements.'
       },
       pauta3: {
-        title: 'Publicité Emplacement 3',
-        desc: 'Promotion et détails pour la Publicité 3.'
+        title: 'Fromage et Café',
+        desc: 'Saveurs régionales : produits laitiers et café de spécialité.'
+      },
+      pauta4: {
+        title: 'Restaurant El Roble',
+        desc: 'Cuisine traditionnelle dans un cadre chaleureux. Bon appétit !'
+      },
+      pauta5: {
+        title: 'Publicité 5',
+        desc: 'Contenu promotionnel ou culturel supplémentaire.'
+      },
+      pauta6: {
+        title: 'Publicité 6',
+        desc: 'Contenu promotionnel ou culturel supplémentaire.'
+      },
+      pauta7: {
+        title: 'Publicité 7',
+        desc: 'Contenu promotionnel ou culturel supplémentaire.'
       }
     }
   },
@@ -108,15 +156,31 @@ const i18n = {
     pautas: {
       pauta1: {
         title: 'Keramik El Alfarero',
-        desc: 'Traditionelle Keramikwerkstatt in Circasia. Besuchen Sie uns und entdecken Sie unsere einzigartigen Stücke!'
+        desc: 'Handgefertigte Keramik in Circasia. Einzigartige Stücke, mit Liebe gemacht.'
       },
       pauta2: {
-        title: 'Werbeplatz 2',
-        desc: 'Informationen oder Werbung für Platz 2.'
+        title: 'Orchester Quinta Base',
+        desc: 'Lokales Musikensemble. Konzerte, Kurse und Events.'
       },
       pauta3: {
-        title: 'Werbeplatz 3',
-        desc: 'Promotion und Details für Platz 3.'
+        title: 'Käse & Kaffee',
+        desc: 'Regionale Köstlichkeiten: Milchprodukte und Spezialkaffee.'
+      },
+      pauta4: {
+        title: 'Restaurant El Roble',
+        desc: 'Traditionelle Küche in gemütlicher Atmosphäre. Guten Appetit!'
+      },
+      pauta5: {
+        title: 'Anzeige 5',
+        desc: 'Zusätzliche Werbe- oder Kulturinhalte.'
+      },
+      pauta6: {
+        title: 'Anzeige 6',
+        desc: 'Zusätzliche Werbe- oder Kulturinhalte.'
+      },
+      pauta7: {
+        title: 'Anzeige 7',
+        desc: 'Zusätzliche Werbe- oder Kulturinhalte.'
       }
     }
   }
@@ -171,9 +235,13 @@ switchBtn.addEventListener('click', () => {
 // 📢 PAUTAS FIJAS
 // ==============================
 const pautasAdicionales = [
-  { position: 'top', id: 'pauta1', img: 'assets/pautas/pauta1.jpg', cara: 1 },
-  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.jpg', cara: 1 },
-  { position: 'bottom', id: 'pauta3', img: 'assets/pautas/pauta3.jpg', cara: 1 }
+  { position: 'top',    id: 'pauta1', img: 'assets/pautas/pauta1.jpg',  cara: 1 },
+  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1 },
+  { position: 'top',    id: 'pauta3', img: 'assets/pautas/pauta3.png',  cara: 1 },
+  { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1 },
+  { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1 },
+  { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1 },
+  { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1 }
 ];
 
 function renderPautasAdicionales() {
