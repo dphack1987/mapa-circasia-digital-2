@@ -229,8 +229,8 @@ function initializePanzoom() {
 // ==============================
 const pautasAdicionales = [
   { position: 'top',    id: 'pauta1', img: 'assets/pautas/pauta1.jpg',  cara: 1, dest: '4.619811,-75.635037' },
-  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1, dest: 'Armenia - Pereira Km 1, Circasia, Salento, Quindío' },
-  { position: 'top',    id: 'pauta3', img: 'assets/pautas/pauta3.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1, dest: '' },
+  { position: 'top',    id: 'pauta3', img: 'assets/pautas/pauta3.png',  cara: 1, dest: 'Armenia - Pereira #km 1, Circasia, Salento, Quindío' },
   { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1, dest: 'El Roble, Sobre la autopista del café, Armenia - Pereira Km 12, Arrayanal, Circasia, Quindío' },
   { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1, dest: null },
   { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1, dest: null },
@@ -266,11 +266,15 @@ function renderPautasAdicionales() {
       e.stopPropagation();
       const hasDesc = tr.desc && String(tr.desc).trim().length > 0;
       const descHtml = hasDesc ? `<p style="font-size:14px;color:#333;">${tr.desc}</p>` : '';
-      const dest = p.dest && String(p.dest).trim().length > 0 ? p.dest : 'Circasia, Quindío, Colombia';
-      const destParam = encodeURIComponent(dest);
-      const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destParam}`;
-      const actionsHtml = `<div class="modal-actions"><a class="maps-link" href="${directionsUrl}" target="_blank" rel="noopener" aria-label="${i18n[currentLang].getDirections} a ${tr.title}">${i18n[currentLang].getDirections}</a></div>`;
-      openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">${descHtml}${actionsHtml}`);
+  const hasExplicitEmptyDest = p.dest === '';
+  const resolvedDest = (p.dest === null || p.dest === undefined) ? 'Circasia, Quindío, Colombia' : p.dest;
+  let actionsHtml = '';
+  if (!hasExplicitEmptyDest) {
+    const destParam = encodeURIComponent(String(resolvedDest).trim());
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destParam}`;
+    actionsHtml = `<div class="modal-actions"><a class="maps-link" href="${directionsUrl}" target="_blank" rel="noopener" aria-label="${i18n[currentLang].getDirections} a ${tr.title}">${i18n[currentLang].getDirections}</a></div>`;
+  }
+  openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">${descHtml}${actionsHtml}`);
     });
   });
 }
