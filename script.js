@@ -207,8 +207,8 @@ function initializePanzoom() {
     panzoomInstance = null;
     mapImage.style.transform = '';
   }
-  // Zoom aplicado directamente a la imagen (cara 1 por defecto)
-  panzoomInstance = Panzoom(mapImage, {
+  // Zoom aplicado al wrapper para que imagen y marcadores se muevan juntos
+  panzoomInstance = Panzoom(panzoomWrapper, {
     maxScale: 5,
     minScale: 1,
     contain: 'outside',
@@ -254,6 +254,10 @@ function saveMarkerPos(id, pos) {
   try { localStorage.setItem('markerPos_' + id, JSON.stringify(pos)); } catch {}
 }
 
+const markerDefaults = {
+  // ejemplo: 'pauta3': { x: 62, y: 48 }
+};
+
 function renderMapMarkers() {
   const markersContainer = document.getElementById('map-markers');
   if (!markersContainer) return;
@@ -269,9 +273,15 @@ function renderMapMarkers() {
     marker.dataset.id = p.id;
     // Cargar posición guardada o usar centro por defecto
     const saved = getSavedMarkerPos(p.id);
-    const pos = saved || { x: 50, y: 50 };
+    const preset = markerDefaults[p.id];
+    const pos = saved || preset || { x: 50, y: 50 };
     marker.style.left = pos.x + '%';
     marker.style.top = pos.y + '%';
+    // Número visible dentro del marcador (1–7)
+    const num = parseInt(String(p.id).replace('pauta',''));
+    if (!Number.isNaN(num)) {
+      marker.textContent = String(num);
+    }
     // Etiqueta
     const label = document.createElement('div');
     label.className = 'marker-label';

@@ -411,11 +411,11 @@ header::after {
 .map-marker {
   position: absolute;
   transform: translate(-50%, -100%);
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffffff, #f7fff7);
   border: 2px solid #2e7d32;
   color: #2e7d32;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: flex;
@@ -425,6 +425,7 @@ header::after {
   font-weight: 800;
   pointer-events: auto;
   cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .map-marker::after {
@@ -442,8 +443,8 @@ header::after {
 .map-marker::before {
   content: '';
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(102,187,106,0.35) 0%, rgba(102,187,106,0.0) 70%);
   z-index: -1;
@@ -471,10 +472,18 @@ header::after {
   backdrop-filter: blur(6px);
   white-space: nowrap;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-.map-marker:hover .marker-label {
-  background: #ffffff;
+.map-marker:hover .marker-label,
+.map-marker:focus .marker-label {
+  opacity: 1;
+}
+
+.map-marker:hover {
+  transform: translate(-50%, -100%) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
 }
 
 /* ==============================
