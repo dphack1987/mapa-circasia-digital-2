@@ -237,6 +237,92 @@ const pautasAdicionales = [
   { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1, dest: null }
 ];
 
+// ==============================
+// 📍 MARCADORES EN EL MAPA (cara 1)
+// ==============================
+function getSavedMarkerPos(id) {
+  try {
+    const raw = localStorage.getItem('markerPos_' + id);
+    if (!raw) return null;
+    const obj = JSON.parse(raw);
+    if (typeof obj.x === 'number' && typeof obj.y === 'number') return obj;
+    return null;
+  } catch { return null; }
+}
+
+function saveMarkerPos(id, pos) {
+  try { localStorage.setItem('markerPos_' + id, JSON.stringify(pos)); } catch {}
+}
+
+function renderMapMarkers() {
+  const markersContainer = document.getElementById('map-markers');
+  if (!markersContainer) return;
+  markersContainer.innerHTML = '';
+  // Sólo las pautas con destino verificado (dest !== '' y dest != null)
+  const withVerifiedDest = pautasAdicionales.filter(p => p.cara === 1 && p.dest !== '' && p.dest != null);
+  withVerifiedDest.forEach(p => {
+    const tr = i18n[currentLang].pautas[p.id];
+    const marker = document.createElement('button');
+    marker.className = 'map-marker';
+    marker.setAttribute('type', 'button');
+    marker.setAttribute('aria-label', tr.title);
+    marker.dataset.id = p.id;
+    // Cargar posición guardada o usar centro por defecto
+    const saved = getSavedMarkerPos(p.id);
+    const pos = saved || { x: 50, y: 50 };
+    marker.style.left = pos.x + '%';
+    marker.style.top = pos.y + '%';
+    // Etiqueta
+    const label = document.createElement('div');
+    label.className = 'marker-label';
+    label.textContent = tr.title;
+    marker.appendChild(label);
+    // Click abre modal con información y botón de cómo llegar
+    marker.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const hasExplicitEmptyDest = p.dest === '';
+      const resolvedDest = (p.dest === null || p.dest === undefined) ? 'Circasia, Quindío, Colombia' : p.dest;
+      let actionsHtml = '';
+      if (!hasExplicitEmptyDest) {
+        const destParam = encodeURIComponent(String(resolvedDest).trim());
+        const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destParam}`;
+        actionsHtml = `<div class="modal-actions"><a class="maps-link" href="${directionsUrl}" target="_blank" rel="noopener" aria-label="${i18n[currentLang].getDirections} a ${tr.title}">${i18n[currentLang].getDirections}</a></div>`;
+      }
+      const descHtml = tr.desc && String(tr.desc).trim().length > 0 ? `<p style="font-size:14px;color:#333;">${tr.desc}</p>` : '';
+      openModal(tr.title, `${descHtml}${actionsHtml}`);
+    });
+    // Arrastre para ubicar marcador (persistente en localStorage)
+    let dragging = false;
+    function onPointerMove(ev) {
+      if (!dragging) return;
+      const rect = markersContainer.getBoundingClientRect();
+      const x = ((ev.clientX - rect.left) / rect.width) * 100;
+      const y = ((ev.clientY - rect.top) / rect.height) * 100;
+      const clampedX = Math.max(2, Math.min(98, x));
+      const clampedY = Math.max(2, Math.min(98, y));
+      marker.style.left = clampedX + '%';
+      marker.style.top = clampedY + '%';
+    }
+    function onPointerUp(ev) {
+      if (!dragging) return;
+      dragging = false;
+      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointerup', onPointerUp);
+      // Guardar posición
+      const left = parseFloat(marker.style.left);
+      const top = parseFloat(marker.style.top);
+      saveMarkerPos(p.id, { x: left, y: top });
+    }
+    marker.addEventListener('pointerdown', (ev) => {
+      ev.stopPropagation();
+      dragging = true;
+      document.addEventListener('pointermove', onPointerMove);
+      document.addEventListener('pointerup', onPointerUp);
+    });
+    markersContainer.appendChild(marker);
+  });
+}
+
 function renderPautasAdicionales() {
   const topAdContainer = document.getElementById('pauta-superior-container');
   const bottomAdContainer = document.getElementById('pauta-inferior-container');
@@ -328,6 +414,7 @@ if (langSelect) {
     document.documentElement.lang = currentLang;
     applyTranslations();
     renderPautasAdicionales();
+    renderMapMarkers();
   });
 }
 
@@ -358,6 +445,9 @@ function loadSavedTheme() {
 if (themeToggle) {
   themeToggle.addEventListener('click', toggleTheme);
 }
+
+// Render inicial de marcadores
+renderMapMarkers();
 
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.lang = currentLang;
