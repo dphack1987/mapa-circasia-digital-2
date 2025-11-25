@@ -212,6 +212,7 @@ header::after {
   height: auto; /* auto para acomodar el tamaño mayor de las pautas */
   flex-shrink: 0;
   display: flex;
+  flex-wrap: nowrap; /* evita salto de línea, garantiza scroll horizontal */
   align-items: center;
   scroll-behavior: smooth; /* desplazamiento más agradable */
   padding: 0; /* eliminar espacio blanco interno del contenedor */
@@ -225,8 +226,12 @@ header::after {
     0 8px 32px rgba(46,125,50,0.15);
   position: relative; /* para las barras decorativas */
   overflow-x: auto;
+  overflow-y: hidden; /* evita scroll vertical accidental */
   scroll-snap-type: x mandatory; /* snapping suave en scroll horizontal */
   overscroll-behavior-x: contain; /* evita rebotes */
+  -webkit-overflow-scrolling: touch; /* suaviza en iOS */
+  touch-action: pan-x; /* mejora gesto táctil horizontal */
+  scroll-padding: 0 12px; /* acolchado para snapping al inicio/fin */
 }
 
 /* Desvanecimientos en extremos para sugerir scroll */
@@ -450,6 +455,7 @@ header::after {
   position: relative;
   flex-shrink: 0;
   scroll-snap-align: start;
+  scroll-snap-stop: always; /* asegura parada en cada tarjeta */
   
   /* Animación de entrada */
   opacity: 0;
