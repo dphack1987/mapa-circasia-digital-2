@@ -4,7 +4,6 @@
 const mapContainer = document.getElementById('map-container');
 const panzoomWrapper = document.getElementById('panzoom-element-wrapper');
 const mapImage = document.getElementById('map-image');
-const switchBtn = document.getElementById('switch-btn');
 const infoModal = document.getElementById('info-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalDesc = document.getElementById('modal-desc');
@@ -15,7 +14,6 @@ const zoomOutBtn = document.getElementById('zoom-out-btn');
 const langSelect = document.getElementById('lang-select');
 const themeToggle = document.getElementById('theme-toggle');
 
-let mostrandoCara1 = true;
 let panzoomInstance = null;
 let currentLang = 'es';
 let zoomWheelHandler = null; // manejador para zoom con rueda
@@ -201,8 +199,7 @@ function initializePanzoom() {
     panzoomInstance = null;
     mapImage.style.transform = '';
   }
-  // Zoom solo en cara1.jpg y aplicado directamente a la imagen
-  if (!mostrandoCara1) return;
+  // Zoom aplicado directamente a la imagen (cara 1 por defecto)
   panzoomInstance = Panzoom(mapImage, {
     maxScale: 5,
     minScale: 1,
@@ -217,19 +214,7 @@ function initializePanzoom() {
   mapContainer.addEventListener('wheel', zoomWheelHandler, { passive: false });
 }
 
-// ==============================
-// 🌀 CAMBIO DE CARA
-// ==============================
-switchBtn.addEventListener('click', () => {
-  mostrandoCara1 = !mostrandoCara1;
-  mapImage.src = mostrandoCara1 ? 'assets/cara1.jpg' : 'assets/cara2.jpg';
-  switchBtn.textContent = mostrandoCara1 ? i18n[currentLang].switchToFace2 : i18n[currentLang].switchToFace1;
-  switchBtn.setAttribute('aria-pressed', mostrandoCara1 ? 'false' : 'true');
-  mapImage.alt = mostrandoCara1 ? i18n[currentLang].altFace1 : i18n[currentLang].altFace2;
-
-  renderPautasAdicionales();
-  initializePanzoom();
-});
+// Cara 2 eliminada: siempre se muestra la cara 1
 
 // ==============================
 // 📢 PAUTAS FIJAS
@@ -251,7 +236,7 @@ function renderPautasAdicionales() {
   bottomAdContainer.innerHTML = '';
   
   pautasAdicionales.forEach(p => {
-    if (p.cara !== (mostrandoCara1 ? 1 : 2)) return;
+    if (p.cara !== 1) return;
     const pautaEl = document.createElement('div');
     pautaEl.classList.add('pauta');
     const tr = i18n[currentLang].pautas[p.id];
@@ -311,10 +296,9 @@ function applyTranslations() {
   const headerSubtitleEl = document.getElementById('header-subtitle');
   if (headerTitleEl) headerTitleEl.textContent = i18n[currentLang].headerTitle;
   if (headerSubtitleEl) headerSubtitleEl.textContent = i18n[currentLang].headerSubtitle;
-  switchBtn.textContent = mostrandoCara1 ? i18n[currentLang].switchToFace2 : i18n[currentLang].switchToFace1;
   zoomInBtn.setAttribute('aria-label', i18n[currentLang].zoomIn);
   zoomOutBtn.setAttribute('aria-label', i18n[currentLang].zoomOut);
-  mapImage.alt = mostrandoCara1 ? i18n[currentLang].altFace1 : i18n[currentLang].altFace2;
+  mapImage.alt = i18n[currentLang].altFace1;
 }
 
 if (langSelect) {
@@ -357,7 +341,6 @@ if (themeToggle) {
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.lang = currentLang;
   mapImage.alt = i18n[currentLang].altFace1;
-  switchBtn.textContent = i18n[currentLang].switchToFace2;
   loadSavedTheme(); // Cargar tema guardado
   renderPautasAdicionales();
   initializePanzoom();
