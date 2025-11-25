@@ -31,6 +31,7 @@ const i18n = {
     zoomOut: 'Alejar',
     altFace1: 'Mapa Turístico - Cara 1',
     altFace2: 'Mapa Turístico - Cara 2',
+    getDirections: 'Cómo llegar',
     pautas: {
       pauta1: {
         title: 'Cerámicas El Alfarero',
@@ -71,6 +72,7 @@ const i18n = {
     zoomOut: 'Zoom Out',
     altFace1: 'Tourist Map - Face 1',
     altFace2: 'Tourist Map - Face 2',
+    getDirections: 'Get directions',
     pautas: {
       pauta1: {
         title: 'El Alfarero Ceramics',
@@ -111,6 +113,7 @@ const i18n = {
     zoomOut: 'Zoom arrière',
     altFace1: 'Carte touristique - Face 1',
     altFace2: 'Carte touristique - Face 2',
+    getDirections: 'Itinéraire',
     pautas: {
       pauta1: {
         title: 'Céramiques El Alfarero',
@@ -151,6 +154,7 @@ const i18n = {
     zoomOut: 'Verkleinern',
     altFace1: 'Touristenkarte - Seite 1',
     altFace2: 'Touristenkarte - Seite 2',
+    getDirections: 'Route',
     pautas: {
       pauta1: {
         title: 'Keramik El Alfarero',
@@ -220,13 +224,13 @@ function initializePanzoom() {
 // 📢 PAUTAS FIJAS
 // ==============================
 const pautasAdicionales = [
-  { position: 'top',    id: 'pauta1', img: 'assets/pautas/pauta1.jpg',  cara: 1 },
-  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1 },
-  { position: 'top',    id: 'pauta3', img: 'assets/pautas/pauta3.png',  cara: 1 },
-  { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1 },
-  { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1 },
-  { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1 },
-  { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1 }
+  { position: 'top',    id: 'pauta1', img: 'assets/pautas/pauta1.jpg',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1, dest: null },
+  { position: 'top',    id: 'pauta3', img: 'assets/pautas/pauta3.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1, dest: null },
+  { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1, dest: null }
 ];
 
 function renderPautasAdicionales() {
@@ -258,7 +262,11 @@ function renderPautasAdicionales() {
       e.stopPropagation();
       const hasDesc = tr.desc && String(tr.desc).trim().length > 0;
       const descHtml = hasDesc ? `<p style="font-size:14px;color:#333;">${tr.desc}</p>` : '';
-      openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">${descHtml}`);
+      const dest = p.dest && String(p.dest).trim().length > 0 ? p.dest : 'Circasia, Quindío, Colombia';
+      const destParam = encodeURIComponent(dest);
+      const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destParam}`;
+      const actionsHtml = `<div class="modal-actions"><a class="maps-link" href="${directionsUrl}" target="_blank" rel="noopener" aria-label="${i18n[currentLang].getDirections} a ${tr.title}">${i18n[currentLang].getDirections}</a></div>`;
+      openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">${descHtml}${actionsHtml}`);
     });
   });
 }
