@@ -103,6 +103,7 @@ header, footer {
 /* Posiciona elementos internos del header (selector de idioma) */
 header {
   position: relative;
+  padding-top: 72px; /* evita superposición con botón fijo superior */
 }
 
 /* Selector de idioma */
@@ -176,6 +177,7 @@ header {
 
 @media (max-width: 600px) {
   #maps-global-btn { padding: 10px 16px; font-weight: 800; }
+  header { padding-top: 88px; } /* más espacio en pantallas pequeñas */
 }
 
 #theme-toggle:hover {
