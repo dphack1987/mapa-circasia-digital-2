@@ -103,7 +103,10 @@ header, footer {
 /* Posiciona elementos internos del header (selector de idioma) */
 header {
   position: relative;
-  padding-top: 72px; /* evita superposición con botón fijo superior */
+  padding-top: 16px; /* espacio superior moderado */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Selector de idioma */
@@ -131,12 +134,13 @@ header {
   justify-content: center;
 }
 
-/* Botón global: Cómo llegar a Circasia (más visible y estético) */
+/* Botón global: Cómo llegar a Circasia (visible y centrado sin superposición) */
 #maps-global-btn {
-  position: fixed;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative; /* entra en flujo dentro del header */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 12px; /* centrado dentro del header */
   background: linear-gradient(135deg, #2e7d32 0%, #43a047 50%, #66bb6a 100%);
   color: #fff;
   padding: 12px 20px;
@@ -148,7 +152,7 @@ header {
   border: 1px solid rgba(255,255,255,0.25);
   backdrop-filter: saturate(160%) blur(8px);
   transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-  z-index: 1100;
+  z-index: 2;
   will-change: transform, filter;
   animation: pulseGlow 3.2s ease-in-out infinite;
 }
@@ -159,7 +163,7 @@ header {
 }
 
 #maps-global-btn:hover {
-  transform: translateX(-50%) translateY(-1px);
+  transform: translateY(-1px);
   background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
   box-shadow: 0 14px 32px rgba(46,125,50,0.45), 0 0 0 3px rgba(255,255,255,0.45) inset;
   filter: brightness(1.06) saturate(1.05);
@@ -176,8 +180,8 @@ header {
 }
 
 @media (max-width: 600px) {
-  #maps-global-btn { padding: 10px 16px; font-weight: 800; }
-  header { padding-top: 88px; } /* más espacio en pantallas pequeñas */
+  #maps-global-btn { padding: 10px 16px; font-weight: 800; margin: 8px auto 10px; }
+  header { padding-top: 20px; } /* espacio ajustado en pantallas pequeñas */
 }
 
 #theme-toggle:hover {
