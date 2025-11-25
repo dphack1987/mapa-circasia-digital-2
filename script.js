@@ -31,6 +31,7 @@ const i18n = {
     zoomOut: 'Alejar',
     altFace1: 'Mapa Turístico - Cara 1',
     altFace2: 'Mapa Turístico - Cara 2',
+    globalDirections: 'Cómo llegar a Circasia',
     getDirections: 'Cómo llegar',
     pautas: {
       pauta1: {
@@ -72,6 +73,7 @@ const i18n = {
     zoomOut: 'Zoom Out',
     altFace1: 'Tourist Map - Face 1',
     altFace2: 'Tourist Map - Face 2',
+    globalDirections: 'Directions to Circasia',
     getDirections: 'Get directions',
     pautas: {
       pauta1: {
@@ -113,6 +115,7 @@ const i18n = {
     zoomOut: 'Zoom arrière',
     altFace1: 'Carte touristique - Face 1',
     altFace2: 'Carte touristique - Face 2',
+    globalDirections: 'Itinéraire vers Circasia',
     getDirections: 'Itinéraire',
     pautas: {
       pauta1: {
@@ -154,6 +157,7 @@ const i18n = {
     zoomOut: 'Verkleinern',
     altFace1: 'Touristenkarte - Seite 1',
     altFace2: 'Touristenkarte - Seite 2',
+    globalDirections: 'Route nach Circasia',
     getDirections: 'Route',
     pautas: {
       pauta1: {
@@ -302,8 +306,13 @@ zoomOutBtn.addEventListener('click', (e) => {
 function applyTranslations() {
   const headerTitleEl = document.getElementById('header-title');
   const headerSubtitleEl = document.getElementById('header-subtitle');
+  const mapsGlobalBtn = document.getElementById('maps-global-btn');
   if (headerTitleEl) headerTitleEl.textContent = i18n[currentLang].headerTitle;
   if (headerSubtitleEl) headerSubtitleEl.textContent = i18n[currentLang].headerSubtitle;
+  if (mapsGlobalBtn) {
+    mapsGlobalBtn.textContent = i18n[currentLang].globalDirections;
+    mapsGlobalBtn.setAttribute('aria-label', i18n[currentLang].globalDirections);
+  }
   zoomInBtn.setAttribute('aria-label', i18n[currentLang].zoomIn);
   zoomOutBtn.setAttribute('aria-label', i18n[currentLang].zoomOut);
   mapImage.alt = i18n[currentLang].altFace1;
