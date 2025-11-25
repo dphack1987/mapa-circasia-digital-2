@@ -213,6 +213,7 @@ header::after {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  scroll-behavior: smooth; /* desplazamiento más agradable */
   padding: 0; /* eliminar espacio blanco interno del contenedor */
   gap: var(--gap-pauta); /* separación mínima entre pautas */
   background: linear-gradient(135deg, var(--glass-bg), rgba(77,208,225,0.15));

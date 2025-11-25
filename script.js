@@ -51,16 +51,16 @@ const i18n = {
         desc: 'Gastronomía típica en un ambiente acogedor. ¡Buen provecho!'
       },
       pauta5: {
-        title: 'Pauta 5',
-        desc: 'Contenido promocional / cultural adicional.'
+        title: 'Mapaturisticodelquindio.com',
+        desc: ''
       },
       pauta6: {
         title: 'Pauta 6',
-        desc: 'Contenido promocional / cultural adicional.'
+        desc: ''
       },
       pauta7: {
         title: 'Pauta 7',
-        desc: 'Contenido promocional / cultural adicional.'
+        desc: ''
       }
     }
   },
@@ -91,16 +91,16 @@ const i18n = {
         desc: 'Traditional cuisine in a cozy setting. Enjoy!'
       },
       pauta5: {
-        title: 'Ad Slot 5',
-        desc: 'Additional promotional or cultural content.'
+        title: 'Mapaturisticodelquindio.com',
+        desc: ''
       },
       pauta6: {
         title: 'Ad Slot 6',
-        desc: 'Additional promotional or cultural content.'
+        desc: ''
       },
       pauta7: {
         title: 'Ad Slot 7',
-        desc: 'Additional promotional or cultural content.'
+        desc: ''
       }
     }
   },
@@ -131,16 +131,16 @@ const i18n = {
         desc: 'Cuisine traditionnelle dans un cadre chaleureux. Bon appétit !'
       },
       pauta5: {
-        title: 'Publicité 5',
-        desc: 'Contenu promotionnel ou culturel supplémentaire.'
+        title: 'Mapaturisticodelquindio.com',
+        desc: ''
       },
       pauta6: {
         title: 'Publicité 6',
-        desc: 'Contenu promotionnel ou culturel supplémentaire.'
+        desc: ''
       },
       pauta7: {
         title: 'Publicité 7',
-        desc: 'Contenu promotionnel ou culturel supplémentaire.'
+        desc: ''
       }
     }
   },
@@ -171,16 +171,16 @@ const i18n = {
         desc: 'Traditionelle Küche in gemütlicher Atmosphäre. Guten Appetit!'
       },
       pauta5: {
-        title: 'Anzeige 5',
-        desc: 'Zusätzliche Werbe- oder Kulturinhalte.'
+        title: 'Mapaturisticodelquindio.com',
+        desc: ''
       },
       pauta6: {
         title: 'Anzeige 6',
-        desc: 'Zusätzliche Werbe- oder Kulturinhalte.'
+        desc: ''
       },
       pauta7: {
         title: 'Anzeige 7',
-        desc: 'Zusätzliche Werbe- oder Kulturinhalte.'
+        desc: ''
       }
     }
   }
@@ -271,7 +271,9 @@ function renderPautasAdicionales() {
     }
     pautaEl.addEventListener('click', e => {
       e.stopPropagation();
-      openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;"><p style="font-size:14px;color:#333;">${tr.desc}</p>`);
+      const hasDesc = tr.desc && String(tr.desc).trim().length > 0;
+      const descHtml = hasDesc ? `<p style="font-size:14px;color:#333;">${tr.desc}</p>` : '';
+      openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">${descHtml}`);
     });
   });
 }
