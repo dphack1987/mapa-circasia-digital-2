@@ -62,6 +62,11 @@ const i18n = {
         title: 'Pauta 7',
         desc: ''
       }
+      ,
+      pauta8: {
+        title: 'Pauta 8',
+        desc: ''
+      }
     }
   },
   en: {
@@ -102,6 +107,11 @@ const i18n = {
       },
       pauta7: {
         title: 'Ad Slot 7',
+        desc: ''
+      }
+      ,
+      pauta8: {
+        title: 'Ad Slot 8',
         desc: ''
       }
     }
@@ -146,6 +156,11 @@ const i18n = {
         title: 'Publicité 7',
         desc: ''
       }
+      ,
+      pauta8: {
+        title: 'Publicité 8',
+        desc: ''
+      }
     }
   },
   de: {
@@ -186,6 +201,11 @@ const i18n = {
       },
       pauta7: {
         title: 'Anzeige 7',
+        desc: ''
+      }
+      ,
+      pauta8: {
+        title: 'Anzeige 8',
         desc: ''
       }
     }
@@ -234,7 +254,8 @@ const pautasAdicionales = [
   { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1, dest: 'El Roble, Sobre la autopista del café, Armenia - Pereira Km 12, Arrayanal, Circasia, Quindío' },
   { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1, dest: null },
   { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1, dest: null },
-  { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1, dest: null }
+  { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1, dest: null },
+  { position: 'top',    id: 'pauta8', img: 'assets/pautas/pauta8.png',  cara: 1, dest: '4.619811,-75.635037' }
 ];
 
 // ==============================
