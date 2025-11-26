@@ -386,6 +386,8 @@ header::after {
   justify-content: center;
   align-items: center;
   position: relative; /* permite posicionar marcadores absolutos dentro */
+  cursor: grab;
+  touch-action: none;
 }
 
 #map-image {
