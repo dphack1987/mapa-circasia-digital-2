@@ -367,26 +367,45 @@ function renderPautasAdicionales() {
     const tr = i18n[currentLang].pautas[p.id];
     pautaEl.title = tr.title;
     const imgEl = document.createElement('img');
-    imgEl.src = p.img;
     imgEl.alt = tr.title;
-    // Fallback si la imagen no existe (muestra un SVG embebido)
+    // Loader robusto: prueba múltiples rutas/formatos antes del fallback
+    const name = p.id; // ej: 'pauta8'
+    const dir = 'assets/pautas/';
+    const cap = name.charAt(0).toUpperCase() + name.slice(1);
+    const candidates = [
+      p.img,
+      `${dir}${name}.png`,
+      `${dir}${name}.jpg`,
+      `${dir}${name}.jpeg`,
+      `${dir}${name}.webp`,
+      `${dir}${cap}.png`,
+      `${dir}${cap}.jpg`
+    ];
+    let attempt = 0;
+    function setCandidate() { imgEl.src = candidates[attempt]; }
     imgEl.addEventListener('error', () => {
-      const svg = encodeURIComponent(
-        `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'>
-           <defs>
-             <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-               <stop offset='0%' stop-color='#1b5e20'/>
-               <stop offset='50%' stop-color='#2e7d32'/>
-               <stop offset='100%' stop-color='#4dd0e1'/>
-             </linearGradient>
-           </defs>
-           <rect x='0' y='0' width='400' height='300' fill='url(#g)'/>
-           <text x='200' y='150' fill='white' font-family='Montserrat, sans-serif' font-size='22' text-anchor='middle' dominant-baseline='middle' font-weight='700'>${tr.title}</text>
-           <text x='200' y='180' fill='rgba(255,255,255,0.8)' font-family='Montserrat, sans-serif' font-size='14' text-anchor='middle' dominant-baseline='middle'>Imagen no disponible</text>
-         </svg>`
-      );
-      imgEl.src = `data:image/svg+xml;utf8,${svg}`;
+      attempt++;
+      if (attempt < candidates.length) {
+        setCandidate();
+      } else {
+        const svg = encodeURIComponent(
+          `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'>
+             <defs>
+               <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+                 <stop offset='0%' stop-color='#1b5e20'/>
+                 <stop offset='50%' stop-color='#2e7d32'/>
+                 <stop offset='100%' stop-color='#4dd0e1'/>
+               </linearGradient>
+             </defs>
+             <rect x='0' y='0' width='400' height='300' fill='url(#g)'/>
+             <text x='200' y='150' fill='white' font-family='Montserrat, sans-serif' font-size='22' text-anchor='middle' dominant-baseline='middle' font-weight='700'>${tr.title}</text>
+             <text x='200' y='180' fill='rgba(255,255,255,0.8)' font-family='Montserrat, sans-serif' font-size='14' text-anchor='middle' dominant-baseline='middle'>Imagen no disponible</text>
+           </svg>`
+        );
+        imgEl.src = `data:image/svg+xml;utf8,${svg}`;
+      }
     });
+    setCandidate();
     pautaEl.appendChild(imgEl);
     const titleEl = document.createElement('div');
     titleEl.classList.add('pauta-title');
