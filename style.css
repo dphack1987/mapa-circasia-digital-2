@@ -113,8 +113,8 @@ header {
 /* Selector de idioma */
 #lang-switcher {
   position: absolute;
-  top: 14px;
-  right: 70px;
+  bottom: 12px;
+  right: 16px;
   z-index: 3; /* por encima de la franja del header */
 }
 
