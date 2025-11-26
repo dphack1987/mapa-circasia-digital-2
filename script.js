@@ -369,6 +369,24 @@ function renderPautasAdicionales() {
     const imgEl = document.createElement('img');
     imgEl.src = p.img;
     imgEl.alt = tr.title;
+    // Fallback si la imagen no existe (muestra un SVG embebido)
+    imgEl.addEventListener('error', () => {
+      const svg = encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'>
+           <defs>
+             <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+               <stop offset='0%' stop-color='#1b5e20'/>
+               <stop offset='50%' stop-color='#2e7d32'/>
+               <stop offset='100%' stop-color='#4dd0e1'/>
+             </linearGradient>
+           </defs>
+           <rect x='0' y='0' width='400' height='300' fill='url(#g)'/>
+           <text x='200' y='150' fill='white' font-family='Montserrat, sans-serif' font-size='22' text-anchor='middle' dominant-baseline='middle' font-weight='700'>${tr.title}</text>
+           <text x='200' y='180' fill='rgba(255,255,255,0.8)' font-family='Montserrat, sans-serif' font-size='14' text-anchor='middle' dominant-baseline='middle'>Imagen no disponible</text>
+         </svg>`
+      );
+      imgEl.src = `data:image/svg+xml;utf8,${svg}`;
+    });
     pautaEl.appendChild(imgEl);
     const titleEl = document.createElement('div');
     titleEl.classList.add('pauta-title');
@@ -391,7 +409,22 @@ function renderPautasAdicionales() {
     const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destParam}`;
     actionsHtml = `<div class="modal-actions"><a class="maps-link" href="${directionsUrl}" target="_blank" rel="noopener" aria-label="${i18n[currentLang].getDirections} a ${tr.title}">${i18n[currentLang].getDirections}</a></div>`;
   }
-  openModal(tr.title, `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;">${descHtml}${actionsHtml}`);
+  const modalSvg = encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>
+       <defs>
+         <linearGradient id='gm' x1='0' y1='0' x2='1' y2='1'>
+           <stop offset='0%' stop-color='#1b5e20'/>
+           <stop offset='50%' stop-color='#2e7d32'/>
+           <stop offset='100%' stop-color='#4dd0e1'/>
+         </linearGradient>
+       </defs>
+       <rect x='0' y='0' width='800' height='600' fill='url(#gm)'/>
+       <text x='400' y='300' fill='white' font-family='Montserrat, sans-serif' font-size='28' text-anchor='middle' dominant-baseline='middle' font-weight='700'>${tr.title}</text>
+       <text x='400' y='336' fill='rgba(255,255,255,0.85)' font-family='Montserrat, sans-serif' font-size='16' text-anchor='middle' dominant-baseline='middle'>Imagen no disponible</text>
+     </svg>`
+  );
+  const modalImgHtml = `<img src="${p.img}" alt="${tr.title}" style="width:100%; border-radius:6px; margin-bottom:8px;" onerror="this.src='data:image/svg+xml;utf8,${modalSvg}'">`;
+  openModal(tr.title, `${modalImgHtml}${descHtml}${actionsHtml}`);
     });
   });
 }
