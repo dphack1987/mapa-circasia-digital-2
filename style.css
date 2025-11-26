@@ -103,7 +103,8 @@ header, footer {
 /* Posiciona elementos internos del header (selector de idioma) */
 header {
   position: relative;
-  padding-top: 100px; /* espacio para logo (72px) y controles */
+  padding-top: 24px; /* restaurado como estaba */
+  padding-left: 120px; /* reserva espacio lateral para logo grande */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -133,6 +134,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 3;
 }
 
 /* Botón global: Cómo llegar a Circasia (visible y centrado sin superposición) */
@@ -184,7 +186,7 @@ header {
 
 @media (max-width: 600px) {
   #maps-global-btn { padding: 10px 16px; font-weight: 800; margin: 12px auto 14px; }
-  header { padding-top: 116px; } /* más espacio para logo y controles en móviles */
+  header { padding-top: 36px; padding-left: 96px; } /* restaurado y ajuste lateral para logo en móviles */
 }
 
 #theme-toggle:hover {
@@ -353,7 +355,7 @@ header::after {
 /* 🖼️ Logo en el header (esquina superior izquierda) */
 #map-logo {
   position: absolute;
-  top: 12px;
+  top: 8px;
   left: 12px;
   z-index: 2; /* por encima de la franja del header */
   pointer-events: none; /* marca visual, sin interacción */
@@ -361,16 +363,14 @@ header::after {
 
 #map-logo img {
   display: block;
-  height: 72px; /* aumentado */
+  height: 96px; /* más grande */
   width: auto;
   border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-  background: rgba(255,255,255,0.85);
-  border: 1px solid rgba(46,125,50,0.25);
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.18));
 }
 
 @media (max-width: 600px) {
-  #map-logo img { height: 56px; }
+  #map-logo img { height: 72px; }
 }
 
 /* Franja superior decorativa en el header (no en el mapa) */
