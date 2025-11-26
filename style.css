@@ -372,6 +372,27 @@ header::after {
   #map-logo img { height: 44px; }
 }
 
+/* Franja superior decorativa */
+#top-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000; /* por debajo del logo */
+  pointer-events: none; /* no bloquea pan/zoom ni clics */
+  display: flex;
+  justify-content: center;
+}
+
+#top-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.18));
+}
+
 /* Fondo mesh animado para dar vida al área del mapa */
 #map-container::before {
   content: '';
