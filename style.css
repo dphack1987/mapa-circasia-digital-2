@@ -349,13 +349,13 @@ header::after {
     #fafafa;
 }
 
-/* 🖼️ Logo superior del mapa */
+/* 🖼️ Logo en el header (esquina superior izquierda) */
 #map-logo {
   position: absolute;
   top: 12px;
-  right: 12px;
-  z-index: 1002;
-  pointer-events: none; /* no bloquea el pan/zoom */
+  left: 12px;
+  z-index: 2; /* por encima de la franja del header */
+  pointer-events: none; /* marca visual, sin interacción */
 }
 
 #map-logo img {
