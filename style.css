@@ -372,26 +372,31 @@ header::after {
   #map-logo img { height: 44px; }
 }
 
-/* Franja superior decorativa */
-#top-banner {
+/* Franja superior decorativa en el header (no en el mapa) */
+header { position: relative; }
+header #top-banner {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   width: 100%;
-  z-index: 1000; /* por debajo del logo */
-  pointer-events: none; /* no bloquea pan/zoom ni clics */
+  pointer-events: none; /* puro decorativo */
   display: flex;
   justify-content: center;
+  align-items: center;
+  z-index: 0; /* por detrás del contenido del header */
 }
 
-#top-banner img {
+header #top-banner img {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.18));
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.25; /* sutil para no competir con textos */
+  mix-blend-mode: soft-light; /* se integra al degradado verde */
+  filter: saturate(115%) contrast(105%);
 }
+
+/* Asegurar que la barrita decorativa del header quede encima */
+header::after { z-index: 1; }
 
 /* Fondo mesh animado para dar vida al área del mapa */
 #map-container::before {
