@@ -360,7 +360,7 @@ header::after {
 
 #map-logo img {
   display: block;
-  height: 56px;
+  height: 72px; /* aumentado */
   width: auto;
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.18);
@@ -369,7 +369,7 @@ header::after {
 }
 
 @media (max-width: 600px) {
-  #map-logo img { height: 44px; }
+  #map-logo img { height: 56px; }
 }
 
 /* Franja superior decorativa en el header (no en el mapa) */
