@@ -5,142 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa Digital de Circasia</title>
     
-    
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
     <link rel="stylesheet" href="style.css?v=20251125-15">
 </head>
 <body>
 
-    <div id="map"></div>
+  <header>
+    <div id="map-logo"><img src="assets/imagenes/logo1.png" alt="Logo Circasia"></div>
+    <button id="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    <select id="lang-select" aria-label="Idioma">
+      <option value="es" selected>ES</option>
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="de">DE</option>
+    </select>
+    <h1 id="header-title">Mapa Turístico de Circasia 2025</h1>
+    <p id="header-subtitle">Explora los puntos más representativos del municipio</p>
+    <button id="maps-global-btn" type="button">Cómo llegar a Circasia</button>
+  </header>
 
-    <script>
-        // Inicializar el mapa
-        var map = L.map('map').setView([4.7585, -75.6361], 14); // Coordenadas de Circasia, Quindío
+  <main id="scrollable-content">
+    <section id="pauta-superior-container" aria-label="Pautas superiores"></section>
 
-        // Añadir capa de teselas (mapa base)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
+    <section id="map-container" aria-label="Mapa">
+      <div id="panzoom-element-wrapper">
+        <img id="map-image" src="assets/cara1.jpg" alt="Mapa Turístico - Cara 1">
+        <div id="map-markers" aria-hidden="false"></div>
+      </div>
+      <div id="zoom-controls">
+        <button id="zoom-in-btn" aria-label="Acercar">+</button>
+        <button id="zoom-out-btn" aria-label="Alejar">−</button>
+      </div>
+    </section>
 
-        // Definir iconos personalizados
-        var parqueIcon = L.icon({
-            iconUrl: 'icons/parque.png',
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -38]
-        });
+    <section id="pauta-inferior-container" aria-label="Pautas inferiores"></section>
+  </main>
 
-        var iglesiaIcon = L.icon({
-            iconUrl: 'icons/iglesia.png',
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -38]
-        });
-
-        var colegioIcon = L.icon({
-            iconUrl: 'icons/colegio.png',
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -38]
-        });
-
-        var restauranteIcon = L.icon({
-            iconUrl: 'icons/restaurante.png',
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -38]
-        });
-
-        var hotelIcon = L.icon({
-            iconUrl: 'icons/hotel.png',
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -38]
-        });
-
-        var sitioIcon = L.icon({
-            iconUrl: 'icons/sitio.png',
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -38]
-        });
-
-        // Grupos de marcadores para cada categoría
-        var markersParques = L.markerClusterGroup();
-        var markersIglesias = L.markerClusterGroup();
-        var markersColegios = L.markerClusterGroup();
-        var markersRestaurantes = L.markerClusterGroup();
-        var markersHoteles = L.markerClusterGroup();
-        var markersSitios = L.markerClusterGroup();
-
-        // Función para añadir marcadores a un grupo específico
-        function addMarkerToGroup(lat, lon, title, group, icon) {
-            var marker = L.marker([lat, lon], { icon: icon }).bindPopup(title);
-            group.addLayer(marker);
-        }
-
-        // Añadir marcadores de Parques
-        addMarkerToGroup(4.7563, -75.6325, "Parque Principal Simón Bolívar", markersParques, parqueIcon);
-        addMarkerToGroup(4.7632, -75.6401, "Parque del Bosque", markersParques, parqueIcon);
-        addMarkerToGroup(4.7545, -75.6388, "Parque La Libertad", markersParques, parqueIcon);
-        addMarkerToGroup(4.7599, -75.6410, "Parque de los Periodistas", markersParques, parqueIcon);
-
-        // Añadir marcadores de Iglesias
-        addMarkerToGroup(4.7571, -75.6331, "Iglesia San José", markersIglesias, iglesiaIcon);
-        addMarkerToGroup(4.7615, -75.6398, "Iglesia Nuestra Señora del Carmen", markersIglesias, iglesiaIcon);
-
-        // Añadir marcadores de Colegios
-        addMarkerToGroup(4.7620, -75.6375, "Institución Educativa Agrícola de Circasia", markersColegios, colegioIcon);
-        addMarkerToGroup(4.7548, -75.6345, "Escuela Normal Superior de Circasia", markersColegios, colegioIcon);
-        addMarkerToGroup(4.7588, -75.6425, "Colegio Camilo Torres", markersColegios, colegioIcon);
-
-        // Añadir marcadores de Restaurantes
-        addMarkerToGroup(4.7575, -75.6315, "Restaurante El Mirador", markersRestaurantes, restauranteIcon);
-        addMarkerToGroup(4.7590, -75.6340, "Comida Típica Doña María", markersRestaurantes, restauranteIcon);
-        addMarkerToGroup(4.7618, -75.6385, "Parrilladas El Buen Sabor", markersRestaurantes, restauranteIcon);
-        addMarkerToGroup(4.7555, -75.6395, "Café y Panadería La 14", markersRestaurantes, restauranteIcon);
-        addMarkerToGroup(4.7635, -75.6360, "Restaurante Sazón Circaseño", markersRestaurantes, restauranteIcon);
-
-        // Añadir marcadores de Hoteles
-        addMarkerToGroup(4.7560, -75.6300, "Hotel Mi Rinción", markersHoteles, hotelIcon);
-        addMarkerToGroup(4.7605, -75.6355, "Hostal La Casona", markersHoteles, hotelIcon);
-        addMarkerToGroup(4.7580, -75.6400, "Cabañas El Recuerdo", markersHoteles, hotelIcon);
-
-        // Añadir marcadores de Sitios de Interés
-        addMarkerToGroup(4.7610, -75.6330, "Alcaldía de Circasia", markersSitios, sitioIcon);
-       MarkerToGroup(4.7578, -75.6352, "Plaza de Mercado", markersSitios, sitioIcon);
-        addMarkerToGroup(4.7640, -75.6420, "Mirador de Circasia", markersSitios, sitioIcon);
-        addMarkerToGroup(4.7520, -75.6370, "Entrada a Circasia (Monumento)", markersSitios, sitioIcon);
-        addMarkerToGroup(4.7595, -75.6318, "Biblioteca Pública Municipal", markersSitios, sitioIcon);
-        addMarkerToGroup(4.7628, -75.6408, "Casa de la Cultura", markersSitios, sitioIcon);
-
-        // Añadir los grupos de marcadores al mapa
-        map.addLayer(markersParques);
-        map.addLayer(markersIglesias);
-        map.addLayer(markersColegios);
-        map.addLayer(markersRestaurantes);
-        map.addLayer(markersHoteles);
-        map.addLayer(markersSitios);
-
-        // Crear el control de capas
-        var overlayMaps = {
-            "Parques": markersParques,
-            "Iglesias": markersIglesias,
-            "Colegios": markersColegios,
-            "Restaurantes": markersRestaurantes,
-            "Hoteles": markersHoteles,
-            "Sitios de Interés": markersSitios
-        };
-
-        L.control.layers(null, overlayMaps).addTo(map);
-
-    </script>
+  <div id="info-modal" class="hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <h3 id="modal-title"></h3>
+      <div id="modal-desc"></div>
+      <button id="close-modal">Cerrar</button>
+    </div>
+  </div>
 
   <!-- 🚨 Añadimos la librería Panzoom para el zoom -->
   <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
