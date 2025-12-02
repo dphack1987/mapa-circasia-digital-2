@@ -371,15 +371,31 @@ function renderPautasAdicionales() {
     // Loader robusto: prueba múltiples rutas/formatos antes del fallback
     const name = p.id; // ej: 'pauta8'
     const dir = 'assets/pautas/';
+    const dirAbs = '/assets/pautas/';
+    const dirRelDot = './assets/pautas/';
     const cap = name.charAt(0).toUpperCase() + name.slice(1);
+    const withLeadingSlash = (path) => path.startsWith('/') ? path : `/${path}`;
     const candidates = [
       p.img,
+      withLeadingSlash(p.img),
       `${dir}${name}.png`,
+      `${dirAbs}${name}.png`,
+      `${dirRelDot}${name}.png`,
       `${dir}${name}.jpg`,
+      `${dirAbs}${name}.jpg`,
+      `${dirRelDot}${name}.jpg`,
       `${dir}${name}.jpeg`,
+      `${dirAbs}${name}.jpeg`,
+      `${dirRelDot}${name}.jpeg`,
       `${dir}${name}.webp`,
+      `${dirAbs}${name}.webp`,
+      `${dirRelDot}${name}.webp`,
       `${dir}${cap}.png`,
-      `${dir}${cap}.jpg`
+      `${dirAbs}${cap}.png`,
+      `${dirRelDot}${cap}.png`,
+      `${dir}${cap}.jpg`,
+      `${dirAbs}${cap}.jpg`,
+      `${dirRelDot}${cap}.jpg`
     ];
     let attempt = 0;
     function setCandidate() { imgEl.src = candidates[attempt]; }
