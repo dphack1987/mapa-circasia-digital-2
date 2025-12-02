@@ -216,6 +216,10 @@ const i18n = {
 // 🔍 FUNCIÓN PARA INICIALIZAR EL ZOOM
 // ==============================
 function initializePanzoom() {
+  // Verificar elementos requeridos
+  if (!mapContainer || !panzoomWrapper || typeof Panzoom !== 'function') {
+    return; // Entorno no compatible (por ejemplo, página Leaflet), evitar errores
+  }
   // Limpia manejador de rueda previo si existe
   if (zoomWheelHandler) {
     mapContainer.removeEventListener('wheel', zoomWheelHandler);
@@ -357,6 +361,7 @@ function renderMapMarkers() {
 function renderPautasAdicionales() {
   const topAdContainer = document.getElementById('pauta-superior-container');
   const bottomAdContainer = document.getElementById('pauta-inferior-container');
+  if (!topAdContainer || !bottomAdContainer) return; // Evitar errores si no existen contenedores
   topAdContainer.innerHTML = '';
   bottomAdContainer.innerHTML = '';
   
@@ -504,7 +509,7 @@ function applyTranslations() {
   }
   zoomInBtn.setAttribute('aria-label', i18n[currentLang].zoomIn);
   zoomOutBtn.setAttribute('aria-label', i18n[currentLang].zoomOut);
-  mapImage.alt = i18n[currentLang].altFace1;
+  if (mapImage) mapImage.alt = i18n[currentLang].altFace1;
 }
 
 if (langSelect) {
@@ -550,9 +555,14 @@ renderMapMarkers();
 
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.lang = currentLang;
-  mapImage.alt = i18n[currentLang].altFace1;
+  if (mapImage) mapImage.alt = i18n[currentLang].altFace1;
   loadSavedTheme(); // Cargar tema guardado
-  renderPautasAdicionales();
-  initializePanzoom();
+  // Ejecutar sólo si existen contenedores esperados
+  if (document.getElementById('pauta-superior-container') && document.getElementById('pauta-inferior-container')) {
+    renderPautasAdicionales();
+  }
+  if (mapContainer && panzoomWrapper && typeof Panzoom === 'function') {
+    initializePanzoom();
+  }
   applyTranslations();
 });
