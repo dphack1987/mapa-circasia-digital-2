@@ -1101,8 +1101,6 @@ header h1 {
   background: linear-gradient(to top, rgba(18,18,18,0.58), rgba(18,18,18,0.32));
   backdrop-filter: blur(6px) saturate(115%);
   border-top: 1px solid rgba(255,255,255,0.08);
-  letter-spacing: 0.2px;
-}
   font-size: 14px;
   letter-spacing: 0.3px;
   text-shadow: 0 2px 6px rgba(0,0,0,0.45);
