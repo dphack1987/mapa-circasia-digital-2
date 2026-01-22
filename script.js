@@ -66,6 +66,30 @@ const i18n = {
       pauta8: {
         title: 'Pauta 8',
         desc: ''
+      },
+      pauta9: {
+        title: 'Pauta 9',
+        desc: ''
+      },
+      pauta10: {
+        title: 'Pauta 10',
+        desc: ''
+      },
+      pauta11: {
+        title: 'Pauta 11',
+        desc: ''
+      },
+      pauta12: {
+        title: 'Pauta 12',
+        desc: ''
+      },
+      pauta13: {
+        title: 'Pauta 13',
+        desc: ''
+      },
+      pauta14: {
+        title: 'Pauta 14',
+        desc: ''
       }
     }
   },
@@ -113,6 +137,30 @@ const i18n = {
       pauta8: {
         title: 'Ad Slot 8',
         desc: ''
+      },
+      pauta9: {
+        title: 'Ad Slot 9',
+        desc: ''
+      },
+      pauta10: {
+        title: 'Ad Slot 10',
+        desc: ''
+      },
+      pauta11: {
+        title: 'Ad Slot 11',
+        desc: ''
+      },
+      pauta12: {
+        title: 'Ad Slot 12',
+        desc: ''
+      },
+      pauta13: {
+        title: 'Ad Slot 13',
+        desc: ''
+      },
+      pauta14: {
+        title: 'Ad Slot 14',
+        desc: ''
       }
     }
   },
@@ -155,10 +203,33 @@ const i18n = {
       pauta7: {
         title: 'Publicité 7',
         desc: ''
-      }
-      ,
+      },
       pauta8: {
         title: 'Publicité 8',
+        desc: ''
+      },
+      pauta9: {
+        title: 'Publicité 9',
+        desc: ''
+      },
+      pauta10: {
+        title: 'Publicité 10',
+        desc: ''
+      },
+      pauta11: {
+        title: 'Publicité 11',
+        desc: ''
+      },
+      pauta12: {
+        title: 'Publicité 12',
+        desc: ''
+      },
+      pauta13: {
+        title: 'Publicité 13',
+        desc: ''
+      },
+      pauta14: {
+        title: 'Publicité 14',
         desc: ''
       }
     }
@@ -206,6 +277,30 @@ const i18n = {
       ,
       pauta8: {
         title: 'Anzeige 8',
+        desc: ''
+      },
+      pauta9: {
+        title: 'Anzeige 9',
+        desc: ''
+      },
+      pauta10: {
+        title: 'Anzeige 10',
+        desc: ''
+      },
+      pauta11: {
+        title: 'Anzeige 11',
+        desc: ''
+      },
+      pauta12: {
+        title: 'Anzeige 12',
+        desc: ''
+      },
+      pauta13: {
+        title: 'Anzeige 13',
+        desc: ''
+      },
+      pauta14: {
+        title: 'Anzeige 14',
         desc: ''
       }
     }
@@ -259,7 +354,13 @@ const pautasAdicionales = [
   { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1, dest: null },
   { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1, dest: null },
   { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1, dest: null },
-  { position: 'top',    id: 'pauta8', img: 'assets/pautas/pauta8.png',  cara: 1, dest: '4.619811,-75.635037' }
+  { position: 'top',    id: 'pauta8', img: 'assets/pautas_circasia/pauta8.png',  cara: 1, dest: '4.619811,-75.635037' },
+  { position: 'top',    id: 'pauta9', img: 'assets/pautas_circasia/pauta9.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta10', img: 'assets/pautas_circasia/pauta10.png', cara: 1, dest: null },
+  { position: 'top',    id: 'pauta11', img: 'assets/pautas_circasia/pauta11.png', cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta12', img: 'assets/pautas_circasia/pauta12.png', cara: 1, dest: null },
+  { position: 'top',    id: 'pauta13', img: 'assets/pautas_circasia/pauta13.png', cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta14', img: 'assets/pautas_circasia/pauta14.png', cara: 1, dest: null }
 ];
 
 // ==============================
@@ -375,9 +476,9 @@ function renderPautasAdicionales() {
     imgEl.alt = tr.title;
     // Loader robusto: prueba múltiples rutas/formatos antes del fallback
     const name = p.id; // ej: 'pauta8'
-    const dir = 'assets/pautas/';
-    const dirAbs = '/assets/pautas/';
-    const dirRelDot = './assets/pautas/';
+    const dir = 'assets/pautas_circasia/';
+    const dirAbs = '/assets/pautas_circasia/';
+    const dirRelDot = './assets/pautas_circasia/';
     const cap = name.charAt(0).toUpperCase() + name.slice(1);
     const withLeadingSlash = (path) => path.startsWith('/') ? path : `/${path}`;
     const candidates = [
@@ -565,4 +666,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePanzoom();
   }
   applyTranslations();
+  setupHorizontalScroll();
 });
