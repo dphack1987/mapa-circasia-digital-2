@@ -613,9 +613,8 @@ header::after { z-index: 1; }
 =========================== */
 .pauta {
   display: block; 
-  width: 400px;  /* más grande y uniforme */
-  height: 300px; /* 4:3 exacto */
-  flex: 0 0 400px; /* asegura ancho fijo en el contenedor flex */
+  width: 100%; /* Ocupa todo el ancho de la celda del grid */
+  aspect-ratio: 4 / 3;
   border: 1px solid #e0e0e0;
   background-color: var(--surface);
   border-radius: var(--radius-card);
@@ -625,9 +624,6 @@ header::after { z-index: 1; }
               transform 260ms cubic-bezier(0.22,1,0.36,1);
   box-shadow: var(--shadow-1);
   position: relative;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always; /* asegura parada en cada tarjeta */
   
   /* Animación de entrada */
   opacity: 0;

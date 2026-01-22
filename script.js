@@ -666,5 +666,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePanzoom();
   }
   applyTranslations();
-  setupHorizontalScroll();
 });
