@@ -90,6 +90,18 @@ const i18n = {
       pauta14: {
         title: 'Pauta 14',
         desc: ''
+      },
+      pauta15: {
+        title: 'Pauta 15',
+        desc: ''
+      },
+      pauta16: {
+        title: 'Pauta 16',
+        desc: ''
+      },
+      pauta17: {
+        title: 'Pauta 17',
+        desc: ''
       }
     }
   },
@@ -160,6 +172,18 @@ const i18n = {
       },
       pauta14: {
         title: 'Ad Slot 14',
+        desc: ''
+      },
+      pauta15: {
+        title: 'Ad Slot 15',
+        desc: ''
+      },
+      pauta16: {
+        title: 'Ad Slot 16',
+        desc: ''
+      },
+      pauta17: {
+        title: 'Ad Slot 17',
         desc: ''
       }
     }
@@ -347,20 +371,23 @@ function initializePanzoom() {
 // 📢 PAUTAS FIJAS
 // ==============================
 const pautasAdicionales = [
-  { position: 'top',    id: 'pauta1', img: 'assets/pautas/pauta1.jpg',  cara: 1, dest: '4.619811,-75.635037' },
-  { position: 'bottom', id: 'pauta2', img: 'assets/pautas/pauta2.png',  cara: 1, dest: '' },
-  { position: 'top',    id: 'pauta3', img: 'assets/pautas/pauta3.png',  cara: 1, dest: 'Armenia - Pereira #km 1, Circasia, Salento, Quindío' },
-  { position: 'bottom', id: 'pauta4', img: 'assets/pautas/pauta4.png',  cara: 1, dest: 'El Roble, Sobre la autopista del café, Armenia - Pereira Km 12, Arrayanal, Circasia, Quindío' },
-  { position: 'top',    id: 'pauta5', img: 'assets/pautas/pauta5.png',  cara: 1, dest: null },
-  { position: 'bottom', id: 'pauta6', img: 'assets/pautas/pauta6.png',  cara: 1, dest: null },
-  { position: 'bottom', id: 'pauta7', img: 'assets/pautas/pauta7.png',  cara: 1, dest: null },
+  { position: 'top',    id: 'pauta1', img: 'assets/pautas_circasia/pauta1.jpg',  cara: 1, dest: '4.619811,-75.635037' },
+  { position: 'bottom', id: 'pauta2', img: 'assets/pautas_circasia/pauta2.png',  cara: 1, dest: '' },
+  { position: 'top',    id: 'pauta3', img: 'assets/pautas_circasia/pauta3.png',  cara: 1, dest: 'Armenia - Pereira #km 1, Circasia, Salento, Quindío' },
+  { position: 'bottom', id: 'pauta4', img: 'assets/pautas_circasia/pauta4.png',  cara: 1, dest: 'El Roble, Sobre la autopista del café, Armenia - Pereira Km 12, Arrayanal, Circasia, Quindío' },
+  { position: 'top',    id: 'pauta5', img: 'assets/pautas_circasia/pauta5.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta6', img: 'assets/pautas_circasia/pauta6.png',  cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta7', img: 'assets/pautas_circasia/pauta7.png',  cara: 1, dest: null },
   { position: 'top',    id: 'pauta8', img: 'assets/pautas_circasia/pauta8.png',  cara: 1, dest: '4.619811,-75.635037' },
   { position: 'top',    id: 'pauta9', img: 'assets/pautas_circasia/pauta9.png',  cara: 1, dest: null },
   { position: 'bottom', id: 'pauta10', img: 'assets/pautas_circasia/pauta10.png', cara: 1, dest: null },
   { position: 'top',    id: 'pauta11', img: 'assets/pautas_circasia/pauta11.png', cara: 1, dest: null },
   { position: 'bottom', id: 'pauta12', img: 'assets/pautas_circasia/pauta12.png', cara: 1, dest: null },
   { position: 'top',    id: 'pauta13', img: 'assets/pautas_circasia/pauta13.png', cara: 1, dest: null },
-  { position: 'bottom', id: 'pauta14', img: 'assets/pautas_circasia/pauta14.png', cara: 1, dest: null }
+  { position: 'bottom', id: 'pauta14', img: 'assets/pautas_circasia/pauta14.png', cara: 1, dest: null },
+  { position: 'top',    id: 'pauta15', img: 'assets/pautas_circasia/pauta15.jpg', cara: 1, dest: null },
+  { position: 'bottom', id: 'pauta16', img: 'assets/pautas_circasia/pauta16.jpg', cara: 1, dest: null },
+  { position: 'top',    id: 'pauta17', img: 'assets/pautas_circasia/pauta17.jpg', cara: 1, dest: null }
 ];
 
 // ==============================
