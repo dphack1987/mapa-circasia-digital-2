@@ -722,6 +722,63 @@ if (themeToggle) {
 // Render inicial de marcadores
 renderMapMarkers();
 
+function addCasillasOverlay() {
+  if (!panzoomWrapper) return;
+  const id = 'casillas-info-overlay';
+  let overlay = document.getElementById(id);
+  if (!overlay) {
+    overlay = document.createElement('img');
+    overlay.id = id;
+    overlay.src = 'assets/imagenes/casillas_info.png';
+    overlay.alt = i18n[currentLang]?.pautas?.pauta18?.title || 'Casillas de información';
+    overlay.style.position = 'absolute';
+    overlay.style.width = '14%';
+    overlay.style.maxWidth = '220px';
+    overlay.style.zIndex = '3';
+    overlay.style.userSelect = 'none';
+    overlay.style.cursor = 'grab';
+    panzoomWrapper.appendChild(overlay);
+    const raw = localStorage.getItem('overlayPos_casillas_info');
+    let pos = raw ? (()=>{try{return JSON.parse(raw)}catch{return null}})() : null;
+    if (!pos || typeof pos.x !== 'number' || typeof pos.y !== 'number') pos = { x: 78, y: 10 };
+    overlay.style.left = pos.x + '%';
+    overlay.style.top = pos.y + '%';
+    let dragging = false;
+    let start = null;
+    function onMove(ev) {
+      if (!dragging) return;
+      const rect = panzoomWrapper.getBoundingClientRect();
+      const x = ((ev.clientX - rect.left) / rect.width) * 100;
+      const y = ((ev.clientY - rect.top) / rect.height) * 100;
+      const clampedX = Math.max(0, Math.min(100, x));
+      const clampedY = Math.max(0, Math.min(100, y));
+      overlay.style.left = clampedX + '%';
+      overlay.style.top = clampedY + '%';
+    }
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+      const left = parseFloat(overlay.style.left);
+      const top = parseFloat(overlay.style.top);
+      try { localStorage.setItem('overlayPos_casillas_info', JSON.stringify({ x: left, y: top })); } catch {}
+      overlay.style.cursor = 'grab';
+    }
+    overlay.addEventListener('pointerdown', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      dragging = true;
+      start = { x: ev.clientX, y: ev.clientY };
+      overlay.style.cursor = 'grabbing';
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onUp);
+    });
+  } else {
+    overlay.alt = i18n[currentLang]?.pautas?.pauta18?.title || 'Casillas de información';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.lang = currentLang;
   if (mapImage) mapImage.alt = i18n[currentLang].altFace1;
@@ -733,5 +790,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (mapContainer && panzoomWrapper && typeof Panzoom === 'function') {
     initializePanzoom();
   }
+  addCasillasOverlay();
   applyTranslations();
 });
