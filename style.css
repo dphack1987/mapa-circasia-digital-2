@@ -375,6 +375,9 @@ header::after {
   #map-logo img { height: 72px; }
 }
 
+[data-device="tablet"] #map-logo img { height: 84px; }
+[data-device="mobile"] #map-logo img { height: 64px; }
+
 /* Franja superior decorativa en el header (no en el mapa) */
 header { position: relative; }
 header #top-banner {
@@ -452,6 +455,19 @@ header::after { z-index: 1; }
   cursor: grab;
 }
 
+.casillas-overlay {
+  width: 14%;
+  max-width: 220px;
+}
+[data-device="tablet"] .casillas-overlay {
+  width: 16%;
+  max-width: 200px;
+}
+[data-device="mobile"] .casillas-overlay {
+  width: 20%;
+  max-width: 180px;
+}
+
 /* ==============================
    📍 MARCADORES INTERACTIVOS
    ============================== */
@@ -492,6 +508,15 @@ header::after { z-index: 1; }
   height: 12px;
   background: #2e7d32;
   border-radius: 2px;
+}
+
+[data-device="mobile"] .map-marker {
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+}
+[data-device="mobile"] .map-marker::after {
+  height: 10px;
 }
 
 .map-marker::before {

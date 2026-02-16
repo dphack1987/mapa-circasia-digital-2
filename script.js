@@ -391,11 +391,17 @@ function initializePanzoom() {
     mapImage.style.transform = '';
   }
   // Zoom aplicado al wrapper para que imagen y marcadores se muevan juntos
+  const device = document.documentElement.dataset.device || 'desktop';
+  const cfg = device === 'mobile'
+    ? { maxScale: 4, minScale: 1, step: 0.12 }
+    : device === 'tablet'
+      ? { maxScale: 5, minScale: 1, step: 0.14 }
+      : { maxScale: 6, minScale: 1, step: 0.15 };
   panzoomInstance = Panzoom(panzoomWrapper, {
-    maxScale: 5,
-    minScale: 1,
+    maxScale: cfg.maxScale,
+    minScale: cfg.minScale,
     contain: 'outside',
-    step: 0.15,
+    step: cfg.step,
     animate: true,
     duration: 200,
     transformOrigin: '50% 50%'
@@ -723,6 +729,16 @@ if (themeToggle) {
 // Render inicial de marcadores
 renderMapMarkers();
 
+function detectDeviceClass() {
+  const w = window.innerWidth || document.documentElement.clientWidth || 1024;
+  const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  let cls = 'desktop';
+  if (w <= 600 || coarse) cls = 'mobile';
+  else if (w <= 1024) cls = 'tablet';
+  document.documentElement.dataset.device = cls;
+  return cls;
+}
+
 function addCasillasOverlay() {
   if (!panzoomWrapper) return;
   const id = 'casillas-info-overlay';
@@ -732,9 +748,8 @@ function addCasillasOverlay() {
     overlay.id = id;
     overlay.src = 'assets/imagenes/casillas_info.png';
     overlay.alt = i18n[currentLang]?.pautas?.pauta18?.title || 'Casillas de información';
+    overlay.classList.add('casillas-overlay');
     overlay.style.position = 'absolute';
-    overlay.style.width = '14%';
-    overlay.style.maxWidth = '220px';
     overlay.style.zIndex = '3';
     overlay.style.userSelect = 'none';
     overlay.style.cursor = 'grab';
@@ -781,6 +796,7 @@ function addCasillasOverlay() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  detectDeviceClass();
   document.documentElement.lang = currentLang;
   if (mapImage) mapImage.alt = i18n[currentLang].altFace1;
   loadSavedTheme(); // Cargar tema guardado
@@ -793,4 +809,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   addCasillasOverlay();
   applyTranslations();
+});
+
+let __lastDevice = detectDeviceClass();
+window.addEventListener('resize', () => {
+  const now = detectDeviceClass();
+  if (now !== __lastDevice) {
+    __lastDevice = now;
+    initializePanzoom();
+  }
 });
