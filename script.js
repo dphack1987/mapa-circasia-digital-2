@@ -670,6 +670,34 @@ zoomOutBtn.addEventListener('click', (e) => {
     if (panzoomInstance) panzoomInstance.zoomOut();
 });
 
+const resetOverlayBtn = document.getElementById('reset-overlay-btn');
+function resetCasillasPositions() {
+  try { localStorage.removeItem('overlayPos_casillas_info'); } catch {}
+  try { localStorage.removeItem('markerPos_pauta18'); } catch {}
+  const overlay = document.getElementById('casillas-info-overlay');
+  const defOverlay = { x: 80, y: 14 };
+  if (overlay) {
+    overlay.style.left = defOverlay.x + '%';
+    overlay.style.top = defOverlay.y + '%';
+  }
+  const markersContainer = document.getElementById('map-markers');
+  if (markersContainer) {
+    const m = markersContainer.querySelector('button.map-marker[data-id="pauta18"]');
+    const def = markerDefaults['pauta18'] || { x: 82, y: 26 };
+    if (m) {
+      m.style.left = def.x + '%';
+      m.style.top = def.y + '%';
+    }
+    saveMarkerPos('pauta18', def);
+  }
+}
+if (resetOverlayBtn) {
+  resetOverlayBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    resetCasillasPositions();
+  });
+}
+
 // ==============================
 // 🟢 INICIALIZAR
 // ==============================
