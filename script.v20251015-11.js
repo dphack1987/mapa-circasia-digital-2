@@ -24,7 +24,7 @@ let zoomWheelHandler = null; // manejador para zoom con rueda
 // ==============================
 const i18n = {
   es: {
-    headerTitle: 'Mapa Turístico de Circasia 2025',
+    headerTitle: 'Mapa Turístico de Circasia 2026',
     headerSubtitle: 'Explora los puntos más representativos del municipio',
     switchToFace2: 'Cambiar a Cara 2',
     switchToFace1: 'Cambiar a Cara 1',
@@ -48,7 +48,7 @@ const i18n = {
     }
   },
   en: {
-    headerTitle: 'Circasia 2025 Tourist Map',
+    headerTitle: 'Circasia 2026 Tourist Map',
     headerSubtitle: 'Explore the most representative places of the municipality',
     switchToFace2: 'Switch to Face 2',
     switchToFace1: 'Switch to Face 1',
@@ -72,7 +72,7 @@ const i18n = {
     }
   },
   fr: {
-    headerTitle: 'Carte touristique de Circasia 2025',
+    headerTitle: 'Carte touristique de Circasia 2026',
     headerSubtitle: 'Explorez les lieux les plus représentatifs de la commune',
     switchToFace2: 'Changer vers Face 2',
     switchToFace1: 'Changer vers Face 1',
@@ -96,7 +96,7 @@ const i18n = {
     }
   },
   de: {
-    headerTitle: 'Touristenkarte Circasia 2025',
+    headerTitle: 'Touristenkarte Circasia 2026',
     headerSubtitle: 'Entdecken Sie die repräsentativsten Orte der Gemeinde',
     switchToFace2: 'Zur Seite 2 wechseln',
     switchToFace1: 'Zur Seite 1 wechseln',
