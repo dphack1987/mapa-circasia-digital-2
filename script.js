@@ -102,6 +102,10 @@ const i18n = {
       pauta17: {
         title: 'Pauta 17',
         desc: ''
+      },
+      pauta18: {
+        title: 'Casillas de información',
+        desc: 'Ubicación de las casillas de información turística.'
       }
     }
   },
@@ -185,6 +189,10 @@ const i18n = {
       pauta17: {
         title: 'Ad Slot 17',
         desc: ''
+      },
+      pauta18: {
+        title: 'Tourist Info Booths',
+        desc: 'Location of tourist information booths.'
       }
     }
   },
@@ -255,6 +263,22 @@ const i18n = {
       pauta14: {
         title: 'Publicité 14',
         desc: ''
+      },
+      pauta15: {
+        title: 'Publicité 15',
+        desc: ''
+      },
+      pauta16: {
+        title: 'Publicité 16',
+        desc: ''
+      },
+      pauta17: {
+        title: 'Publicité 17',
+        desc: ''
+      },
+      pauta18: {
+        title: "Guichets d'information",
+        desc: "Emplacement des guichets d'information touristique."
       }
     }
   },
@@ -326,6 +350,22 @@ const i18n = {
       pauta14: {
         title: 'Anzeige 14',
         desc: ''
+      },
+      pauta15: {
+        title: 'Anzeige 15',
+        desc: ''
+      },
+      pauta16: {
+        title: 'Anzeige 16',
+        desc: ''
+      },
+      pauta17: {
+        title: 'Anzeige 17',
+        desc: ''
+      },
+      pauta18: {
+        title: 'Infohäuschen',
+        desc: 'Standort der touristischen Informationsstände.'
       }
     }
   }
@@ -387,7 +427,8 @@ const pautasAdicionales = [
   { position: 'bottom', id: 'pauta14', img: 'assets/pautas_circasia/pauta14.png', cara: 1, dest: null },
   { position: 'top',    id: 'pauta15', img: 'assets/pautas_circasia/pauta15.jpg', cara: 1, dest: null },
   { position: 'bottom', id: 'pauta16', img: 'assets/pautas_circasia/pauta16.jpg', cara: 1, dest: null },
-  { position: 'top',    id: 'pauta17', img: 'assets/pautas_circasia/pauta17.jpg', cara: 1, dest: null }
+  { position: 'top',    id: 'pauta17', img: 'assets/pautas_circasia/pauta17.jpg', cara: 1, dest: null },
+  { position: 'top',    id: 'pauta18', img: 'assets/imagenes/casillas_info.png',  cara: 1, dest: 'Circasia, Quindío, Colombia' }
 ];
 
 // ==============================
