@@ -450,6 +450,7 @@ function saveMarkerPos(id, pos) {
 
 const markerDefaults = {
   // ejemplo: 'pauta3': { x: 62, y: 48 }
+  pauta18: { x: 82, y: 26 }
 };
 
 function renderMapMarkers() {
@@ -740,7 +741,7 @@ function addCasillasOverlay() {
     panzoomWrapper.appendChild(overlay);
     const raw = localStorage.getItem('overlayPos_casillas_info');
     let pos = raw ? (()=>{try{return JSON.parse(raw)}catch{return null}})() : null;
-    if (!pos || typeof pos.x !== 'number' || typeof pos.y !== 'number') pos = { x: 78, y: 10 };
+    if (!pos || typeof pos.x !== 'number' || typeof pos.y !== 'number') pos = { x: 80, y: 14 };
     overlay.style.left = pos.x + '%';
     overlay.style.top = pos.y + '%';
     let dragging = false;
