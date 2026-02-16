@@ -365,8 +365,8 @@ header::after {
   display: block;
   height: 96px; /* más grande */
   width: auto;
-  border-radius: 8px;
-  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.18));
+  background: transparent;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.16));
 }
 
 @media (max-width: 600px) {
